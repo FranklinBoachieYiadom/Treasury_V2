@@ -1,0 +1,446 @@
+
+/*All the NavBar Styling Goes Here   */
+*{
+  margin: 0;
+  padding: 0;
+}
+nav{
+  background: #333;
+  height: 80px;
+  width: 100%;
+  z-index: 1000; 
+  top: 0;
+  left: 0;
+  position: fixed;
+}
+a.logo3{
+  color:rgb(255, 255, 244);
+  font-size: 20px;
+  line-height: 90px;
+  padding: 0 100;
+  font-weight: bold;
+  text-decoration: none;
+}
+.sda_logo{
+  width: 60px;
+  height:60px;
+}
+nav ul{
+  float: right;
+  margin-right: 20px;
+  list-style: none;
+}
+nav ul li{
+  display: inline-block;
+  line-height: 80px;
+  margin: 0 5px;
+}
+nav ul li a{
+  text-decoration: none;
+  color: white;
+  font-size: 17px;
+  padding: 7px 13px;
+  border-radius:3px ;
+  text-transform: uppercase;
+}
+
+nav ul li a:hover {
+  text-decoration: none; 
+  color: white;
+}
+a.active,a:hover{
+  background: rgb(36, 35, 36);
+  transition: .5s;
+  border-radius: 4px;
+  text-decoration: none;
+  color: white;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  color: white;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #302f2ff5;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: rgb(223, 216, 216);
+  padding: 12px 8px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #060606;
+  text-decoration: none;
+  color: white;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+#log-out {
+  color: white; /* Change text color to white */
+}
+.checkbtn{
+  font-size: 30px;
+  color: white;
+  float: right;
+  line-height: 80px;
+  margin-right: 40px;
+  cursor: pointer;
+  display: none;
+}
+#check{
+  display: none;
+}
+@media (max-width: 952px){
+  label.logo3{
+      font-size: 20px;
+      padding-left: 50px;
+  }
+  nav ul li a{
+      font-size: 16px;
+  }
+}
+@media (max-width: 858px){
+  .checkbtn{
+      display: block ;
+  }
+  ul{
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      background:  #68665e;
+      top: 80px;
+      left: -100%;
+      text-align: center;
+      transition: all .5s;  
+  }
+  nav ul li{
+      display: block;
+      margin: 50px 0;
+      line-height: 30px;
+  }
+  nav ul li a{
+      font-size: 20px;
+  }
+  a:hover, a.active{
+      background: none;
+      color: rgb(38, 33, 31);    
+  }
+  #check:checked ~ ul{
+      left: 0;
+  }
+}
+
+
+.logo{
+  width: 100px;
+  height:100px;
+  position: relative;
+  top: -70px;
+  left: calc(50% - 50px);
+}
+/* Scrollable Container */
+.scrollable-container {
+  max-height: 60vh; /* Adjust the height as needed */
+  overflow-y: auto;
+  padding-right: 10px; /* Add some padding to avoid scrollbar overlap */
+}
+
+/* Scrollable Table Container */
+.table-container {
+  margin-bottom: 20px;
+}
+
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('../images/bgImage.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow-y: auto; /* Ensure the body can scroll */
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(28, 242, 113, 0.975);
+  width: 400px;
+  max-width: 100%;
+}
+
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-text {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.form-text a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.form-text a:hover {
+  text-decoration: underline;
+  background-color: #fff;
+}
+
+.download-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.download-btn:hover {
+  background-color: #0056b3;
+}
+
+.container {
+  background-color: #ffffffac;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px; /* Adjust the width as needed */
+  max-width: 1200px; /* Ensure the container does not exceed a certain width */
+  margin: 20px auto; /* Center the container and add some margin */
+}
+
+h1, h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f8f8f8;
+}
+
+.amount-input {
+  width: 90%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.particulars-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.login-btn {
+  background-color: #34a105;
+  color: #fff;
+}
+
+.login-btn:hover {
+  background-color: #3983de;
+}
+
+.signup-btn {
+  background-color: #073a71;
+  color: #fff;
+}
+
+.signup-btn:hover {
+  background-color: #34a105;
+}
+
+.save-btn {
+  background-color: #10d709f0;
+  color: #fff;
+}
+
+.save-btn:hover {
+  background-color: #0d6605;
+}
+
+.add-btn {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.add-btn:hover {
+  background-color: #218838;
+}
+
+.remove-btn {
+  background-color: #e7365a;
+  color: #fff;
+}
+
+.remove-btn:hover {
+  background-color: #f50202;
+}
+
+.calculate-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.calculate-btn:hover {
+  background-color: #0056b3;
+}
+
+.full-btn {
+  background-color: #5d5f28;
+  color: #fff;
+}
+
+.full-btn:hover {
+  background-color: #bdd64f;
+}
+
+.total-amount {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.total-row {
+  font-weight: bold;
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position the tooltip above the button */
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when hovering */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #333;
+  z-index: 1000;
+}
+
+/* Spinner styles */
+.spinner2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust height as needed */
+  font-size: 24px; /* Adjust font size as needed */
+  color: #007bff; /* Adjust color as needed */
+}
+
+/* Add this rule to make the table scrollable horizontally */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+}
