@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ash.North SDA Church Treasury</title>
+    <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
+    <link rel="stylesheet" href="./assest/styles/styles.css" />
+    <script
+      src="https://kit.fontawesome.com/8ebf6fd839.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+
+    <nav>
+        <input type="checkbox" id="check" />
+        <label for="check" class="checkbtn">
+          <i class="fas fa-bars"></i>
+        </label>
+        <a href="landing-page.html" class="logo3">Ash.North Treasury Dept.</a>
+        <img class="sda_logo" src="./assest/images/sda_logo.png" alt="logo">
+        <ul>
+          <li class="dropdown">
+            <a>Menu</a>
+            <div class="dropdown-content">
+              <a class="active" href="income-book.html">Income-Book</a>
+              <a href="full-view.html">Full View</a>
+              <a href="expenditure-book.html">Expenditure-Book</a>
+              <a href="cutoff.html">Cut-Off Sheet</a>
+              <a href="denominations.html">Denominations</a>
+              <a href="saved-records.html">Saved Records</a>
+            </div>
+          </li>
+          <li><a id="log-out">Log Out</a></li>
+        </ul>
+      </nav>
+
+
+    <div class="container">
+      <h1>Income Table</h1>
+      <div class="scrollable-container">
+        <div class="table-container">
+          <form id="incomeTableForm">
+          <table id="amountTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Particulars</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+          
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <div class="tooltip">
+          <button id="save" class="btn save-btn" type="submit">Save</button>
+          <span class="tooltiptext">Save</span>
+        </div>
+      </form>
+        <div class="tooltip">
+          <button id="calculateBtn" class="btn calculate-btn">Total</button>
+          <span class="tooltiptext">Calculate Total</span>
+        </div>
+        <div class="tooltip">
+          <button id="fullBtn" class="btn full-btn" type="submit">Full View</button>
+          <span class="tooltiptext">Full View</span>
+        </div>
+        <div class="tooltip">
+            <button id="addRowBtn" class="btn add-btn">
+              <i class="fa-solid fa-plus fa-beat"></i>
+            </button>
+            <span class="tooltiptext">Add a new row</span>
+          </div>
+        <div class="tooltip">
+          <button id="removeRowBtn" class="btn remove-btn">
+            <i class="fa-solid fa-minus fa-beat"></i>
+          </button>
+          <span class="tooltiptext">Remove row</span>
+        </div>
+      </div>
+      <div id="totalAmount" class="total-amount"></div>
+    </div>
+
+    <div id="spinner" class="spinner" style="display: none;">
+      <i class="fa fa-spinner fa-spin"></i> Saving...
+    </div>
+    <script src="./assest/scripts/script.js"></script>
+
+    <datalist id="particularsList">
+      <option value="Tithe"></option>
+      <option value="C.B.F"></option>
+      <option value="Loose Offering"></option>
+      <option value="Thanksgiving"></option>
+      <option value="Children Offering"></option>
+    </datalist>
+
+
+
+<script>
+    // For the Save Button
+    const scriptURL =                       
+    "https://script.google.com/macros/s/AKfycbx4pI-Q_2fcUgb3R2rPr8meTV4oLukbfFyXqqSvdxPF6kjiWDNvmxcYZPvsBpKVS2kxJA/exec"
+    const form = document.forms["incomeTableForm"];
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      var formData = new FormData(form);
+  
+      // Show spinner
+    spinner.style.display = 'block';
+  
+      fetch(scriptURL, { method: "POST", body: formData })
+        .then((response) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Done", text: "Saved Successfully.", icon: "success"
+          });
+        })
+        .catch((error) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Error", text: "Something went wrong. please try again!", icon: "error"
+          });
+        });
+        
+    });
+  </script>
+  </body>
+</html>

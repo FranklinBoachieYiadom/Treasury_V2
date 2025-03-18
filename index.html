@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ash.North SDA Church Treasury</title>
+    <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
+    <link rel="stylesheet" href="./assest/styles/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
+</head>
+<body>
+    <div class="form-container">
+        <form class="form" id="loginForm">
+          <img class="logo" src="./assest/images/logo.png" alt="logo">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="userName">User Name</label>
+                <input type="text" id="userName" name="USERNAME" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="PASSWORD" required>
+            </div>
+            <button type="submit" class="btn login-btn">Login</button>
+            <p class="form-text">Don't have an account? <a href="signup.html">Sign up</a></p>
+        </form>
+    </div>
+    
+
+    <script>
+     // Cheching the user login Details
+const login_form = document.forms["loginForm"];
+login_form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  var userName = document.getElementById("userName").value;
+  var passWord = document.getElementById("loginPassword").value;
+  if (
+    (userName == "franklin" && passWord == "franklin") ||
+    (userName == "eben" && passWord == "eben") ||
+    (userName == "mary" && passWord == "mary") ||
+    (userName == "stella" && passWord == "stella")
+  ) {
+    /*  alert("Login Successful"); */
+    userName=userName.toUpperCase();
+    if(userName=="FRANKLIN"){
+        userName="FRANKLIN"+"✅";
+    }
+    else if(userName=="STELLA"){
+        userName="Madam STELLA"+ "👸🏾";
+    }
+    else if(userName=="MARY"){
+        userName="Madam MARY"+ "👸🏾";
+    }
+    else if(userName=="EBEN"){
+        userName="EBEN"+ "✅";
+    }
+    localStorage.setItem("userName", userName);
+    //
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Sign-In successful",
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    // Wait for 10 seconds before redirecting
+    setTimeout(() => {
+      var targetPageUrl = "landing-page.html";
+      window.location.href = targetPageUrl;
+    }, 1500); // 10000 milliseconds = 10 seconds
+  } else {
+    Swal.fire({
+      text: "Wrong email or Password",
+      icon: "error"
+    });
+  }
+});
+    </script>
+</body>
+</html>
