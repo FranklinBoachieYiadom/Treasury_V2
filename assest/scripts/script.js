@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+
   // Add Row button
   const addRowBtn = document.getElementById('addRowBtn');
   if (addRowBtn) {
@@ -84,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = 'full-view.html';
     });
   }
-
+  
   // Log out button
   const logOutButton = document.getElementById('log-out');
   if (logOutButton) {
@@ -94,6 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
         confirmButtonColor: "#3085d6", cancelButtonColor: "#d33", confirmButtonText: "Yes, Log out"
       }).then((result) => {
         if (result.isConfirmed) {
+          sessionStorage.removeItem("user-creds");
+          sessionStorage.removeItem("user-info");
           window.location.href = 'index.html';
         }
       });

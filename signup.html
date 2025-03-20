@@ -14,7 +14,7 @@
             <h2>Sign Up</h2>
             <div class="form-group">
                 <label for="signupName">Name</label>
-                <input type="text" id="signupName" name="name" required>
+                <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
                 <label for="signupEmail">Email</label>
@@ -28,11 +28,76 @@
                 <label for="signupPassword">Confirm Password</label>
                 <input type="password" id="signupPasswordConfirm" name="password" required>
             </div>
-            <button type="submit" class="btn signup-btn">Sign Up</button>
+            <button type="submit" id="submit" class="btn signup-btn">Sign Up</button>
             <p class="form-text">Already have an account? <a href="index.html">Login</a></p>
         </form>
     </div>
 
-<script src="./assest/scripts/script.js"></script>
+    <script type="module">
+      
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"; 
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyAUsDGmwxSHg5l4BgDbX8Ny1WdIqtFDnYc",
+          authDomain: "treasury-16f8d.firebaseapp.com",
+          projectId: "treasury-16f8d",
+          storageBucket: "treasury-16f8d.firebasestorage.app",
+          messagingSenderId: "127419985247",
+          appId: "1:127419985247:web:0e6116989c29d0f3989aea"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore()
+        const auth = getAuth(app)
+        
+      
+        const submit= document.getElementById("submit");
+        submit.addEventListener("click", function(event){
+        event.preventDefault()
+
+        let name=document.getElementById("name").value;
+        let email=document.getElementById("signupEmail").value;
+        let password=document.getElementById("signupPassword").value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+            // Signed up 
+            var ref = doc (db,"UserAuthList",userCredential.user.uid);
+            await setDoc(ref,{
+                fname:name
+            })
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Account created successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            // Wait for 10 seconds before redirecting
+            setTimeout(() => {
+              var targetPageUrl = "index.html";
+              window.location.href = targetPageUrl;
+            }, 1500); // 10000 milliseconds = 10 seconds
+        })
+        .catch((error) => {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            // Replace "Firebase:" with an empty string
+            if (errorMessage.includes("Firebase:")) {
+                    errorMessage = errorMessage.replace("Firebase:", "").trim();
+                }
+            Swal.fire({
+            text: errorMessage,
+            icon: "error"
+          });  
+            // ..
+        });
+    })
+
+
+      </script>
 </body>
 </html>
