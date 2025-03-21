@@ -84,10 +84,13 @@
         
       })
       .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
+          let errorCode = error.code;
+          let errorMessage = error.message;
+          if (errorMessage.includes("Firebase:")) {
+              errorMessage = errorMessage.replace("Firebase:", "").trim();
+            }
           Swal.fire({
-            text: "Wrong email or Password",
+            text: errorMessage ,
             icon: "error"
           });  
       });
@@ -118,8 +121,7 @@
                 }
       // ..
       Swal.fire({
-        text: errorMessage,    
-        //text: "Input your valid email",
+            text: errorMessage,    
             icon: "error"
           });  
     });
