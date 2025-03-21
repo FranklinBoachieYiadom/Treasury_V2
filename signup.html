@@ -39,13 +39,8 @@
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"; 
         
-        fetch(' https://franklinboachieyiadom.github.io/Treasury_V2/secrets.json')
-        .then(response => response.json())
-        .then(data => {
-            const apiKey = data.FIREBASE_API_KEY;
-
           const firebaseConfig = {
-          apiKey: apiKey,
+          apiKey: "AIzaSyAUsDGmwxSHg5l4BgDbX8Ny1WdIqtFDnYc",
           authDomain: "treasury-16f8d.firebaseapp.com",
           projectId: "treasury-16f8d",
           storageBucket: "treasury-16f8d.firebasestorage.app",
@@ -101,8 +96,6 @@
             // ..
         });
     })
-});
-
       </script>
 </body>
 </html>
