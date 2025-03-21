@@ -7,6 +7,7 @@
     <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
     <link rel="stylesheet" href="./assest/styles/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <scrip src="./assest/scripts/auth.js"></scrip>
    
 </head>
 <body>
@@ -35,8 +36,14 @@
       import { getFirestore, doc, getDoc  } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
       import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"; 
       
+      fetch(' https://franklinboachieyiadom.github.io/secrets.json')
+        .then(response => response.json())
+        .then(data => {
+            const apiKey = data.FIREBASE_API_KEY;
+
+            
       const firebaseConfig = {
-        apiKey: "AIzaSyAUsDGmwxSHg5l4BgDbX8Ny1WdIqtFDnYc",
+        apiKey: apiKey,
         authDomain: "treasury-16f8d.firebaseapp.com",
         projectId: "treasury-16f8d",
         storageBucket: "treasury-16f8d.firebasestorage.app",
@@ -123,6 +130,7 @@
           });  
     });
   })
+});
     </script>
     
 </body>

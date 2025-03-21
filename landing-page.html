@@ -62,35 +62,5 @@
 
     <script src="./assest/scripts/script.js"></script>
 
-    <!-- <script>
-      let UserCreds=JSON.parse(sessionStorage.getItem("user-creds"));
-      let UserInfo=JSON.parse(sessionStorage.getItem("user-info"));
-
-      let MsgHead=document.getElementById('msg');
-      let GreetHead=document.getElementById('msg-body');
-      let LogoutBtn= document.getElementById('log-out');
-
-      
-
-      let Signout = () =>{
-        sessionStorage.removeItem("user-creds");
-        sessionStorage.removeItem("user-info");
-        window.location.href = "./index.html";
-      }
-
-      let CheckCred = ()=>{
-        if (!sessionStorage.getItem("user-creds"))
-          window.location.href = "./index.html";
-        else{
-          //MsgHead.innerText = `User with email: "${UserCreds.email}" logged in`;
-          GreetHead.innerText = `Welcome ${UserInfo.fname}!`;
-        }
-      }
-      
-      window.addEventListener('load',CheckCred);
-      LogoutBtn.addEventListener('click', Signout);
-
-
-    </script> -->
   </body>
 </html>
