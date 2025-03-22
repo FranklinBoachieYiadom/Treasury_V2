@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ash.North SDA Church Treasury</title>
+    <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
+    <link rel="stylesheet" href="./assest/styles/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <scrip src="./assest/scripts/auth.js"></scrip>
+   
+</head>
+<body>
+    <div class="form-container">
+        <form class="form" id="loginForm">
+          <img class="logo" src="./assest/images/logo.png" alt="logo">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="email" id="loginEmail" name="EMAIL" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="PASSWORD" required>
+            </div>
+            <button type="submit" id="submit" class="btn login-btn">Login</button>
+            <p class="form-text">Don't have an account? <a href="signup.html">Sign up</a></p>
+            <br>
+            <p align="center"><a href="#" id="reset">Forgot Password?</a></p>
+        </form>
+    </div>
+    
+    <script type="module">
+      
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+      import { getFirestore, doc, getDoc  } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+      import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"; 
+          
+      const firebaseConfig = {
+        apiKey: "AIzaSyAUsDGmwxSHg5l4BgDbX8Ny1WdIqtFDnYc",
+        authDomain: "treasury-16f8d.firebaseapp.com",
+        projectId: "treasury-16f8d",
+        storageBucket: "treasury-16f8d.firebasestorage.app",
+        messagingSenderId: "127419985247",
+        appId: "1:127419985247:web:0e6116989c29d0f3989aea"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore();
+      const auth = getAuth(app);
+    
+      const submit= document.getElementById("submit");
+      submit.addEventListener("click", function(event){
+      event.preventDefault()
+
+      let email=document.getElementById("loginEmail").value;
+      let password=document.getElementById("loginPassword").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+      .then(async(userCredential) => {
+          // Log In
+          var ref = doc (db,"UserAuthList",userCredential.user.uid); 
+          const docSnap = await getDoc(ref);
+
+          if(docSnap.exists()){
+            sessionStorage.setItem("user-info",JSON.stringify({
+              fname: docSnap.data().fname
+            }))
+            sessionStorage.setItem("user-creds", JSON.stringify(userCredential.user));
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Sign-In successful",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            // Wait for 10 seconds before redirecting
+            setTimeout(() => {
+              var targetPageUrl = "landing-page.html";
+              window.location.href = targetPageUrl;
+            }, 1500); // 10000 milliseconds = 10 seconds
+       }
+        
+      })
+      .catch((error) => {
+          let errorCode = error.code;
+          let errorMessage = error.message;
+          if (errorMessage.includes("Firebase:")) {
+              errorMessage = errorMessage.replace("Firebase:", "").trim();
+            }
+          Swal.fire({
+            text: errorMessage ,
+            icon: "error"
+          });  
+      });
+  })
+
+  const reset= document.getElementById("reset");
+  reset.addEventListener("click", function(event){
+  event.preventDefault()
+
+  const email= document.getElementById("loginEmail").value;
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      // Password reset email sent!
+      // ..
+      Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Password reset email sent!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+    })
+    .catch((error) => {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      if (errorMessage.includes("Firebase:")) {
+                    errorMessage = errorMessage.replace("Firebase:", "").trim();
+                }
+      // ..
+      Swal.fire({
+            text: errorMessage,    
+            icon: "error"
+          });  
+    });
+  })
+    </script>
+    
+</body>
+</html>
