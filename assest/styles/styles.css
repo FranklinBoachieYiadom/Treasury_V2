@@ -22,8 +22,8 @@ a.logo3{
   text-decoration: none;
 }
 .sda_logo{
-  width: 60px;
-  height:60px;
+  width: 40px;
+  height:40px;
 }
 nav ul{
   float: right;
@@ -169,6 +169,18 @@ a.active,a:hover{
   position: relative;
   top: -10px;
   left: calc(50% - 50px);
+}
+
+/* Position #msg-body at the top right corner, below the navbar */
+#msg-body {
+  position: absolute; /* Use absolute positioning */
+  top: 100px; /* Adjust the top value to position it below the navbar */
+  right: 20px; /* Adjust the right value to position it at the right corner */
+  font-family:cursive;
+  background-color: rgba(242, 237, 237, 0.8); /* Optional: Add a background color with transparency */
+  padding: 10px; /* Optional: Add some padding */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
 }
 
 .landing-text{
