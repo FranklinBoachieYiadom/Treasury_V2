@@ -6,6 +6,7 @@
     <title>Ash.North SDA Church Treasury</title>
     <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
     <link rel="stylesheet" href="./assest/styles/styles.css">
+    <script src="https://kit.fontawesome.com/8ebf6fd839.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <scrip src="./assest/scripts/auth.js"></scrip>
    
@@ -28,6 +29,9 @@
             <br>
             <p align="center"><a href="#" id="reset">Forgot Password?</a></p>
         </form>
+        <div id="spinner" class="spinner" style="display: none;">
+          <i class="fa fa-spinner fa-spin"></i> Signing...
+        </div>
     </div>
     
     <script type="module">
@@ -53,12 +57,15 @@
       const submit= document.getElementById("submit");
       submit.addEventListener("click", function(event){
       event.preventDefault()
+           // Show spinner
+      spinner.style.display = 'block';
 
       let email=document.getElementById("loginEmail").value;
       let password=document.getElementById("loginPassword").value;
 
       signInWithEmailAndPassword(auth, email, password)
       .then(async(userCredential) => {
+
           // Log In
           var ref = doc (db,"UserAuthList",userCredential.user.uid); 
           const docSnap = await getDoc(ref);
@@ -68,6 +75,10 @@
               fname: docSnap.data().fname
             }))
             sessionStorage.setItem("user-creds", JSON.stringify(userCredential.user));
+
+              // Hide spinner
+        spinner.style.display = 'none';
+
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -84,6 +95,10 @@
         
       })
       .catch((error) => {
+
+          // Hide spinner
+          spinner.style.display = 'none';
+
           let errorCode = error.code;
           let errorMessage = error.message;
           if (errorMessage.includes("Firebase:")) {
