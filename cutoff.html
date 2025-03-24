@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ash.North SDA Church Treasury</title>
     <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
     <link rel="stylesheet" href="./assest/styles/styles.css" />
     <script src="https://kit.fontawesome.com/8ebf6fd839.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./assest/scripts/auth.js"></script> 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-  </head>
-  <body>
-
+</head>
+<body>
     <nav>
         <input type="checkbox" id="check" />
         <label for="check" class="checkbtn">
@@ -31,7 +26,6 @@
               <a href="expenditure-book.html">Expenditure-Book</a>
               <a class="active" href="cutoff.html">Cut-Off Sheet</a>
               <a href="denominations.html">Denominations</a>
-              
             </div>
           </li>
           <li class="dropdown">
@@ -44,70 +38,146 @@
           <li><a id="log-out">Log Out</a></li>
         </ul>
       </nav>
+      
 
 
-
-
-      <!-- <h2>MERIDIAN GHANA CONFERENCE OF SDA CHURCH</h2>
-    <h3 class="h3style">ASHAIMAN NORTH</h3>
-    <h3 class="h3style"><u>CUT OFF REPORT</u></h3>
-    <br>
-    <div style="text-align: center;">
-    <p><b>MONTH AND YEAR:</b><input type="month"></p>
-    <p><b>RECEIPT NUM:  FROM:<input type="number">  <span>TO:<input type="number"></span></b></p>
-    <p><b>TOTAL CONTRIBUTORS FOR THE MONTH:  TITHE:<input type="number">  <span>C.B.F:<input type="number"></span></b></p>
-    </div>
-    <br>
-    <h3 class="h3style"><u>CONFERENCE</u></h3>
-    <br> -->
-
-    <div class="container mt-5">
-        <h2 class="mb-4">TOTAL INCOME</h2>
+      <div class="container">
+        <h2 class="table-title">Conference Fund</h2>
         <div class="table-responsive">
-            <!-- Spinner -->
-            <div id="spinner2" class="spinner2" style="display: none;">
-                <i class="fa fa-spinner fa-spin"></i> Loading...
-            </div>
-            <table id="dataTable" class="table table-striped table-bordered">
+            <table class="styled-table">
                 <thead>
                     <tr>
-                        <td><b>DATE</b></td>
-                        <td><input type="date" id="cdate1"></td>
-                        <td><input type="date" id="cdate2"></td>
-                        <td><input type="date" id="cdate3"></td>
-                        <td><input type="date" id="cdate4"></td>
-                        <td><input type="date" id="cdate5"></td>
-                        <td><b>TOTAL</b></td>
+                        <th>Header 1</th>
+                        <th>Header 2</th>
+                        <th>Header 3</th>
+                        <th>Header 4</th>
+                        <th>Header 5</th>
+                        <th>Header 6</th>
+                        <th>Header 7</th>
+                        <th>Header 8</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
+                <tbody>
                     <tr>
-                        <td>TITHE</td>
-                        <td><input type="number" class="smallNumInp" id="t1"></td>
-                        <td><input type="number" class="smallNumInp" id="t2"></td>
-                        <td><input type="number" class="smallNumInp" id="t3"></td>
-                        <td><input type="number" class="smallNumInp" id="t4"></td>
-                        <td><input type="number" class="smallNumInp" id="t5"></td>
-                        <td id="totalTithe"></td>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                        <td>Data 6</td>
+                        <td>Data 7</td>
+                        <td>Data 8</td>
                     </tr>
                     <tr>
-                        <td>CBF</td>
-                        <td><input type="number" class="smallNumInp" id="c1"></td>
-                        <td><input type="number" class="smallNumInp" id="c2"></td>
-                        <td><input type="number" class="smallNumInp" id="c3"></td>
-                        <td><input type="number" class="smallNumInp" id="c4"></td>
-                        <td><input type="number" class="smallNumInp" id="c5"></td>
-                        <td id="totalCbf"></td>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                        <td>Data 6</td>
+                        <td>Data 7</td>
+                        <td>Data 8</td>
+                    </tr>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                        <td>Data 6</td>
+                        <td>Data 7</td>
+                        <td>Data 8</td>
+                    </tr>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                        <td>Data 6</td>
+                        <td>Data 7</td>
+                        <td>Data 8</td>
+                    </tr>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                        <td>Data 6</td>
+                        <td>Data 7</td>
+                        <td>Data 8</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-   
+    
+    <div class="container">
+        <h2 class="table-title">District Fund</h2>
+        <div class="table-responsive">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Header 1</th>
+                        <th>Header 2</th>
+                        <th>Header 3</th>
+                        <th>Header 4</th>
+                        <th>Header 5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                    </tr>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                    </tr>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                    </tr>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                    </tr>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                    </tr>
+                    <!-- <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 
-   
+
+
+    
     <script src="./assest/scripts/script.js"></script>
-
-  </body>
+</body>
 </html>
