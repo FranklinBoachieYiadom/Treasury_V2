@@ -57,8 +57,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore()
         const auth = getAuth(app)
-        
-      
+
         const submit= document.getElementById("submit");
         submit.addEventListener("click", function(event){
         event.preventDefault()
@@ -74,7 +73,8 @@
             // Signed up 
             var ref = doc (db,"UserAuthList",userCredential.user.uid);
             await setDoc(ref,{
-                fname:name
+                fname:name,
+                role:"member"
             })
             // Hide spinner
         spinner.style.display = 'none';
