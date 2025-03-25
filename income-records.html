@@ -55,6 +55,7 @@
             <table id="dataTable" class="table table-striped table-bordered">
                 <thead>
                     <tr>
+                        <th>User</th>
                         <th>Date_Column</th>
                         <th>Tithe</th>
                         <th>C.B.F</th>
@@ -94,6 +95,7 @@
                         }).replace(',', ', ');
                         
                         tr.innerHTML = `
+                            <td>${row['USER']}</td>
                             <td>${formattedDate}</td>
                             <td>${row['TITHE']}</td>
                             <td>${row['C.B.F']}</td>
