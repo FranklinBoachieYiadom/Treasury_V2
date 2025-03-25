@@ -73,6 +73,7 @@
           if(docSnap.exists()){
             sessionStorage.setItem("user-info",JSON.stringify({
               fname: docSnap.data().fname,
+              surname: docSnap.data().surname,
               role: docSnap.data().role
             }))
             sessionStorage.setItem("user-creds", JSON.stringify(userCredential.user));

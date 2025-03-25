@@ -22,6 +22,6 @@ if (Role){
 
 //This is for the landing page to get the Name of the user
 if (GreetHead){
-    GreetHead.innerText = `Welcome ${UserInfo.fname}!`;
+    GreetHead.innerText = `Welcome ${UserInfo.fname} ${UserInfo.surname}!`;
   }    
 });
