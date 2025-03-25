@@ -115,9 +115,15 @@
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       var formData = new FormData(form);
+
+       // Get user info from session storage and append to the form to be sent
+      let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));
+      if (UserInfo && UserInfo.fname) {
+          formData.append("USER", UserInfo.fname);
+      }
   
       // Show spinner
-    spinner.style.display = 'block';
+      spinner.style.display = 'block';
   
       fetch(scriptURL, { method: "POST", body: formData })
         .then((response) => {
