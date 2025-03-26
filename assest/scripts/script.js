@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       amountInput.type = 'number';
       amountInput.classList.add('amount-input');
       amountInput.placeholder = 'Enter amount';
+      amountInput.step='any';   // This allows for decimal numbers 
       cell3.appendChild(amountInput);
 
       // Set the ID of the amount input based on the particulars input value
