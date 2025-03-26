@@ -106,7 +106,7 @@
 
 
 <script>
-    // For the Save Button
+    // For the Save Button (Submit button for the form)
     const scriptURL =                       
     "https://script.google.com/macros/s/AKfycbyWOFw5vM7pxj_Hd1srPRrEYa9yULbL5hFT8tHnVMMYNDLzVKOLNXcvKtwzQyAblr7P/exec"
     const form = document.forms["incomeTableForm"];
@@ -119,6 +119,17 @@
       if (UserInfo && UserInfo.fname) {
           formData.append("USER", UserInfo.fname);
       }
+
+       // Calculate all the expenditures provided by the user
+       let totalExpenditure = 0;
+      const amountInputs = document.querySelectorAll("#amountTable tbody tr td:nth-child(3) input");
+      amountInputs.forEach(input => {
+          const value = parseFloat(input.value) || 0; // Default to 0 if the input is empty or invalid
+          totalExpenditure += value;
+      });
+
+      // Append the total income to the form data
+      formData.append("TOTAL", totalExpenditure);
   
       // Show spinner
     spinner.style.display = 'block';

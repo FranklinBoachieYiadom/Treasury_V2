@@ -105,10 +105,13 @@
       <option value="Loose Offering"></option>
       <option value="Thanksgiving"></option>
       <option value="Children Offering"></option>
+
+<!-- //All new income data would be added here -->
+
     </datalist>
 
 <script>
-    // For the Save Button
+    // For the Save Button (Submit button for the form Income)
     const scriptURL =                       
     "https://script.google.com/macros/s/AKfycbx4pI-Q_2fcUgb3R2rPr8meTV4oLukbfFyXqqSvdxPF6kjiWDNvmxcYZPvsBpKVS2kxJA/exec"
     const form = document.forms["incomeTableForm"];
@@ -121,6 +124,18 @@
       if (UserInfo && UserInfo.fname) {
           formData.append("USER", UserInfo.fname);
       }
+
+       // Calculate all the incomes provided by the user
+       let totalIncome = 0;
+      const amountInputs = document.querySelectorAll("#amountTable tbody tr td:nth-child(3) input");
+      amountInputs.forEach(input => {
+          const value = parseFloat(input.value) || 0; // Default to 0 if the input is empty or invalid
+          totalIncome += value;
+      });
+
+      // Append the total income to the form data
+      formData.append("TOTAL", totalIncome);
+
   
       // Show spinner
       spinner.style.display = 'block';
