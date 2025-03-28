@@ -102,6 +102,7 @@ a.active,a:hover{
 #check{
   display: none;
 }
+
 @media (max-width: 952px){
   label.logo3{
       font-size: 20px;
@@ -199,7 +200,6 @@ a.active,a:hover{
   font-weight: bolder;
 }
 
-
 /* Scrollable Container */
 .scrollable-container {
   max-height: 60vh; /* Adjust the height as needed */
@@ -218,14 +218,12 @@ body {
   background-image: url('../images/img-2.jpg');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow-y: auto; /* Ensure the body can scroll */
+  flex-direction: column; /* Stack elements vertically */
+  min-height: 100vh; /* Ensure the body takes up the full height */
+ 
 }
 
 .form-container {
@@ -235,8 +233,8 @@ body {
   box-shadow: 0 0 10px rgba(28, 242, 113, 0.975);
   width: 400px;
   max-width: 100%;
+  margin: auto;
 }
-
 
 .form {
   display: flex;
@@ -300,9 +298,69 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 400px; /* Adjust the width as needed */
-  max-width: 1200px; /* Ensure the container does not exceed a certain width */
-  margin: 20px auto; /* Center the container and add some margin */
+  width: 50vh; /* Adjust the width as needed */
+  max-width: 800px; /* Ensure the container does not exceed a certain width */
+  margin:  auto; /* Center the container horizontally */
+  height: auto; /* Allow the height to grow dynamically based on content */
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: flex-start; /* Align content to the top */
+}
+
+footer.footer {
+  background-color: #333; /* New background color */
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed; /* Fix the footer at the bottom */
+  bottom: 0;
+  width: 100vw; /* Ensure the footer spans the full viewport width */
+  left: 0; /* Align the footer to the left edge */
+  width: 100%; /* Ensure the footer spans the full width */
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+footer.footer a {
+  color: #00bcd4;
+  text-decoration: none;
+}
+
+footer.footer a:hover {
+  text-decoration: underline;
+}
+
+/* cleaering the default spacing from boostrap */
+footer.footer p {
+  margin: 0; /* Reduce paragraph spacing */
+  line-height: 1.4; /* Adjust line height */
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 95%; /* Increase width for smaller screens */
+    padding: 15px; /* Reduce padding */
+  }
+
+  footer.footer {
+    font-size: 14px; /* Adjust font size for smaller screens */
+    padding: 8px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 92%; /* Full width for very small screens */
+    padding: 10px; /* Further reduce padding */
+  }
+
+  footer.footer {
+    font-size: 12px; /* Smaller font size for very small screens */
+  }
+
+  .form-container {
+    width: 92%; /* Full width for very small screens */
+    padding: 10px; /* Further reduce padding */
+  }
 }
 
 h1, h2 {
