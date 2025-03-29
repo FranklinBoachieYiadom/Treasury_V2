@@ -134,6 +134,16 @@
           totalExpenditure += value;
       });
 
+      // Check if total Expenditure to be sent is 0
+      if (totalExpenditure === 0) {
+        Swal.fire({
+          title: "Error",
+          text: "Total Expenditure cannot be 0. Please enter valid amounts.",
+          icon: "error"
+        });
+        return; // Stop further execution
+      } 
+
       // Append the total income to the form data
       formData.append("TOTAL", totalExpenditure);
   
