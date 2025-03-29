@@ -140,6 +140,17 @@
           totalIncome += value;
       });
 
+      // Check if total income to be sent is 0
+      if (totalIncome === 0) {
+        Swal.fire({
+          title: "Error",
+          text: "Total income cannot be 0. Please enter valid amounts.",
+          icon: "error"
+        });
+        return; // Stop further execution
+      } 
+
+
       // Append the total income to the form data
       formData.append("TOTAL", totalIncome);
 
@@ -161,8 +172,7 @@
         Swal.fire({
           title: "Error", text: "Something went wrong. please try again!", icon: "error"
           });
-        });
-        
+        }); 
     });
   </script>
   </body>
