@@ -60,13 +60,14 @@ a.active,a:hover{
   position: relative;
   display: inline-block;
   color: white;
+  cursor: pointer;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: #302f2ff5;
-  min-width: 200px;
+  min-width: 210px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -89,6 +90,7 @@ a.active,a:hover{
 }
 #log-out {
   color: white; /* Change text color to white */
+  cursor: pointer;
 }
 .checkbtn{
   font-size: 30px;
