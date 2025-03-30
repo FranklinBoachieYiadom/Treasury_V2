@@ -21,6 +21,13 @@ a.logo3{
   font-weight: bold;
   text-decoration: none;
 }
+
+a.logo3:hover{
+  color: #fff;
+  transition: 0.5s;
+  text-decoration: none;
+}
+
 .sda_logo{
   width: 40px;
   height:40px;
