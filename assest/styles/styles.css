@@ -487,8 +487,6 @@ th {
   margin: 0 45px;
 }
 
-
-
 .total-amount {
   text-align: center;
   font-size: 18px;
@@ -568,6 +566,7 @@ th {
 }
 
 
+
 /* Style for input type date */
 input[type="date"] {
   appearance: none; /* Remove default browser styling */
@@ -585,23 +584,44 @@ input[type="date"] {
   transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover/focus */
   font-family: Arial, Helvetica, sans-serif;
 }
-
 /* Add hover effect */
 input[type="date"]:hover {
   border-color: #0b12eb; /* Change border color on hover */
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.2); /* Add a subtle blue shadow */
 }
-
 /* Add focus effect */
 input[type="date"]:focus {
   border-color: #007bff; /* Change border color on focus */
   outline: none; /* Remove default outline */
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Add a stronger blue shadow */
 }
-
 /* Style for disabled date inputs */
 input[type="date"]:disabled {
   background-color: #e9ecef; /* Light gray background */
   color: #6c757d; /* Gray text color */
   cursor: not-allowed; /* Show not-allowed cursor */
 }
+
+
+
+/* This is the styling for the Income and Expenditure Record Table*/
+/* Ensure the table header remains fixed */
+.table-wrapper {
+  max-height: 70vh; /* Set the height to 70% of the viewport */
+  overflow-y: auto;
+}
+.table-wrapper thead th {
+  position: sticky; /* Make the header sticky */
+  top: 0; /* Stick to the top of the container */
+  background-color: #f8f9fa; /* Background color for the header */
+  z-index: 2; /* Ensure the header stays above the table body */
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visibility */
+}
+/* Optional: Style the table rows */
+.table-wrapper tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Light background for even rows */
+}
+.table-wrapper tbody tr:hover {
+  background-color: #f1f1f1; /* Highlight row on hover */
+}
+
