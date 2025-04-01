@@ -393,7 +393,7 @@ th {
 }
 
 .amount-input {
-  width: 90%;
+  width: 70%;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -482,6 +482,12 @@ th {
 .full-btn:hover {
   background-color: #bdd64f;
 }
+
+#cal-cutoff{
+  margin: 0 45px;
+}
+
+
 
 .total-amount {
   text-align: center;
