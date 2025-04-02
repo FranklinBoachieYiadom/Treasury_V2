@@ -315,6 +315,31 @@ body {
   justify-content: flex-start; /* Align content to the top */
 }
 
+/* Add Styling to the class records headers*/
+.records-header {
+  color: #fff; /* White text color */
+  font-family: 'Arial', sans-serif; /* Stylish font */
+  font-size: 24px; /* Larger font size */
+  font-weight: bold; /* Bold text */
+  text-align: center; /* Center the text */
+  padding: 15px 20px; /* Add padding for spacing */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin-bottom: 20px; /* Add spacing below the heading */
+  text-transform: uppercase; /* Make the text uppercase */
+  letter-spacing: 1px; /* Add spacing between letters */
+}
+/* Add hover effect for the heading */
+.records-header:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+  transform: scale(1.02); /* Slight zoom effect */
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+
+
+
 footer.footer {
   background-color: #333; /* New background color */
   color: #fff;
