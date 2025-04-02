@@ -136,6 +136,5 @@ var totalCalculation=[];
     document.getElementById("grandTot").innerText="Total: GH₵"+grandTotal.toFixed(2)
     totalCalculation=[0]   
   })
-}
-
+ }
 });
