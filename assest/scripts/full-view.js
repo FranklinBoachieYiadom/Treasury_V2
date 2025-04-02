@@ -121,23 +121,3 @@ function normalizeParticulars(particulars) {
   
   // Call the function to populate the tables when the page loads
   window.onload = populateTables;
-
-
-
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    // Log out button
-    const logOutButton = document.getElementById('log-out');
-    if (logOutButton) {
-      logOutButton.addEventListener('click', () => {
-        Swal.fire({
-          text: "Are you sure you want to log out?", icon: "warning", showCancelButton: true,
-          confirmButtonColor: "#3085d6", cancelButtonColor: "#d33", confirmButtonText: "Yes, Log out"
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = 'index.html';
-          }
-        });
-      });
-    }
-  });
