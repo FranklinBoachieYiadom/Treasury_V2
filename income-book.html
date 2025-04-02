@@ -36,6 +36,8 @@
             <div class="dropdown-content">
               <a href="income-records.html">Income-Records</a>
               <a href="expenditure-records.html">Expenses-Records</a>
+              <a href="conference-records.html">Conference-Records</a>
+              <a href="district-records.html">District-Records</a>
             </div>
           </li>
           <li><a id="log-out"> <i class="fa-solid fa-right-from-bracket"></i> Log Out</a></li>
@@ -119,10 +121,10 @@
 
 <script>
     // For the Save Button (Submit button for the form Income)
-    const scriptURL = "https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec"                     
-    // "https://script.google.com/macros/s/AKfycbx4pI-Q_2fcUgb3R2rPr8meTV4oLukbfFyXqqSvdxPF6kjiWDNvmxcYZPvsBpKVS2kxJA/exec"
-  
-   
+    const totalIncomeScriptURL = "https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec";                     
+    const conferenceScriptURL ="https://script.google.com/macros/s/AKfycbxCdDlJLrcq3qxlEcOW8oI73OJHXC-E3eOaapWiW4Qj9l6OHY8XO1cSK_oaqOWwx7fu9A/exec";
+    const districtScriptURL="https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec"
+
     const form = document.forms["incomeTableForm"];
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -151,31 +153,139 @@
         });
         return; // Stop further execution
       } 
-
-
       // Append the total income to the form data
       formData.append("TOTAL", totalIncome);
 
-  
       // Show spinner
       spinner.style.display = 'block';
   
-      fetch(scriptURL, { method: "POST", body: formData })
+      fetch(totalIncomeScriptURL, { method: "POST", body: formData })
         .then((response) => {
           // Hide spinner
         spinner.style.display = 'none';
         Swal.fire({
-          title: "Done", text: "Saved Successfully.", icon: "success"
+          title: "Done", text: "Incomes Saved Successfully.", icon: "success"
           });
         })
         .catch((error) => {
           // Hide spinner
         spinner.style.display = 'none';
         Swal.fire({
-          title: "Error", text: "Something went wrong. please try again!", icon: "error"
+          title: "Error", text: "Could not save Incomes. please try again!", icon: "error"
           });
         }); 
-    });
+
+
+
+ // Calculate Conference Fund Values and send to conference sheet
+ const conferenceData = new FormData();
+  let conferenceTotal = 0;
+
+  // Get user info from session storage declared above and append to the form to be sent
+  if (UserInfo && UserInfo.fname) {
+    conferenceData.append("USER", UserInfo.fname);
+  }
+
+  const rows = document.querySelectorAll("#amountTable tbody tr");
+  rows.forEach((row) => {
+  const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
+  const amountInput = row.cells[2].querySelector("input"); // Get the input element in the Amount cell
+
+  const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
+  const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0; // Get the value of the Amount input
+
+  if (particulars === "Tithe") {
+    conferenceData.append("TITHE", amount); // 100%
+    conferenceTotal += amount;
+  } else if (particulars === "C.B.F") {
+    const cbfAmount = amount * 0.4; // 40%
+    conferenceData.append("C.B.F", cbfAmount);
+    conferenceTotal += cbfAmount;
+  } else if (particulars === "Loose Offering") {
+    const looseOfferingAmount = amount * 0.4; // 40%
+    conferenceData.append("LOOSE-OFFERING", looseOfferingAmount);
+    conferenceTotal += looseOfferingAmount;
+  } else if (particulars === "Thanksgiving") {
+    const thanksgivingAmount = amount * 0.4; // 40%
+    conferenceData.append("THANKSGIVING", thanksgivingAmount);
+    conferenceTotal += thanksgivingAmount;
+  }
+});
+  // Append the total of the tithe,CBF,loose Offering and Thanksgiving to the conference data
+  conferenceData.append("TOTAL", conferenceTotal);
+
+  // Save Conference Fund Records
+  fetch(conferenceScriptURL, { method: "POST", body: conferenceData })
+  .then((response) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Done", text: "Conference Funds Saved Successfully.", icon: "success"
+          });
+        })
+        .catch((error) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Error", text: "Could not saveConference Funds. please try again!", icon: "error"
+          });
+        }); 
+
+
+
+ // Calculate District Fund Values and send to districtsheet
+ const districtData = new FormData();
+  let districtTotal = 0;
+
+  // Get user info from session storage declared above and append to the form to be sent
+  if (UserInfo && UserInfo.fname) {
+    districtData.append("USER", UserInfo.fname);
+  }
+
+  const districtrows = document.querySelectorAll("#amountTable tbody tr");
+  districtrows.forEach((row) => {
+  const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
+  const amountInput = row.cells[2].querySelector("input"); // Get the input element in the Amount cell
+
+  const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
+  const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0; // Get the value of the Amount input
+
+  if (particulars === "C.B.F") {
+    const cbfAmount = amount * 0.1; // 10%
+    districtData.append("C.B.F", cbfAmount);
+    districtTotal += cbfAmount;
+  } else if (particulars === "Loose Offering") {
+    const looseOfferingAmount = amount * 0.1; // 10%
+    districtData.append("LOOSE-OFFERING", looseOfferingAmount);
+    districtTotal += looseOfferingAmount;
+  } else if (particulars === "Thanksgiving") {
+    const thanksgivingAmount = amount * 0.1; // 10%
+    districtData.append("THANKSGIVING", thanksgivingAmount);
+    districtTotal += thanksgivingAmount;
+  }
+});
+  // Append the total of the CBF,loose Offering and Thanksgiving to the District data
+  districtData.append("TOTAL", districtTotal);
+
+  // Save District Fund Records
+  fetch(districtScriptURL, { method: "POST", body: districtData })
+  .then((response) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Done", text: "District Funds Saved Successfully.", icon: "success"
+          });
+        })
+        .catch((error) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Error", text: "Could not save District Funds. please try again!", icon: "error"
+          });
+        }); 
+
+
+});
   </script>
   </body>
 </html>
