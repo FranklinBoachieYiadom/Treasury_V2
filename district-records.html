@@ -38,10 +38,10 @@
           <li class="dropdown">
             <a> <i class="fa-solid fa-folder-minus"></i> Saved Records</a>
             <div class="dropdown-content">
-              <a class="active" href="income-records.html">Income-Records</a>
+              <a href="income-records.html">Income-Records</a>
               <a href="expenditure-records.html">Expenses-Records</a>
               <a href="conference-records.html">Conference-Records</a>
-              <a href="district-records.html">District-Records</a>
+              <a class="active" href="district-records.html">District-Records</a>
             </div>
           </li>
           <li><a id="log-out"> <i class="fa-solid fa-right-from-bracket"></i> Log Out</a></li>
@@ -49,7 +49,7 @@
       </nav>
       <br><br>
     <div class="container mt-5">
-        <h2 class="mb-4">TOTAL INCOME RECORDS</h2>
+        <h2 class="mb-4">TOTAL DISTRICT RECORDS</h2>
         <div class="table-responsive">
             <!-- Spinner -->
             <div id="spinner2" class="spinner2" style="display: none;">
@@ -62,11 +62,9 @@
                         <th>Num</th>
                         <th>User</th>
                         <th>Date_Column</th>
-                        <th>Tithe</th>
                         <th>C.B.F</th>
                         <th>Loose Offering</th>
                         <th>Thanks Giving</th>
-                        <th>Children Offering</th> 
                         <th>Total</th>
 
                     </tr>
@@ -90,8 +88,7 @@
 
     <script>
         $(document).ready(function() {
-            const webAppUrl = 'https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec';
-             //const webAppUrl = 'https://script.google.com/macros/s/AKfycbx4pI-Q_2fcUgb3R2rPr8meTV4oLukbfFyXqqSvdxPF6kjiWDNvmxcYZPvsBpKVS2kxJA/exec';
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec';
 
             // Show spinner
             $('#spinner2').show();
@@ -114,11 +111,9 @@
                             <td>${row['NUM']}</td>
                             <td>${row['USER']}</td>
                             <td>${formattedDate}</td>
-                            <td>${row['TITHE']}</td>
                             <td>${row['C.B.F']}</td>
                             <td>${row['LOOSE-OFFERING']}</td>
                             <td>${row['THANKSGIVING']}</td>
-                            <td>${row['CHILDREN-OFFERING']}</td>  
                             <td>${row['TOTAL']}</td>  
                         `;
                         tableBody.appendChild(tr);
