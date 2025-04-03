@@ -105,6 +105,71 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+  
+//Here is the function for the cut-off table
+const filterBtn = document.getElementById('filterBtn');
+if (filterBtn){
+  filterBtn.addEventListener('click', () => {
+    document.getElementById('cut-off-tables').style.display = 'block';
+    const fromDateInput = document.getElementById('fromDate').value;
+    const toDateInput = document.getElementById('toDate').value;
+
+    // Normalize the dates
+    const fromDate = new Date(fromDateInput);
+    fromDate.setHours(0, 0, 0, 0); // Set to start of the day
+
+    const toDate = new Date(toDateInput);
+    toDate.setHours(23, 59, 59, 999); // Set to end of the day
+
+    const tableRows = document.querySelectorAll('#dataTable tbody tr, #dataTable2 tbody tr');
+    let conferenceTotal = 0;
+    let districtTotal = 0;
+
+    tableRows.forEach(row => {
+        const dateCell = row.cells[0]; // Assuming the first column contains the date
+        const rowDate = new Date(dateCell.textContent.trim());
+
+        if (fromDate && toDate) {
+            if (rowDate >= fromDate && rowDate <= toDate) {
+                row.style.display = ''; // Show the row
+
+                // Calculate totals for visible rows
+                const totalCell = row.cells[row.cells.length - 1]; // Assuming the last column is "Total"
+                const totalValue = parseFloat(totalCell.textContent.trim()) || 0;
+
+                if (row.closest('#dataTable')) {
+                    conferenceTotal += totalValue; // Add to conference total
+                } else if (row.closest('#dataTable2')) {
+                    districtTotal += totalValue; // Add to district total
+                }
+            } else {
+                row.style.display = 'none'; // Hide the row
+            }
+        } else {
+            row.style.display = ''; // Show all rows if no date range is selected
+        }
+    });
+
+    // Calculate the grand total
+    const grandTotal = conferenceTotal + districtTotal;
+
+    // Display the grand total
+    const grandTotalElement = document.getElementById('grandTotal');
+    if (grandTotalElement) {
+        grandTotalElement.textContent = `Grand Total: GH₵${grandTotal.toFixed(2)}`;
+    } else {
+        const grandTotalDiv = document.createElement('div');
+        grandTotalDiv.id = 'grandTotal';
+        grandTotalDiv.style.fontWeight = 'bold';
+        grandTotalDiv.style.marginTop = '20px';
+        grandTotalDiv.textContent = `Grand Total: GH₵${grandTotal.toFixed(2)}`;
+        document.getElementById('cut-off-tables').appendChild(grandTotalDiv);
+    }
+});
+}
+
+
+
 //Here is the function calculation of the Denominations
 const calDenom = document.getElementById('calDenom');
 if (calDenom) {
