@@ -6,8 +6,12 @@
     <title>Ash.North SDA Church Treasury</title>
     <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
     <link rel="stylesheet" href="./assest/styles/styles.css" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/8ebf6fd839.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="./assest/scripts/auth.js"></script> 
 </head>
 <body>
@@ -20,14 +24,16 @@
         <img class="sda_logo" src="./assest/images/sda_logo.png" alt="logo"></a>
         <ul>
           <li class="dropdown">
-            <a> <i class="fa-solid fa-bars"></i> Menu</a>
-            <div class="dropdown-content">
-              <a href="income-book.html">Income-Book</a>
-              <a href="full-view.html">Full View</a>
-              <a href="expenditure-book.html">Expenditure-Book</a>
-              <a class="active" href="cutoff.html">Cut-Off Sheet</a>
-              <a href="denominations.html">Denominations</a>
-            </div>
+            <div id="admin-section" style="display: none;">
+                <a> <i class="fa-solid fa-bars"></i> Menu</a>
+                <div class="dropdown-content">
+                  <a href="income-book.html">Income-Book</a>
+                  <a href="full-view.html">Full View</a>
+                  <a href="expenditure-book.html">Expenditure-Book</a>
+                  <a class="active"  href="cutoff.html">Cut-Off Sheet</a>
+                  <a href="denominations.html">Denominations</a>
+                </div>
+              </div>
           </li>
           <li class="dropdown">
             <a> <i class="fa-solid fa-folder-minus"></i> Saved Records</a>
@@ -41,230 +47,178 @@
           <li><a id="log-out"> <i class="fa-solid fa-right-from-bracket"></i> Log Out</a></li>
         </ul>
       </nav>
-      
-      <br><br><br><br><br>
 
-      
-
-      <div class="container">
-        <h2 class="records-header" style="background-color:#608a06;">Conference Fund</h2>
-        <div class="table-responsive">
-            <table class="styled-table">
-                <thead>
-                    <tr>
-                        <th>DATE</th>
-                        <th><input type="date"></th>
-                        <th><input type="date"></th>
-                        <th><input type="date"></th>
-                        <th><input type="date"></th>
-                        <th><input type="date"></th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>TITHE</td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>C.B.F</td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>LOOSE OFFERING</td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>THANKSGIVING</td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>SABBATH SCH ORDER</td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" class="particulars-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" class="particulars-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" class="particulars-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td><input type="number" class="amount-input"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>TOTAL</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<br><br><br><br>
+    <div class="date-filter-container">
+        <label for="fromDate" class="date-label">From:</label>
+        <input type="date" id="fromDate" class="date-input">
+        
+        <label for="toDate" class="date-label">To:</label>
+        <input type="date" id="toDate" class="date-input">
+        
+        <button id="filterBtn" class="btn btn-primary">Filter</button>
     </div>
 
-    <div style="display: block;">
-    <br><br>
-    <div class="container">
-        <h2 class="records-header" style="background-color:#07836c;">District Fund</h2>
+    
+    <div id='cut-off-tables' style="display: none;">
+      
+    <div class="container mt-5">
+    <h2 class="records-header" style="background-color:#90066b;">CONFERENCE FUNDS</h2>
         <div class="table-responsive">
-            <table class="styled-table">
+            <!-- Spinner -->
+            <div id="spinner2" class="spinner2" style="display: none;">
+                <i class="fa fa-spinner fa-spin"></i> Loading...
+            </div>
+        <div class="table-wrapper">
+            <table id="dataTable" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>DATE</th>
-                        <th><input type="date"></th>
-                        <th><input type="date"></th>
-                        <th><input type="date"></th>
-                        <th><input type="date"></th>
-                        <th><input type="date"></th>
+                        <th>Date</th>
+                        <th>Tithe</th>
+                        <th>C.B.F</th>
+                        <th>Loose Offering</th>
+                        <th>Thanks Giving</th>
                         <th>Total</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>TITHE</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>C.B.F</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td> 
-                    </tr>
-                    <tr>
-                        <td>LOOSE OFFERING</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>THANKSGIVING</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>TRANSPORTATION</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>DORYUMU SCH PROJECT</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                  
-                    <tr>
-                        <td>TOTAL</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><strong>GRAND TOTAL</strong> </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tbody id="tableBody">
+                    <!-- Data will be dynamically loaded here -->
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<div class="buttons">
-    <div class="tooltip">
-      <button id="cal-cutoff" class="btn save-btn" type="submit">Calculate</button>
-      <span class="tooltiptext">Save</span>
+    
+
+<div class="container mt-5">
+    <h2 class="records-header" style="background-color:#07836c;">DISTRICT FUNDS</h2>
+        <div class="table-responsive">
+            <!-- Spinner -->
+            <div id="spinner2" class="spinner2" style="display: none;">
+                <i class="fa fa-spinner fa-spin"></i> Loading...
+            </div>
+        <div class="table-wrapper">
+            <table id="dataTable2" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>C.B.F</th>
+                        <th>Loose Offering</th>
+                        <th>Thanks Giving</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody2">
+                    <!-- Data will be dynamically loaded here -->
+                </tbody>
+            </table>
+        </div>
     </div>
-<br><br><br><br><br><br>
+</div>
+
+    <br>
+    <div id="grandTotal" style="font-size: 50px; text-align: center; color: rgb(21, 35, 47);" ></div>
+    <br><br><br><br>
+    
+</div>
 
     <footer class="footer">
         <p>&copy; 2025 Phlashly Inc©. All rights reserved.</p>
         <p>Contact us: <a href="mailto:franklinboachie@gmail.com">franklinboachie@gmail.com</a> | Phone: +233-540-896194</p>
       </footer>
-
     <script src="./assest/scripts/script.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbyuWNfL4LByPRBo9pGUk_27DHAF-xiX8yR0ubIcbpa_yqQdTdICNvUo2iqlvTml1rXg/exec';
+
+            // Show spinner
+            $('#spinner2').show();
+
+            fetch(webAppUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('tableBody');
+                    data.forEach(row => {
+                        let tr = document.createElement('tr');
+                        // Format the date
+                        const date = new Date(row['timestamp']);
+                        const formattedDate = date.toLocaleDateString('en-US', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric'
+                        }).replace(',', ', ');
+                        
+                        tr.innerHTML = `
+                            <td>${formattedDate}</td>
+                            <td>${row['TITHE']}</td>
+                            <td>${row['C.B.F']}</td>
+                            <td>${row['LOOSE-OFFERING']}</td>
+                            <td>${row['THANKSGIVING']}</td>
+                            <td>${row['TOTAL']}</td>    
+                        `;
+                        tableBody.appendChild(tr);
+                    });
+                    $('#dataTable').DataTable({
+                        searching: false, // Disable the search functionality
+                        lengthChange: false, // Remove the "Show entries" dropdown
+                        paging: false, // Disable pagination
+                        info: false // Remove the "Showing X of Y entries" text
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error))
+                .finally(() => {
+                    // Hide spinner
+                    $('#spinner2').hide();
+                });
+        });
+
+
+// Second Table (That is the District Funds)
+
+        $(document).ready(function() {
+            const webAppUrl2 = 'https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec';
+
+            // Show spinner
+            $('#spinner2').show();
+
+            fetch(webAppUrl2)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('tableBody2');
+                    data.forEach(row => {
+                        let tr = document.createElement('tr');
+                        // Format the date
+                        const date = new Date(row['timestamp']);
+                        const formattedDate = date.toLocaleDateString('en-US', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric'
+                        }).replace(',', ', ');
+                        
+                        tr.innerHTML = `
+                            <td>${formattedDate}</td>
+                            <td>${row['C.B.F']}</td>
+                            <td>${row['LOOSE-OFFERING']}</td>
+                            <td>${row['THANKSGIVING']}</td>
+                            <td>${row['TOTAL']}</td>    
+                        `;
+                        tableBody.appendChild(tr);
+                    });
+                    $('#dataTable2').DataTable({
+                        searching: false, // Disable the search functionality
+                        lengthChange: false, // Remove the "Show entries" dropdown
+                        paging: false, // Disable pagination
+                        info: false // Remove the "Showing X of Y entries" text
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error))
+                .finally(() => {
+                    // Hide spinner
+                    $('#spinner2').hide();
+                });
+        });
+
+    </script>
 </body>
 </html>

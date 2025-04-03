@@ -592,41 +592,46 @@ th {
 
 
 
-/* Style for input type date */
-input[type="date"] {
-  appearance: none; /* Remove default browser styling */
-  -webkit-appearance: none; /* Remove default styling for Safari */
-  -moz-appearance: none; /* Remove default styling for Firefox */
-  background-color: #f8f9fa; /* Light background color */
-  border: 1px solid #ccc; /* Light border */
-  border-radius: 4px; /* Rounded corners */
-  padding: 5px; /* Add padding for better spacing */
-  font-size: 14px; /* Adjust font size */
-  color: #333; /* Text color */
-  width: 75%; /* Full width */
-  max-width: 200px; /* Optional: Set a maximum width */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover/focus */
-  font-family: Arial, Helvetica, sans-serif;
-}
-/* Add hover effect */
-input[type="date"]:hover {
-  border-color: #0b12eb; /* Change border color on hover */
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2); /* Add a subtle blue shadow */
-}
-/* Add focus effect */
-input[type="date"]:focus {
-  border-color: #007bff; /* Change border color on focus */
-  outline: none; /* Remove default outline */
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Add a stronger blue shadow */
-}
-/* Style for disabled date inputs */
-input[type="date"]:disabled {
-  background-color: #e9ecef; /* Light gray background */
-  color: #6c757d; /* Gray text color */
-  cursor: not-allowed; /* Show not-allowed cursor */
+/* Container for the date filter */
+.date-filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* margin-bottom: 20px; */
+  margin: auto;
+  gap: 10px;
 }
 
+/* Labels for the date inputs */
+.date-label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Styling for the date inputs */
+.date-input {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Styling for the filter button */
+#filterBtn {
+  padding: 5px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#filterBtn:hover {
+  background-color: #0056b3;
+}
 
 
 /* This is the styling for the Income and Expenditure Record Table*/
