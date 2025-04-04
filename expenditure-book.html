@@ -146,7 +146,7 @@ rows.forEach((row) => {
 if (invalidParticulars.length > 0) {
   Swal.fire({
     title: "Invalid Particulars",
-    text: `Check this Particular: ${invalidParticulars.join(", ")}`,
+    text: `Check this Particular(s): ${invalidParticulars.join(", ")}`,
     icon: "error"
   });
   return; // Stop further execution
