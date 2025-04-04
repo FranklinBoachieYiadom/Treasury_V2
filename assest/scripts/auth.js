@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
  checkAuth();
+ 
 
-let UserInfo=JSON.parse(sessionStorage.getItem("user-info"));
+let UserInfo=JSON.parse(sessionStorage.getItem("user-info"));  // Get the user info from session storage
 const GreetHead=document.getElementById('msg-body');
 const Role =document.getElementById("admin-section")
 
