@@ -128,6 +128,38 @@
     const form = document.forms["incomeTableForm"];
     form.addEventListener("submit", (e) => {
       e.preventDefault();
+
+//**********************************************************************
+//Checking if the particulars entered by the user exist in the datalist first before saving
+        // Get all valid datalist options
+const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
+
+// Validate user inputs
+const rows = document.querySelectorAll("#amountTable tbody tr");
+let invalidParticulars = [];
+
+rows.forEach((row) => {
+  const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
+  const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
+
+  if (particulars && !datalistOptions.includes(particulars)) {
+    invalidParticulars.push(particulars); // Add invalid value to the list
+  }
+});
+
+// If there are invalid particulars, show an alert and stop the form submission
+if (invalidParticulars.length > 0) {
+  Swal.fire({
+    title: "Invalid Particulars",
+    text: `Check this Particular: ${invalidParticulars.join(", ")}`,
+    icon: "error"
+  });
+  return; // Stop further execution
+}
+
+//**********************************************************************
+
+// Proceed with saving if all particulars are valid
       var formData = new FormData(form);
 
        // Get user info from session storage and append to the form to be sent
@@ -186,8 +218,8 @@
     conferenceData.append("USER", UserInfo.fname);
   }
 
-  const rows = document.querySelectorAll("#amountTable tbody tr");
-  rows.forEach((row) => {
+  const conferencerows = document.querySelectorAll("#amountTable tbody tr");
+  conferencerows.forEach((row) => {
   const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
   const amountInput = row.cells[2].querySelector("input"); // Get the input element in the Amount cell
 
