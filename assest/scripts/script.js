@@ -98,12 +98,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (result.isConfirmed) {
           sessionStorage.removeItem("user-creds");
           sessionStorage.removeItem("user-info");
+          localStorage.removeItem("amountTableData");
           window.location.href = 'index.html';
         }
       });
     });
   }
-
 
   
 //Here is the function for the cut-off table

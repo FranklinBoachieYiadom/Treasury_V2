@@ -60,7 +60,7 @@
             </thead>
             <tbody>
               
-               <!-- Data will be dynamically loaded here -->
+          
             </tbody>
           </table>
         </div>
@@ -76,11 +76,10 @@
           <button id="calculateBtn" class="btn calculate-btn">Total</button>
           <span class="tooltiptext">Calculate Total</span>
         </div>
-        <!-- This button is hidden to the user, but has some functionality -->
-        <div class="tooltip" style="display: none;">
+        <!-- <div class="tooltip">
           <button id="fullBtn" class="btn full-btn" type="submit">Full View</button>
           <span class="tooltiptext">Full View</span>
-        </div>
+        </div> -->
         <div class="tooltip">
             <button id="addRowBtn" class="btn add-btn">
               <i class="fa-solid fa-plus fa-beat"></i>
@@ -132,31 +131,19 @@
 
 //**********************************************************************
 //Checking if the particulars entered by the user exist in the datalist first before saving
- // Get all valid datalist options
- const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
+        // Get all valid datalist options
+const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
 
 // Validate user inputs
 const rows = document.querySelectorAll("#amountTable tbody tr");
 let invalidParticulars = [];
-let particularsSet = new Set(); // To track duplicates
-let duplicateParticulars = [];
 
 rows.forEach((row) => {
   const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
   const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
 
-  // Check if the particulars are valid
   if (particulars && !datalistOptions.includes(particulars)) {
     invalidParticulars.push(particulars); // Add invalid value to the list
-  }
-
-  // Check for duplicates
-  if (particulars) {
-    if (particularsSet.has(particulars)) {
-      duplicateParticulars.push(particulars); // Add duplicate value to the list
-    } else {
-      particularsSet.add(particulars); // Add to the set
-    }
   }
 });
 
@@ -170,129 +157,166 @@ if (invalidParticulars.length > 0) {
   return; // Stop further execution
 }
 
-// If there are duplicate particulars, show an alert and stop the form submission
-if (duplicateParticulars.length > 0) {
-  Swal.fire({
-    title: "Duplicate Particulars",
-    text: `The following Particular(s) appear more than once: ${duplicateParticulars.join(", ")}`,
-    icon: "error"
-  });
-  return; // Stop further execution
-}// End of checking for invalid and duplicate particulars
-
 //**********************************************************************
 
 // Proceed with saving if all particulars are valid
-const formData = new FormData(form);
-  let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));
-  if (UserInfo && UserInfo.fname) {
-    formData.append("USER", UserInfo.fname);
-  }
+      const formData = new FormData(form);
 
-  let totalIncome = 0;
-  const amountInputs = document.querySelectorAll("#amountTable tbody tr td:nth-child(3) input");
-  amountInputs.forEach(input => {
-    const value = parseFloat(input.value) || 0;
-    totalIncome += value;
-  });
+       // Get user info from session storage and append to the form to be sent
+      let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));
+      if (UserInfo && UserInfo.fname) {
+          formData.append("USER", UserInfo.fname);
+      }
 
-  if (totalIncome === 0) {
-    Swal.fire({
-      title: "Error",
-      text: "Total income cannot be 0. Please enter valid amounts.",
-      icon: "error"
-    });
-    return;
-  }
+       // Calculate all the incomes provided by the user
+       let totalIncome = 0;
+      const amountInputs = document.querySelectorAll("#amountTable tbody tr td:nth-child(3) input");
+      amountInputs.forEach(input => {
+          const value = parseFloat(input.value) || 0; // Default to 0 if the input is empty or invalid
+          totalIncome += value;
+      });
 
-  formData.append("TOTAL", totalIncome);
+      // Check if total income to be sent is 0
+      if (totalIncome === 0) {
+        Swal.fire({
+          title: "Error",
+          text: "Total income cannot be 0. Please enter valid amounts.",
+          icon: "error"
+        });
+        return; // Stop further execution
+      } 
+      // Append the total income to the form data
+      formData.append("TOTAL", totalIncome);
 
-  // Prepare Conference and District Data
-  const conferenceData = new FormData();
-  const districtData = new FormData();
+      // Show spinner
+      spinner.style.display = 'block';
+  
+      fetch(totalIncomeScriptURL, { method: "POST", body: formData })
+        .then((response) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Done", text: "Incomes Saved Successfully.", icon: "success"
+          });
+        })
+        .catch((error) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Error", text: "Could not save Incomes. please try again!", icon: "error"
+          });
+        }); 
+
+
+
+ // Calculate Conference Fund Values and send to conference sheet
+ const conferenceData = new FormData();
   let conferenceTotal = 0;
-  let districtTotal = 0;
+
+  // Get user info from session storage declared above and append to the form to be sent
+  if (UserInfo && UserInfo.fname) {
+    conferenceData.append("USER", UserInfo.fname);
+  }
 
   const conferencerows = document.querySelectorAll("#amountTable tbody tr");
   conferencerows.forEach((row) => {
-    const particularsInput = row.cells[1].querySelector("input");
-    const amountInput = row.cells[2].querySelector("input");
-    const particulars = particularsInput ? particularsInput.value.trim() : "";
-    const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0;
+  const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
+  const amountInput = row.cells[2].querySelector("input"); // Get the input element in the Amount cell
 
-    if (particulars === "Tithe") {
-      conferenceData.append("TITHE", amount);
-      conferenceTotal += amount;
-    } else if (particulars === "C.B.F") {
-      const cbfAmount = amount * 0.4;
-      conferenceData.append("C.B.F", cbfAmount);
-      conferenceTotal += cbfAmount;
+  const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
+  const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0; // Get the value of the Amount input
 
-      const districtCBFAmount = amount * 0.1;
-      districtData.append("C.B.F", districtCBFAmount);
-      districtTotal += districtCBFAmount;
-    } else if (particulars === "Loose Offering") {
-      const looseOfferingAmount = amount * 0.4;
-      conferenceData.append("LOOSE-OFFERING", looseOfferingAmount);
-      conferenceTotal += looseOfferingAmount;
+  if (particulars === "Tithe") {
+    conferenceData.append("TITHE", amount); // 100%
+    conferenceTotal += amount;
+  } else if (particulars === "C.B.F") {
+    const cbfAmount = amount * 0.4; // 40%
+    conferenceData.append("C.B.F", cbfAmount);
+    conferenceTotal += cbfAmount;
+  } else if (particulars === "Loose Offering") {
+    const looseOfferingAmount = amount * 0.4; // 40%
+    conferenceData.append("LOOSE-OFFERING", looseOfferingAmount);
+    conferenceTotal += looseOfferingAmount;
+  } else if (particulars === "Thanksgiving") {
+    const thanksgivingAmount = amount * 0.4; // 40%
+    conferenceData.append("THANKSGIVING", thanksgivingAmount);
+    conferenceTotal += thanksgivingAmount;
+  }
+});
+  // Append the total of the tithe,CBF,loose Offering and Thanksgiving to the conference data
+  conferenceData.append("TOTAL", conferenceTotal);
 
-      const districtLooseOfferingAmount = amount * 0.1;
-      districtData.append("LOOSE-OFFERING", districtLooseOfferingAmount);
-      districtTotal += districtLooseOfferingAmount;
-    } else if (particulars === "Thanksgiving") {
-      const thanksgivingAmount = amount * 0.4;
-      conferenceData.append("THANKSGIVING", thanksgivingAmount);
-      conferenceTotal += thanksgivingAmount;
+  // Save Conference Fund Records
+  fetch(conferenceScriptURL, { method: "POST", body: conferenceData })
+  .then((response) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Done", text: "Conference Funds Saved Successfully.", icon: "success"
+          });
+        })
+        .catch((error) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Error", text: "Could not saveConference Funds. please try again!", icon: "error"
+          });
+        }); 
 
-      const districtThanksgivingAmount = amount * 0.1;
-      districtData.append("THANKSGIVING", districtThanksgivingAmount);
-      districtTotal += districtThanksgivingAmount;
-    }
-  });
-  // Append user info to conference and district data
+
+
+ // Calculate District Fund Values and send to districtsheet
+ const districtData = new FormData();
+  let districtTotal = 0;
+
+  // Get user info from session storage declared above and append to the form to be sent
   if (UserInfo && UserInfo.fname) {
-    conferenceData.append("USER", UserInfo.fname);
     districtData.append("USER", UserInfo.fname);
   }
-  // Append totals to conference and district data
-  conferenceData.append("TOTAL", conferenceTotal);
+
+  const districtrows = document.querySelectorAll("#amountTable tbody tr");
+  districtrows.forEach((row) => {
+  const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
+  const amountInput = row.cells[2].querySelector("input"); // Get the input element in the Amount cell
+
+  const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
+  const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0; // Get the value of the Amount input
+
+  if (particulars === "C.B.F") {
+    const cbfAmount = amount * 0.1; // 10%
+    districtData.append("C.B.F", cbfAmount);
+    districtTotal += cbfAmount;
+  } else if (particulars === "Loose Offering") {
+    const looseOfferingAmount = amount * 0.1; // 10%
+    districtData.append("LOOSE-OFFERING", looseOfferingAmount);
+    districtTotal += looseOfferingAmount;
+  } else if (particulars === "Thanksgiving") {
+    const thanksgivingAmount = amount * 0.1; // 10%
+    districtData.append("THANKSGIVING", thanksgivingAmount);
+    districtTotal += thanksgivingAmount;
+  }
+});
+  // Append the total of the CBF,loose Offering and Thanksgiving to the District data
   districtData.append("TOTAL", districtTotal);
 
-  // Show spinner
-  spinner.style.display = 'block';
-
-  // Save all data and redirect after success
-  Promise.all([
-    fetch(totalIncomeScriptURL, { method: "POST", body: formData }),
-    fetch(conferenceScriptURL, { method: "POST", body: conferenceData }),
-    fetch(districtScriptURL, { method: "POST", body: districtData })
-  ])
-    .then((responses) => {
-      // Check if all responses are successful
-      if (responses.every(response => response.ok)) {
+  // Save District Fund Records
+  fetch(districtScriptURL, { method: "POST", body: districtData })
+  .then((response) => {
+          // Hide spinner
+        spinner.style.display = 'none';
         Swal.fire({
-          title: "Done",
-          text: "All records saved successfully!",
-          icon: "success"
-        }).then(() => {
-          // Trigger the Full View button click
-          document.getElementById('fullBtn').click();
-        });
-      } else {
-        throw new Error("One or more requests failed.");
-      }
-    })
-    .catch((error) => {
-      Swal.fire({
-        title: "Error",
-        text: "Could not save all records. Please try again!",
-        icon: "error"
-      });
-    })
-    .finally(() => {
-      // Hide spinner
-      spinner.style.display = 'none';
-    });
+          title: "Done", text: "District Funds Saved Successfully.", icon: "success"
+          });
+        })
+        .catch((error) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Error", text: "Could not save District Funds. please try again!", icon: "error"
+          });
+        }); 
+
+   
 });
   </script>
   </body>

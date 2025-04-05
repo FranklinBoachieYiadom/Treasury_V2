@@ -59,7 +59,7 @@
               </tr>
             </thead>
             <tbody>
-              
+               <!-- Data will be dynamically loaded here -->
           
             </tbody>
           </table>
@@ -126,19 +126,31 @@
 
 //**********************************************************************
 //Checking if the particulars entered by the user exist in the datalist first before saving
-        // Get all valid datalist options
-        const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
+ // Get all valid datalist options
+ const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
 
 // Validate user inputs
 const rows = document.querySelectorAll("#amountTable tbody tr");
 let invalidParticulars = [];
+let particularsSet = new Set(); // To track duplicates
+let duplicateParticulars = [];
 
 rows.forEach((row) => {
   const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
   const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
 
+  // Check if the particulars are valid
   if (particulars && !datalistOptions.includes(particulars)) {
     invalidParticulars.push(particulars); // Add invalid value to the list
+  }
+
+  // Check for duplicates
+  if (particulars) {
+    if (particularsSet.has(particulars)) {
+      duplicateParticulars.push(particulars); // Add duplicate value to the list
+    } else {
+      particularsSet.add(particulars); // Add to the set
+    }
   }
 });
 
@@ -152,6 +164,15 @@ if (invalidParticulars.length > 0) {
   return; // Stop further execution
 }
 
+// If there are duplicate particulars, show an alert and stop the form submission
+if (duplicateParticulars.length > 0) {
+  Swal.fire({
+    title: "Duplicate Particulars",
+    text: `The following Particular(s) appear more than once: ${duplicateParticulars.join(", ")}`,
+    icon: "error"
+  });
+  return; // Stop further execution
+}// End of checking for invalid and duplicate particulars
 //**********************************************************************
 
 
