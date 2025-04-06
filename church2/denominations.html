@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ash.North SDA Church Treasury</title>
+    <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
+    <link rel="stylesheet" href="./assest/styles/styles.css" />
+    <script src="https://kit.fontawesome.com/8ebf6fd839.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./assest/scripts/auth.js"></script> 
+  </head>
+  <body>
+
+    <nav>
+        <input type="checkbox" id="check" />
+        <label for="check" class="checkbtn">
+          <i class="fas fa-bars"></i>
+        </label>
+        <a href="landing-page.html" class="logo3">Ash.North Treasury Dept.
+        <img class="sda_logo" src="./assest/images/sda_logo.png" alt="logo"></a>
+        <ul>
+          <li class="dropdown">
+            <a> <i class="fa-solid fa-bars"></i> Menu</a>
+            <div class="dropdown-content">
+              <a class="active" href="income-book.html">Income-Book</a>
+              <a href="full-view.html">Full View</a>
+              <a href="expenditure-book.html">Expenditure-Book</a>
+              <a href="cutoff.html">Cut-Off Sheet</a>
+              <a href="denominations.html">Denominations</a>
+              
+            </div>
+          </li>
+          <li class="dropdown">
+            <a> <i class="fa-solid fa-folder-minus"></i> Saved Records</a>
+            <div class="dropdown-content">
+              <a href="income-records.html">Income-Records</a>
+              <a href="expenditure-records.html">Expenses-Records</a>
+              <a href="conference-records.html">Conference-Records</a>
+              <a href="district-records.html">District-Records</a>
+            </div>
+          </li>
+          <li><a id="log-out"> <i class="fa-solid fa-right-from-bracket"></i> Log Out</a></li>
+        </ul>
+      </nav>
+
+   <br><br><br><br><br>
+    <div class="container">
+      <h1 class="records-header" style="background-color:#007bff;">Denominations Calculator</h1>
+      <div class="scrollable-container">
+        <div class="table-container">
+          <table id="denominations">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Quantity</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3"><b> PAPER NOTES</b></td>
+                </tr>
+                <tr >
+                    <td style="width: 40%;">GH₵200.00</td>
+                    <td style="width: 20%;" ><input type="number" id="twoHundred" class="amount-input"></td>
+                    <td  id="answer1"></td>
+                </tr><tr>
+                    <td>GH₵100.00</td>
+                    <td><input type="number" id="oneHundred" class="amount-input"></td>
+                    <td id="answer2"></td>
+                </tr>
+                <tr>
+                    <td>GH₵50.00</td>
+                    <td><input type="number" id="fifty" class="amount-input"></td>
+                    <td id="answer3"></td>
+                </tr>
+                <tr>
+                    <td>GH₵20.00</td>
+                    <td><input type="number" id="twenty" class="amount-input"></td>
+                    <td id="answer4"></td>
+                </tr>
+                <tr>
+                    <td>GH₵10.00</td>
+                    <td><input type="number" id="ten" class="amount-input"></td>
+                    <td id="answer5"></td>
+                </tr>
+                <tr>
+                    <td>GH₵5.00</td>
+                    <td><input type="number" id="five" class="amount-input"></td>
+                    <td id="answer6"></td>
+                </tr>
+                <tr>
+                    <td>GH₵2.00</td>
+                    <td><input type="number" id="two" class="amount-input"></td>
+                    <td id="answer7"></td>
+                </tr>
+                <tr>
+                    <td>GH₵1.00</td>
+                    <td><input type="number" id="one" class="amount-input"></td>
+                    <td id="answer8"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b> COINS</b></td>
+                </tr>
+                <tr>
+                    <td>GH₵2.00</td>
+                    <td><input type="number" id="twoP" class="amount-input"></td>
+                    <td id="answer9"></td>
+                </tr>
+                <tr>
+                    <td>GH₵1.00</td>
+                    <td><input type="number" id="oneP" class="amount-input"></td>
+                    <td id="answer10"></td>
+                </tr>
+                <tr>
+                    <td>GH₵0.50</td>
+                    <td><input type="number" id="fiftyP" class="amount-input"></td>
+                    <td id="answer11"></td>
+                </tr>
+                <tr>
+                    <td>GH₵0.20</td>
+                    <td><input type="number" id="twentyP" class="amount-input"></td>
+                    <td id="answer12"></td>
+                </tr>
+                <tr>
+                    <td on>GH₵0.10</td>
+                    <td><input type="number" id="tenP" class="amount-input"></td>
+                    <td id="answer13"></td>
+                </tr>
+                <!-- <tr>
+                    <td><b>Total</b></td>
+                    <td colspan="2" id="grandTot"></td>
+                </tr> -->
+              
+          
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <div class="tooltip">
+            
+          <button id="calDenom" class="btn save-btn" >Calculate</button>
+          <span class="tooltiptext">Calculate</span>
+        </div> 
+    </div>
+    <div id="grandTot" class="total-amount"></div>
+</div>
+
+    <br><br><br><br><br>
+
+
+    <footer class="footer">
+      <p>&copy; 2025 Phlashly Inc©. All rights reserved.</p>
+      <p>Contact us: <a href="mailto:franklinboachie@gmail.com">franklinboachie@gmail.com</a> | Phone: +233-540-896194</p>
+    </footer>
+  
+    <script src="./assest/scripts/script.js"></script>
+
+   
+  </body>
+</html>

@@ -79,7 +79,8 @@
             sessionStorage.setItem("user-info",JSON.stringify({
               fname: docSnap.data().fname,
               surname: docSnap.data().surname,
-              role: docSnap.data().role
+              role: docSnap.data().role,
+              church: docSnap.data().church
             }))
             sessionStorage.setItem("user-creds", JSON.stringify(userCredential.user));
 
@@ -93,10 +94,27 @@
               showConfirmButton: false,
               timer: 1500
             });
+
+            // Get the user info from session storage
+            let UserInfo=JSON.parse(sessionStorage.getItem("user-info"));  
+          
             // Wait for 10 seconds before redirecting
             setTimeout(() => {
-              var targetPageUrl = "landing-page.html";
-              window.location.href = targetPageUrl;
+              if(UserInfo.church === "AshNorth"){
+                window.location.href = "church1/landing-page.html";
+              }
+              else if(UserInfo.church === "Church2"){
+                window.location.href = "church2/landing-page.html";
+              }
+              // else if(UserInfo.church === "AshWest"){
+              //   window.location.href = "landing-page.html";
+              // }
+              // else if(UserInfo.church === "AshEast"){
+              //   window.location.href = "landing-page.html";
+              // }
+
+
+              // window.location.href = "landing-page.html";
             }, 1500); // 10000 milliseconds = 10 seconds
        }
         
@@ -118,6 +136,8 @@
       });
   })
 
+
+  // Reset password
   const reset= document.getElementById("reset");
   reset.addEventListener("click", function(event){
   event.preventDefault()
@@ -139,13 +159,12 @@
       let errorCode = error.code;
       let errorMessage = error.message;
       if (errorMessage.includes("Firebase:")) {
-                    errorMessage = errorMessage.replace("Firebase:", "").trim();
-                }
-      // ..
+        errorMessage = errorMessage.replace("Firebase:", "").trim();
+      }
       Swal.fire({
-            text: errorMessage,    
-            icon: "error"
-          });  
+        text: errorMessage,    
+        icon: "error"
+      });  
     });
   })
     </script>

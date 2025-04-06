@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    <br><br><br><br>
     <div class="form-container">
         <form class="form" id="signupForm">
             <img class="logo" src="./assest/images/logo.png" alt="logo">
@@ -21,6 +22,21 @@
             <div class="form-group">
                 <label for="signupSurname">Surname</label>
                 <input type="text" id="surname" name="surname" required>
+            </div>
+            <div class="form-group">
+                <label for="church">Church</label>
+                <select id="church" name="church" required>
+                    <option value="" disabled selected>Select your Church</option>
+                    <option value="AshNorth">Ashaiman North</option>
+                    <option value="Church2">Church2</option>
+                    <option value="Church3">Church3</option>
+                    <option value="Church4">Church4</option>
+                    <option value="Church5">Church5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="key">Church Key</label>
+                <input type="text" id="key" name="key" required>
             </div>
             <div class="form-group">
                 <label for="signupEmail">Email</label>
@@ -42,7 +58,7 @@
           </div>
     </div>
 
-    <br><br>
+    <br><br><br><br>
 
     <footer class="footer">
         <p>&copy; 2025 Phlashly Inc©. All rights reserved.</p>
@@ -77,9 +93,53 @@
 
         let name=document.getElementById("name").value;
         let surname=document.getElementById("surname").value;
+        let church=document.getElementById("church").value;
+        let key=document.getElementById("key").value;
         let email=document.getElementById("signupEmail").value;
         let password=document.getElementById("signupPassword").value;
         let confirmPassword = document.getElementById("signupPasswordConfirm").value;
+       
+        // Define church keys
+        const churchKeys = {
+            AshNorth: "KEY123",
+            Church2: "KEY456",
+            Church3: "KEY789",
+            Church4: "KEY101",
+            Church5: "KEY112",
+        };
+        
+        // Validate church selection
+        if (church === "") {
+            // Hide spinner
+            spinner.style.display = 'none';
+            Swal.fire({
+                text: "Please select a church.",
+                icon: "error"
+            });
+            return; // Stop further execution
+        }
+
+         // Validate church key
+        if (churchKeys[church] !== key) {
+            // Hide spinner
+            spinner.style.display = "none";
+            Swal.fire({
+            text: "Invalid church key. Please enter the correct key for the selected church.",
+            icon: "error",
+            });
+            return; // Stop further execution
+        }
+
+        // Validate name and surname
+        if (name === "" || surname === "") {
+            // Hide spinner
+            spinner.style.display = 'none';
+            Swal.fire({
+                text: "Please fill in all fields.",
+                icon: "error"
+            });
+            return; // Stop further execution
+        }
 
          // Check if passwords match
          if (password !== confirmPassword) {
@@ -99,7 +159,8 @@
             await setDoc(ref,{
                 fname:name,
                 surname:surname,
-                role:"member"
+                role:"member",
+                church:church
             })
             // Hide spinner
         spinner.style.display = 'none';
