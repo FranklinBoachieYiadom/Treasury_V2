@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const checkAuth = () => { 
       if (!sessionStorage.getItem("user-creds")) {
-        window.location.href = "./index.html";
+        window.location.href = "../index.html";
       }
     };
 
