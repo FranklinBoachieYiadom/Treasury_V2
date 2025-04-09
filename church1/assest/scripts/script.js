@@ -35,8 +35,30 @@ document.addEventListener('DOMContentLoaded', () => {
         amountInput.id = particularsInput.value.replace(/\s+/g, '-').toLowerCase();
         amountInput.name = particularsInput.value.replace(/\s+/g, '-').toUpperCase();
       });
+
+      // Add event listener to calculate total when the amount input changes
+      amountInput.addEventListener('input', calculateTotal);
     });
   }
+
+   // Add event listeners to existing amount input fields
+   const amountInputs = document.querySelectorAll('.amount-input');
+   amountInputs.forEach(input => {
+     input.addEventListener('input', calculateTotal);
+   });
+ 
+   // Function to calculate the total
+   function calculateTotal() {
+     let total = 0;
+     const rows = document.getElementById('amountTable').getElementsByTagName('tr');
+     for (let i = 0; i < rows.length; i++) {
+       const amountInput = rows[i].querySelector('.amount-input');
+       if (amountInput && amountInput.value) {
+         total += parseFloat(amountInput.value);
+       }
+     }
+     document.getElementById('totalAmount').textContent = `Total Amount: GH₵${total.toFixed(2)}`;
+   }
 
   // Remove Row button
   const removeRowBtn = document.getElementById('removeRowBtn');
@@ -49,6 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+
+
+
+
+
 
   // Calculate button
   const calculateBtn = document.getElementById('calculateBtn');
@@ -66,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Full view button
+  // Full view button (Its hidden on the screen)
   const fullBtn = document.getElementById('fullBtn');
   if (fullBtn) {
     fullBtn.addEventListener('click', () => {
@@ -167,7 +195,6 @@ if (filterBtn){
     }
 });
 }
-
 
 
 //Here is the function calculation of the Denominations

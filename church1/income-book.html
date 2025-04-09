@@ -138,6 +138,7 @@
 // Validate user inputs
 const rows = document.querySelectorAll("#amountTable tbody tr");
 let invalidParticulars = [];
+let emptyParticulars = [];
 let particularsSet = new Set(); // To track duplicates
 let duplicateParticulars = [];
 
@@ -145,20 +146,34 @@ rows.forEach((row) => {
   const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
   const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
 
+   // Check if the particulars are empty
+   if (!particulars) {
+      emptyParticulars.push(`Row ${row.rowIndex}`); // Add the row number with empty particulars
+      return; // Skip further checks for this row
+    }
+
   // Check if the particulars are valid
-  if (particulars && !datalistOptions.includes(particulars)) {
+  if (!datalistOptions.includes(particulars)) {
     invalidParticulars.push(particulars); // Add invalid value to the list
   }
 
-  // Check for duplicates
-  if (particulars) {
-    if (particularsSet.has(particulars)) {
+  // Check for duplicates  
+  if (particularsSet.has(particulars)) {
       duplicateParticulars.push(particulars); // Add duplicate value to the list
     } else {
       particularsSet.add(particulars); // Add to the set
-    }
   }
 });
+
+ // If there are empty particulars, show an alert and stop the form submission
+ if (emptyParticulars.length > 0) {
+    Swal.fire({
+      title: "Empty Particulars",
+      text: `The following rows have empty particulars: ${emptyParticulars.join(", ")}`,
+      icon: "error"
+    });
+    return; // Stop further execution
+  }
 
 // If there are invalid particulars, show an alert and stop the form submission
 if (invalidParticulars.length > 0) {
@@ -178,7 +193,7 @@ if (duplicateParticulars.length > 0) {
     icon: "error"
   });
   return; // Stop further execution
-}// End of checking for invalid and duplicate particulars
+}
 
 //**********************************************************************
 
