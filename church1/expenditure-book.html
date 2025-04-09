@@ -51,6 +51,11 @@
         <div class="table-container">
           <form id="incomeTableForm">
           <table id="amountTable">
+            <div class="date-filter-container">
+              <label for="fromDate" class="date-label">Date:</label>
+              <input type="date" id="incomeDate" class="date-input">
+            </div>
+            <br>
             <thead>
               <tr>
                 <th>#</th>
@@ -129,6 +134,19 @@
  // Get all valid datalist options
  const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
 
+ // Retrieve the date value
+ const dateValue = document.getElementById("incomeDate").value;
+
+ // Validate the date
+ if (!dateValue) {
+    Swal.fire({
+      title: "Error",
+      text: "Please select a date before saving.",
+      icon: "error",
+    });
+    return; // Stop further execution
+  }
+
 // Validate user inputs
 const rows = document.querySelectorAll("#amountTable tbody tr");
 let invalidParticulars = [];
@@ -198,6 +216,9 @@ if (duplicateParticulars.length > 0) {
       if (UserInfo && UserInfo.fname) {
           formData.append("USER", UserInfo.fname);
       }
+
+       // Append the date to the form data
+      formData.append("DATE", dateValue);
 
        // Calculate all the expenditures provided by the user
        let totalExpenditure = 0;

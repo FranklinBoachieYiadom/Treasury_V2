@@ -142,7 +142,7 @@
                     data.forEach(row => {
                         let tr = document.createElement('tr');
                         // Format the date
-                        const date = new Date(row['timestamp']);
+                        const date = new Date(row['DATE']);
                         const formattedDate = date.toLocaleDateString('en-US', {
                             day: 'numeric',
                             month: 'short',
@@ -189,7 +189,7 @@
                     data.forEach(row => {
                         let tr = document.createElement('tr');
                         // Format the date
-                        const date = new Date(row['timestamp']);
+                        const date = new Date(row['DATE']);
                         const formattedDate = date.toLocaleDateString('en-US', {
                             day: 'numeric',
                             month: 'short',

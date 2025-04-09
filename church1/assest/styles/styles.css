@@ -48,7 +48,7 @@ nav ul li a{
   font-size: 17px;
   padding: 7px 13px;
   border-radius:3px ;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 nav ul li a:hover {
@@ -614,6 +614,7 @@ th {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Styling for the filter button */

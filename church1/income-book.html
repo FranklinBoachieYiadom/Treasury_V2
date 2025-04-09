@@ -51,6 +51,11 @@
         <div class="table-container">
           <form id="incomeTableForm">
           <table id="amountTable">
+            <div class="date-filter-container">
+              <label for="fromDate" class="date-label">Date:</label>
+              <input type="date" id="incomeDate" class="date-input">
+            </div>
+            <br>
             <thead>
               <tr>
                 <th>#</th>
@@ -135,6 +140,19 @@
  // Get all valid datalist options
  const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
 
+// Retrieve the date value
+const dateValue = document.getElementById("incomeDate").value;
+
+// Validate the date
+if (!dateValue) {
+  Swal.fire({
+    title: "Error",
+    text: "Please select a date before saving.",
+    icon: "error",
+  });
+  return; // Stop further execution
+}
+
 // Validate user inputs
 const rows = document.querySelectorAll("#amountTable tbody tr");
 let invalidParticulars = [];
@@ -204,6 +222,9 @@ const formData = new FormData(form);
     formData.append("USER", UserInfo.fname);
   }
 
+  // Append the date to the form data
+  formData.append("DATE", dateValue);
+
   let totalIncome = 0;
   const amountInputs = document.querySelectorAll("#amountTable tbody tr td:nth-child(3) input");
   amountInputs.forEach(input => {
@@ -264,11 +285,15 @@ const formData = new FormData(form);
       districtTotal += districtThanksgivingAmount;
     }
   });
-  // Append user info to conference and district data
+
+  // Append user info and date to conference and district data
   if (UserInfo && UserInfo.fname) {
     conferenceData.append("USER", UserInfo.fname);
     districtData.append("USER", UserInfo.fname);
   }
+  conferenceData.append("DATE", dateValue);
+  districtData.append("DATE", dateValue);
+
   // Append totals to conference and district data
   conferenceData.append("TOTAL", conferenceTotal);
   districtData.append("TOTAL", districtTotal);

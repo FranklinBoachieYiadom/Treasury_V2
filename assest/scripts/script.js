@@ -168,8 +168,6 @@ if (filterBtn){
 });
 }
 
-
-
 //Here is the function calculation of the Denominations
 const calDenom = document.getElementById('calDenom');
 if (calDenom) {
