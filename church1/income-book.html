@@ -295,8 +295,8 @@ const formData = new FormData(form);
     conferenceData.append("USER", UserInfo.fname);
     districtData.append("USER", UserInfo.fname);
   }
-  conferenceData.append("DATE", dateValue);
-  districtData.append("DATE", dateValue);
+  conferenceData.append("DATE", formattedDate);
+  districtData.append("DATE", formattedDate);
 
   // Append totals to conference and district data
   conferenceData.append("TOTAL", conferenceTotal);
