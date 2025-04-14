@@ -67,7 +67,7 @@
                         <th>Loose Offering</th>
                         <th>Thanks Giving</th>
                         <th>Children Offering</th> 
-                        <th>Total</th>
+                        <th><strong>Total</strong></th>
 
                     </tr>
                 </thead>
@@ -101,19 +101,12 @@
                 .then(data => {
                     const tableBody = document.getElementById('tableBody');
                     data.forEach(row => {
-                        let tr = document.createElement('tr');
-                        // Format the date
-                        const date = new Date(row['DATE']);
-                        const formattedDate = date.toLocaleDateString('en-US', {
-                            day: 'numeric',
-                            month: 'short',
-                            year: 'numeric'
-                        }).replace(',', ', ');
+                        let tr = document.createElement('tr'); 
                         
                         tr.innerHTML = `
                             <td>${row['NUM']}</td>
                             <td>${row['USER']}</td>
-                             <td>${formattedDate}</td>
+                            <td>${row['DATE']}</td>
                             <td>${row['TITHE']}</td>
                             <td>${row['C.B.F']}</td>
                             <td>${row['LOOSE-OFFERING']}</td>

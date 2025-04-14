@@ -147,6 +147,11 @@
     return; // Stop further execution
   }
 
+// Format the date to DD-MMM-YYYY
+const dateObject = new Date(dateValue);
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const formattedDate = `${String(dateObject.getDate()).padStart(2, '0')}-${monthNames[dateObject.getMonth()]}-${dateObject.getFullYear()}`;
+
 // Validate user inputs
 const rows = document.querySelectorAll("#amountTable tbody tr");
 let invalidParticulars = [];
@@ -217,8 +222,8 @@ if (duplicateParticulars.length > 0) {
           formData.append("USER", UserInfo.fname);
       }
 
-       // Append the date to the form data
-      formData.append("DATE", dateValue);
+       // Append the formated date to the form data
+      formData.append("DATE", formattedDate);
 
        // Calculate all the expenditures provided by the user
        let totalExpenditure = 0;

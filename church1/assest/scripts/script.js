@@ -72,12 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-
-
-
-
-
-
   // Calculate button
   const calculateBtn = document.getElementById('calculateBtn');
   if (calculateBtn) {
@@ -198,35 +192,43 @@ if (filterBtn){
 
 
 //Here is the function calculation of the Denominations
-const calDenom = document.getElementById('calDenom');
-if (calDenom) {
-  calDenom.addEventListener('click', () => {
-var totalCalculation=[];
- function innerHeight(id1,amount,id2){
-        var inputs= document.getElementById(id1).value;
-        var calculate=  amount * inputs
-        if(inputs!==""){
-          document.getElementById(id2).innerText= "GH₵"+calculate.toFixed(2)
-          totalCalculation.push(calculate);
-        }    
-    }
-    innerHeight("twoHundred",200,"answer1")
-    innerHeight("oneHundred",100,"answer2")
-    innerHeight("fifty",50,"answer3")
-    innerHeight("twenty",20,"answer4")
-    innerHeight("ten",10,"answer5")
-    innerHeight("five",5,"answer6")
-    innerHeight("two",2,"answer7")
-    innerHeight("one",1,"answer8")
-    innerHeight("twoP",2,"answer9")
-    innerHeight("oneP",1,"answer10")
-    innerHeight("fiftyP",0.5,"answer11")
-    innerHeight("twentyP",0.2,"answer12")
-    innerHeight("tenP",0.1,"answer13")
+function calculateDenomination(id1, amount, id2) {
+  const input = document.getElementById(id1).value;
+  const calculate = amount * input;
+  if (input !== "") {
+    document.getElementById(id2).innerText = "GH₵" + calculate.toFixed(2);
+    return calculate;
+  }
+  document.getElementById(id2).innerText = ""; // Clear the total if input is empty
+  return 0;
+}
 
-    const grandTotal= totalCalculation.reduce((sum,int)=>sum+int,0);
-    document.getElementById("grandTot").innerText="Total: GH₵"+grandTotal.toFixed(2)
-    totalCalculation=[0]   
-  })
- }
+// Function to calculate the grand total
+function calculateGrandTotal() {
+  const totalCalculation = [];
+  totalCalculation.push(calculateDenomination("twoHundred", 200, "answer1"));
+  totalCalculation.push(calculateDenomination("oneHundred", 100, "answer2"));
+  totalCalculation.push(calculateDenomination("fifty", 50, "answer3"));
+  totalCalculation.push(calculateDenomination("twenty", 20, "answer4"));
+  totalCalculation.push(calculateDenomination("ten", 10, "answer5"));
+  totalCalculation.push(calculateDenomination("five", 5, "answer6"));
+  totalCalculation.push(calculateDenomination("two", 2, "answer7"));
+  totalCalculation.push(calculateDenomination("one", 1, "answer8"));
+  totalCalculation.push(calculateDenomination("twoP", 2, "answer9"));
+  totalCalculation.push(calculateDenomination("oneP", 1, "answer10"));
+  totalCalculation.push(calculateDenomination("fiftyP", 0.5, "answer11"));
+  totalCalculation.push(calculateDenomination("twentyP", 0.2, "answer12"));
+  totalCalculation.push(calculateDenomination("tenP", 0.1, "answer13"));
+
+  const grandTotal = totalCalculation.reduce((sum, value) => sum + value, 0);
+  document.getElementById("grandTot").innerText = "Total: GH₵" + grandTotal.toFixed(2);
+}
+
+// Add event listeners to all input fields in the denominations table
+const denominationInputs = document.querySelectorAll("#denominations input[type='number']");
+denominationInputs.forEach((input) => {
+  input.addEventListener("input", calculateGrandTotal);
+});
+
+
 });
