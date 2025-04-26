@@ -36,6 +36,7 @@
             <div class="dropdown-content">
               <a href="income-records.html">Income-Records</a>
               <a href="expenditure-records.html">Expenses-Records</a>
+              <a href="local-records.html">Local-Records</a>
               <a href="conference-records.html">Conference-Records</a>
               <a href="district-records.html">District-Records</a>
             </div>
@@ -120,6 +121,7 @@
       <option value="Loose Offering"></option>
       <option value="Thanksgiving"></option>
       <option value="Children Offering"></option>
+      <option value="Sabbath School"></option>
 
 <!-- //All new income data would be added here -->
 
@@ -129,7 +131,8 @@
     // For the Save Button (Submit button for the form Income)
     const totalIncomeScriptURL = "https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec";                     
     const conferenceScriptURL ="https://script.google.com/macros/s/AKfycbxCdDlJLrcq3qxlEcOW8oI73OJHXC-E3eOaapWiW4Qj9l6OHY8XO1cSK_oaqOWwx7fu9A/exec";
-    const districtScriptURL="https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec"
+    const districtScriptURL="https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec";
+    const localDataScriptURL="https://script.google.com/macros/s/AKfycbxfRWuHaQ-lEvopSxkHOTXmeeWYAZ4TCx9NvUi3loXYmMjTfxq-D9VMIZY-KFOxDVNUGQ/exec";
 
     const form = document.forms["incomeTableForm"];
     form.addEventListener("submit", (e) => {
@@ -247,11 +250,13 @@ const formData = new FormData(form);
 
   formData.append("TOTAL", totalIncome);
 
-  // Prepare Conference and District Data
+  // Prepare Conference , District Data and Local data
   const conferenceData = new FormData();
   const districtData = new FormData();
+  const localData = new FormData();
   let conferenceTotal = 0;
   let districtTotal = 0;
+  let localTotal = 0;
 
   const conferencerows = document.querySelectorAll("#amountTable tbody tr");
   conferencerows.forEach((row) => {
@@ -271,6 +276,10 @@ const formData = new FormData(form);
       const districtCBFAmount = amount * 0.1;
       districtData.append("C.B.F", districtCBFAmount);
       districtTotal += districtCBFAmount;
+
+      const localCBFAmount = amount * 0.5;
+      localData.append("C.B.F", localCBFAmount);
+      localTotal += localCBFAmount;
     } else if (particulars === "Loose Offering") {
       const looseOfferingAmount = amount * 0.4;
       conferenceData.append("LOOSE-OFFERING", looseOfferingAmount);
@@ -279,6 +288,10 @@ const formData = new FormData(form);
       const districtLooseOfferingAmount = amount * 0.1;
       districtData.append("LOOSE-OFFERING", districtLooseOfferingAmount);
       districtTotal += districtLooseOfferingAmount;
+
+      const localLooseOfferingAmount = amount * 0.5;
+      localData.append("LOOSE-OFFERING", localLooseOfferingAmount);
+      localTotal += localLooseOfferingAmount;
     } else if (particulars === "Thanksgiving") {
       const thanksgivingAmount = amount * 0.4;
       conferenceData.append("THANKSGIVING", thanksgivingAmount);
@@ -287,20 +300,32 @@ const formData = new FormData(form);
       const districtThanksgivingAmount = amount * 0.1;
       districtData.append("THANKSGIVING", districtThanksgivingAmount);
       districtTotal += districtThanksgivingAmount;
+
+      const localThanksgivingAmount = amount * 0.5;
+      localData.append("THANKSGIVING", localThanksgivingAmount);
+      localTotal += localThanksgivingAmount;
+    } else {
+      // Convert particulars to uppercase and replace spaces with "-"
+    const formattedParticulars = particulars.toUpperCase().replace(/\s+/g, "-");
+    localData.append(formattedParticulars, amount);
+    localTotal += amount;
     }
   });
 
-  // Append user info and date to conference and district data
+  // Append user info and date to conference, district, and local data
   if (UserInfo && UserInfo.fname) {
     conferenceData.append("USER", UserInfo.fname);
     districtData.append("USER", UserInfo.fname);
+    localData.append("USER", UserInfo.fname);
   }
   conferenceData.append("DATE", formattedDate);
   districtData.append("DATE", formattedDate);
+  localData.append("DATE", formattedDate);
 
-  // Append totals to conference and district data
+  // Append totals to conference, district and local data
   conferenceData.append("TOTAL", conferenceTotal);
   districtData.append("TOTAL", districtTotal);
+  localData.append("TOTAL", localTotal);
 
   // Show spinner
   spinner.style.display = 'block';
@@ -309,7 +334,8 @@ const formData = new FormData(form);
   Promise.all([
     fetch(totalIncomeScriptURL, { method: "POST", body: formData }),
     fetch(conferenceScriptURL, { method: "POST", body: conferenceData }),
-    fetch(districtScriptURL, { method: "POST", body: districtData })
+    fetch(districtScriptURL, { method: "POST", body: districtData }),
+    fetch(localDataScriptURL, { method: "POST", body: localData })
   ])
     .then((responses) => {
       // Check if all responses are successful

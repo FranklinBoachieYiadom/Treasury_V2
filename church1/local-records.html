@@ -38,9 +38,9 @@
           <li class="dropdown">
             <a> <i class="fa-solid fa-folder-minus"></i> Saved Records</a>
             <div class="dropdown-content">
-              <a class="active" href="income-records.html">Income-Records</a>
+              <a href="income-records.html">Income-Records</a>
               <a href="expenditure-records.html">Expenses-Records</a>
-              <a href="local-records.html">Local-Records</a>
+              <a class="active" href="local-records.html">Local-Records</a>
               <a href="conference-records.html">Conference-Records</a>
               <a href="district-records.html">District-Records</a>
             </div>
@@ -50,7 +50,7 @@
       </nav>
       <br><br>
     <div class="container mt-5">
-        <h2 class="records-header" style="background-color:#007bff;">TOTAL INCOME RECORDS</h2>
+        <h2 class="records-header" style="background-color:#8e651a;">TOTAL LOCAL RECORDS</h2>
         <div class="table-responsive">
             <!-- Spinner -->
             <div id="spinner2" class="spinner2" style="display: none;">
@@ -63,13 +63,12 @@
                         <th>Num</th>
                         <th>User</th>
                         <th>Date_Column</th>
-                        <th>Tithe</th>
                         <th>C.B.F</th>
                         <th>Loose Offering</th>
                         <th>Thanks Giving</th>
-                        <th>Children Offering</th> 
+                        <th>Children Offering</th>
                         <th>Sabbath School</th>
-                        <th><strong>Total</strong></th>
+                        <th>Total</th>
 
                     </tr>
                 </thead>
@@ -92,8 +91,7 @@
 
     <script>
         $(document).ready(function() {
-            const webAppUrl = 'https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec';
-             //const webAppUrl = 'https://script.google.com/macros/s/AKfycbx4pI-Q_2fcUgb3R2rPr8meTV4oLukbfFyXqqSvdxPF6kjiWDNvmxcYZPvsBpKVS2kxJA/exec';
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbxfRWuHaQ-lEvopSxkHOTXmeeWYAZ4TCx9NvUi3loXYmMjTfxq-D9VMIZY-KFOxDVNUGQ/exec';
 
             // Show spinner
             $('#spinner2').show();
@@ -103,17 +101,16 @@
                 .then(data => {
                     const tableBody = document.getElementById('tableBody');
                     data.forEach(row => {
-                        let tr = document.createElement('tr'); 
+                        let tr = document.createElement('tr');
                         
                         tr.innerHTML = `
                             <td>${row['NUM']}</td>
                             <td>${row['USER']}</td>
                             <td>${row['DATE']}</td>
-                            <td>${row['TITHE']}</td>
                             <td>${row['C.B.F']}</td>
                             <td>${row['LOOSE-OFFERING']}</td>
                             <td>${row['THANKSGIVING']}</td>
-                            <td>${row['CHILDREN-OFFERING']}</td>  
+                            <td>${row['CHILDREN-OFFERING']}</td>
                             <td>${row['SABBATH-SCHOOL']}</td>
                             <td>${row['TOTAL']}</td>  
                         `;
