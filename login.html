@@ -141,14 +141,19 @@
 
   // Reset password
   const reset= document.getElementById("reset");
-  reset.addEventListener("click", function(event){
+  reset.addEventListener("click", async function(event){
   event.preventDefault()
 
-  const email= document.getElementById("loginEmail").value;
+  // This from sweet alert
+  const { value: email } = await Swal.fire({
+  title: "Input Email Address",
+  input: "email",
+  inputLabel: "Receive a reset link in your email",
+  inputPlaceholder: "Enter your email address"
+});
+if (email) {
   sendPasswordResetEmail(auth, email)
     .then(() => {
-      // Password reset email sent!
-      // ..
       Swal.fire({
           position: "top-end",
           icon: "success",
@@ -168,7 +173,12 @@
         icon: "error"
       });  
     });
-  })
+  }
+})
+
+
+
+ 
     </script>
     
 </body>
