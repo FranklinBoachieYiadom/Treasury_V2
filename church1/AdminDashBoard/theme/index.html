@@ -887,6 +887,10 @@
         Main wrapper end
     ***********************************-->
 
+    <div class="button-container">
+        <button id="customButton" class="btn custom-btn">Next Page</button>
+    </div>
+
     <br><br>
 
     <footer class="footer">
@@ -924,6 +928,15 @@
                     window.location.href = '../../../index.html';
                     }
                 });
+                });
+            }
+
+
+            // Just for the next page button
+            const customButton = document.getElementById('customButton');
+            if (customButton) {
+                customButton.addEventListener('click', () => {
+                    window.location.href = './chart-chartjs.html'; 
                 });
             }
     </script>
