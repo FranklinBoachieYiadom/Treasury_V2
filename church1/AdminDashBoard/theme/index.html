@@ -896,7 +896,26 @@
     <!--**********************************
         Scripts
     ***********************************-->
-    <script src="../../../church1/assest/scripts/script.js"></script>
+    
+    <script>
+        //Just for log out button
+         const logOutButton = document.getElementById('log-out');
+            if (logOutButton) {
+                logOutButton.addEventListener('click', () => {
+                Swal.fire({
+                    text: "Are you sure you want to log out?", icon: "warning", showCancelButton: true,
+                    confirmButtonColor: "#3085d6", cancelButtonColor: "#d33", confirmButtonText: "Yes, Log out"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    sessionStorage.removeItem("user-creds");
+                    sessionStorage.removeItem("user-info");
+                    localStorage.removeItem("amountTableData");
+                    window.location.href = '../../../../index.html';
+                    }
+                });
+                });
+            }
+    </script>
 
     <!-- Required vendors -->
     <script src="./vendor/global/global.min.js"></script>
