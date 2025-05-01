@@ -258,6 +258,10 @@ if (duplicateParticulars.length > 0) {
         Swal.fire({
           title: "Done", text: "Saved Successfully.", icon: "success"
           });
+          //reload the page after saving
+          setTimeout(() => {
+            location.reload();
+          }, 3000); // Reload after 2 seconds
         })
         .catch((error) => {
           // Hide spinner
