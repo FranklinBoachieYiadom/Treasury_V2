@@ -7,41 +7,57 @@
     Morris.Bar({
         element: 'morris-bar-chart',
         data: [{
-            y: '2006',
+            y: 'Jan',
             a: 100,
             b: 90
         }, {
-            y: '2007',
+            y: 'Feb',
             a: 75,
             b: 65
         }, {
-            y: '2008',
+            y: 'Mar',
             a: 50,
             b: 40
         }, {
-            y: '2009',
+            y: 'Apr',
             a: 75,
             b: 65
         }, {
-            y: '2010',
+            y: 'May',
             a: 50,
             b: 40
         }, {
-            y: '2011',
+            y: 'Jun',
             a: 75,
             b: 65
         }, {
-            y: '2012',
+            y: 'Jul',
             a: 100,
             b: 90
         }, {
-            y: '2013',
+            y: 'Aug',
             a: 100,
             b: 90
+        }, {
+            y: 'Sep',
+            a: 100,
+            b: 90
+        }, {
+            y: 'Oct',
+            a: 100,
+            b: 90
+        }, {
+            y: 'Nov',
+            a: 100,
+            b: 90
+        }, {
+            y: 'Dec',
+            a: 40,
+            b: 30
         }],
         xkey: 'y',
         ykeys: ['a', 'b'],
-        labels: ['A', 'B'],
+        labels: ['In', 'Ex'],
         barColors: ['#343957', '#5873FE'],
         hideHover: 'auto',
         gridLineColor: '#eef0f2',

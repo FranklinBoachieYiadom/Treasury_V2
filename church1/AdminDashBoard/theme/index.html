@@ -287,11 +287,17 @@
                         <div class="card">
                             <div class="stat-widget-two card-body">
                                 <div class="stat-content">
-                                    <div class="stat-text">Today Expenses </div>
-                                    <div class="stat-digit"> <i class="fa fa-usd"></i>8500</div>
+                                    <div class="stat-text">Total Income for {year} </div>
+                                    <!-- Spinner  -->
+                                    <div id="spinner1" class="spinner2" style="display: none;">
+                                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                                    </div>
+
+                                    <div class="stat-digit" id="grandIncome"> </div>
+
                                 </div>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-success w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar progress-bar-success w-100" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
@@ -300,11 +306,16 @@
                         <div class="card">
                             <div class="stat-widget-two card-body">
                                 <div class="stat-content">
-                                    <div class="stat-text">Income Detail</div>
-                                    <div class="stat-digit"> <i class="fa fa-usd"></i>7800</div>
+                                    <div class="stat-text">Total Expenditure for {year}</div>
+                                    <!-- Spinner  -->
+                                    <div id="spinner2" class="spinner2" style="display: none;">
+                                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                                    </div>
+
+                                    <div class="stat-digit" id="grandExpenditure"> GH₵1</div>
                                 </div>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-primary w-75" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar progress-bar-danger w-100" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
@@ -313,11 +324,15 @@
                         <div class="card">
                             <div class="stat-widget-two card-body">
                                 <div class="stat-content">
-                                    <div class="stat-text">Task Completed</div>
-                                    <div class="stat-digit"> <i class="fa fa-usd"></i> 500</div>
+                                    <div class="stat-text">Local Income for {year}</div>
+                                     <!-- Spinner  -->
+                                     <div id="spinner3" class="spinner2" style="display: none;">
+                                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                                    </div>
+                                    <div class="stat-digit" id="localIncome"> GH₵1</div>
                                 </div>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-warning w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar progress-bar-primary w-100" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
@@ -326,11 +341,15 @@
                         <div class="card">
                             <div class="stat-widget-two card-body">
                                 <div class="stat-content">
-                                    <div class="stat-text">Task Completed</div>
-                                    <div class="stat-digit"> <i class="fa fa-usd"></i>650</div>
+                                    <div class="stat-text">Local Expenditure for {year}</div>
+                                     <!-- Spinner  -->
+                                     <div id="spinner4" class="spinner2" style="display: none;">
+                                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                                    </div>
+                                    <div class="stat-digit" id="localExpenditure"></div>
                                 </div>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-danger w-65" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar progress-bar-danger w-100" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
@@ -342,7 +361,7 @@
                     <div class="col-xl-8 col-lg-8 col-md-8">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Sales Overview</h4>
+                                <h4 class="card-title">Income and Expenditure for {year} <span></span></h4>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -357,18 +376,18 @@
                         <div class="card">
                             <div class="card-body text-center">
                                 <div class="m-t-10">
-                                    <h4 class="card-title">Customer Feedback</h4>
-                                    <h2 class="mt-3">385749</h2>
+                                    <h4 class="card-title">Current Bal as at {year}</h4>
+                                    <h2 class="mt-3">GH₵1</h2>
                                 </div>
                                 <div class="widget-card-circle mt-5 mb-5" id="info-circle-card">
                                     <i class="ti-control-shuffle pa"></i>
                                 </div>
-                                <ul class="widget-line-list m-b-15">
+                                <!-- <ul class="widget-line-list m-b-15">
                                     <li class="border-right">92% <br><span class="text-success"><i
                                                 class="ti-hand-point-up"></i> Positive</span></li>
                                     <li>8% <br><span class="text-danger"><i
                                                 class="ti-hand-point-down"></i>Negative</span></li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                     </div>
@@ -899,46 +918,107 @@
       </footer>
 
 
-
-
-
-
-
-
-
-
-
     <!--**********************************
         Scripts
     ***********************************-->
     
-    <script>
-        //Just for log out button
-         const logOutButton = document.getElementById('log-out');
-            if (logOutButton) {
-                logOutButton.addEventListener('click', () => {
-                Swal.fire({
-                    text: "Are you sure you want to log out?", icon: "warning", showCancelButton: true,
-                    confirmButtonColor: "#3085d6", cancelButtonColor: "#d33", confirmButtonText: "Yes, Log out"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                    sessionStorage.removeItem("user-creds");
-                    sessionStorage.removeItem("user-info");
-                    localStorage.removeItem("amountTableData");
-                    window.location.href = '../../../index.html';
-                    }
-                });
-                });
-            }
+ <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const IncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec';
+  const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycby9-laPphroGrCkAsLCIUhM9ZHXhzfB5AB_bW5013Kxi33_epoj47Zd2qKzZM3pxOxryQ/exec';
+
+  // Show all spinners
+  const spinnerIncome = document.getElementById('spinner1');
+  const spinnerExpenditure = document.getElementById('spinner4');
+  if (spinnerIncome) spinnerIncome.style.display = 'block';
+  if (spinnerExpenditure) spinnerExpenditure.style.display = 'block';
+
+  // Fetch both Income and Expenditure data concurrently
+  Promise.all([
+    fetch(IncomeWebAppUrl).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok for Income');
+      }
+      return response.json();
+    }),
+    fetch(ExpenditureWebAppUrl).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok for Expenditure');
+      }
+      return response.json();
+    })
+  ])
+    .then(([incomeData, expenditureData]) => {
+      // Process Income Data
+      let incomeGrandTotal = null;
+      for (const record of incomeData) {
+        if (record.GRAND2025 && !isNaN(record.GRAND2025)) {
+          incomeGrandTotal = parseFloat(record.GRAND2025);
+          break;
+        }
+      }
+      const incomeElement = document.getElementById('grandIncome');
+      if (incomeElement) {
+        if (incomeGrandTotal !== null) {
+          incomeElement.innerHTML = `GH₵${incomeGrandTotal.toFixed(2)}`;
+        } else {
+          incomeElement.innerHTML = "Data not available";
+        }
+      }
+
+      // Process Expenditure Data
+      let expenditureGrandTotal = null;
+      for (const record of expenditureData) {
+        if (record.GRAND2025 && !isNaN(record.GRAND2025)) {
+          expenditureGrandTotal = parseFloat(record.GRAND2025);
+          break;
+        }
+      }
+      const expenditureElement = document.getElementById('localExpenditure');
+      if (expenditureElement) {
+        if (expenditureGrandTotal !== null) {
+          expenditureElement.innerHTML = `GH₵${expenditureGrandTotal.toFixed(2)}`;
+        } else {
+          expenditureElement.innerHTML = "Data not available";
+        }
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    })
+    .finally(() => {
+      // Hide both spinners
+      if (spinnerIncome) spinnerIncome.style.display = 'none';
+      if (spinnerExpenditure) spinnerExpenditure.style.display = 'none';
+    });
+});
 
 
-            // Just for the next page button
-            const customButton = document.getElementById('customButton');
-            if (customButton) {
-                customButton.addEventListener('click', () => {
-                    window.location.href = './chart-chartjs.html'; 
-                });
+//Just for log out button
+ const logOutButton = document.getElementById('log-out');
+    if (logOutButton) {
+        logOutButton.addEventListener('click', () => {
+        Swal.fire({
+            text: "Are you sure you want to log out?", icon: "warning", showCancelButton: true,
+            confirmButtonColor: "#3085d6", cancelButtonColor: "#d33", confirmButtonText: "Yes, Log out"
+        }).then((result) => {
+            if (result.isConfirmed) {
+            sessionStorage.removeItem("user-creds");
+            sessionStorage.removeItem("user-info");
+            localStorage.removeItem("amountTableData");
+            window.location.href = '../../../index.html';
             }
+        });
+        });
+    }
+
+      // Just for the next page button
+      const customButton = document.getElementById('customButton');
+      if (customButton) {
+          customButton.addEventListener('click', () => {
+              window.location.href = './chart-chartjs.html'; 
+          });
+      }
     </script>
 
     <!-- Required vendors -->
