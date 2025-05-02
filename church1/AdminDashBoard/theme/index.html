@@ -306,7 +306,7 @@
                         <div class="card">
                             <div class="stat-widget-two card-body">
                                 <div class="stat-content">
-                                    <div class="stat-text">Total Expenditure for {year}</div>
+                                    <div class="stat-text" id="totalExpenYear">   </div>
                                     <!-- Spinner  -->
                                     <div id="spinner2" class="spinner2" style="display: none;">
                                         <i class="fa fa-spinner fa-spin"></i> Loading...
@@ -923,7 +923,20 @@
     ***********************************-->
     
  <script>
-    document.addEventListener("DOMContentLoaded", () => {
+
+ document.addEventListener("DOMContentLoaded", () => {
+  // Get the current year
+  const currentYear = new Date().getFullYear();
+
+  // Update the innerText of the element with id "totalExpenYear"
+  const totalExpenYearElement = document.getElementById("totalExpenYear");
+  if (totalExpenYearElement) {
+    totalExpenYearElement.innerText = `Total Expenditure for ${currentYear}`;
+  }
+});
+
+    // Function to fetch data from Google Apps Script Web App and update the HTML elements
+  document.addEventListener("DOMContentLoaded", () => {
   const IncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec';
   const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycby9-laPphroGrCkAsLCIUhM9ZHXhzfB5AB_bW5013Kxi33_epoj47Zd2qKzZM3pxOxryQ/exec';
 
