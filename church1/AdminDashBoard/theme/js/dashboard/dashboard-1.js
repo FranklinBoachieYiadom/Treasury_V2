@@ -57,8 +57,9 @@
         }],
         xkey: 'y',
         ykeys: ['a', 'b'],
-        labels: ['In', 'Ex'],
-        barColors: ['#343957', '#5873FE'],
+        labels: ['Inc', 'Exp'],
+        // barColors: ['#343957', '#5873FE'],
+        barColors: ['#5873FE', '#FF0000'],
         hideHover: 'auto',
         gridLineColor: '#eef0f2',
         resize: true
