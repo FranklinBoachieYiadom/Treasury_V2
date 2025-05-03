@@ -50,6 +50,10 @@
                 <label for="signupPassword">Confirm Password</label>
                 <input type="password" id="signupPasswordConfirm" name="passwordConfirm" required>
             </div>
+            <div>
+                <input type="checkbox" id="togglePassword"> Show Password 
+            </div>
+            <br>
             <button type="submit" id="submit" class="btn signup-btn">Sign Up</button>
             <p class="form-text">Already have an account? <a href="login.html">Login</a></p>
         </form>
@@ -196,6 +200,31 @@
             // ..
         });
     })
+
+
+
+    // Toggle password visibility
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordField = document.getElementById("signupPassword");
+    const confirmPasswordField = document.getElementById("signupPasswordConfirm");
+    togglePassword.addEventListener("change", function() {
+        if (togglePassword.checked) {
+            passwordField.type = "text";
+            confirmPasswordField.type = "text";
+        } else {
+            passwordField.type = "password";
+            confirmPasswordField.type = "password";
+        }
+    });
+
+    // Prevent form submission on Enter key press
+    const form = document.getElementById("signupForm");
+    form.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    });
+   
       </script>
 </body>
 </html>

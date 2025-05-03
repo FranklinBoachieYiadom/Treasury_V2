@@ -1,5 +1,6 @@
 //Checking if the user is logged in across all pages
 
+// This script checks if the user is logged in and redirects to the login page if not
 document.addEventListener('DOMContentLoaded', () => {
   const checkAuth = () => { 
       if (!sessionStorage.getItem("user-creds")) {
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
  checkAuth();
  
-
+// It also greets the user by name on the landing page and shows/hides the admin menu based on user role
 let UserInfo=JSON.parse(sessionStorage.getItem("user-info"));  // Get the user info from session storage
 const GreetHead=document.getElementById('msg-body');
 const HideMenu =document.getElementById("admin-section")
@@ -24,5 +25,7 @@ if (HideMenu){
 //This is for the landing page to get the Name of the user
 if (GreetHead){
     GreetHead.innerText = `Welcome ${UserInfo.fname} ${UserInfo.surname}!`;
-  }    
+  }  
+  
+  
 });

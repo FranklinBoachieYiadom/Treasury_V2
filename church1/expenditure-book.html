@@ -272,6 +272,15 @@ if (duplicateParticulars.length > 0) {
         });
         
     });
+
+    
+// Prevent form submission on Enter key press
+const IncomeTableForm = document.getElementById("incomeTableForm");
+IncomeTableForm.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+    }
+});
   </script>
   </body>
 </html>

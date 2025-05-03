@@ -24,6 +24,10 @@
                 <label for="loginPassword">Password</label>
                 <input type="password" id="loginPassword" name="PASSWORD" required>
             </div>
+            <div>
+              <input type="checkbox" id="togglePassword"> Show Password 
+            </div>
+            <br>
             <button type="submit" id="submit" class="btn login-btn">Login</button>
             <p class="form-text">Don't have an account? <a href="signup.html">Sign up</a></p>
             <br>
@@ -177,6 +181,27 @@ if (email) {
 })
 
 
+// Here is the function for the Toggle Password Visibility
+const togglePasswordBtn = document.getElementById('togglePassword');
+if (togglePasswordBtn) {
+  togglePasswordBtn.addEventListener('click', () => {
+    let x = document.getElementById("loginPassword");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  
+  });
+}
+
+// Prevent form submission on Enter key press
+const form = document.getElementById("loginForm");
+form.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+    }
+});
 
  
     </script>
