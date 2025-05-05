@@ -125,6 +125,7 @@
                     });
                     $('#dataTable').DataTable({
                         scrollX: true, // Enable horizontal scrolling
+                        scrollY: "60vh", // Enable vertical scrolling with a height of 60% of the viewport
                         scrollCollapse: true, // Allow the table to shrink when fewer rows are displayed
                         paging: true, // Enable pagination
                         fixedColumns: {
@@ -132,7 +133,7 @@
                             rightColumns: 1 // Freeze the last column (Total)
                         },
                         order: [[0, "desc"]], // Order by the first column (NUM) in descending order
-                        pageLength: 10, // Set the number of rows per page
+                        pageLength: 5, // Set the number of rows per page
                         lengthMenu: [5, 10, 25, 50, 100, 200] // Options for number of rows per page
                     });
                 })
