@@ -1007,8 +1007,8 @@
       // Process All Income Data
       let incomeGrandTotal = null;
       for (const record of incomeData) {
-        if (record.GRAND2025 && !isNaN(record.GRAND2025)) {
-          incomeGrandTotal = parseFloat(record.GRAND2025);
+        if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
+          incomeGrandTotal = parseFloat(record.GRANDCURRENTYEAR);
           break;
         }
       }
@@ -1024,8 +1024,8 @@
       // Process Local Expenditure Data
       let expenditureGrandTotal = null;
       for (const record of expenditureData) {
-        if (record.GRAND2025 && !isNaN(record.GRAND2025)) {
-          expenditureGrandTotal = parseFloat(record.GRAND2025);
+        if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
+          expenditureGrandTotal = parseFloat(record.GRANDCURRENTYEAR);
           break;
         }
       }
@@ -1041,8 +1041,8 @@
        // Process Conference Data
        let conferenceGrandTotal = null;
         for (const record of conferenceData) {
-            if (record.GRAND2025 && !isNaN(record.GRAND2025)) {
-            conferenceGrandTotal = parseFloat(record.GRAND2025);
+            if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
+            conferenceGrandTotal = parseFloat(record.GRANDCURRENTYEAR);
             break;
             }
             else {
@@ -1053,8 +1053,8 @@
      // Process District Data
       let districtGrandTotal = null;
         for (const record of districtData) {
-            if (record.GRAND2025 && !isNaN(record.GRAND2025)) {
-            districtGrandTotal = parseFloat(record.GRAND2025);
+            if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
+            districtGrandTotal = parseFloat(record.GRANDCURRENTYEAR);
             break;
             }
             else {
@@ -1108,8 +1108,7 @@
 
     });
 
-
-
+    
     // Function to check authentication and redirect if not authenticated, this is for the dashboard page
     // General one exist for the whole app in auth 
     const checkAuth = () => { 
