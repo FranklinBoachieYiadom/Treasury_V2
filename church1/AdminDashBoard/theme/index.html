@@ -293,7 +293,7 @@
                                         <i class="fa fa-spinner fa-spin"></i> Loading...
                                     </div>
 
-                                    <div class="stat-digit" id="grandIncome"> </div>
+                                    <div class="stat-digit" id="grandIncome">    </div>
 
                                 </div>
                                 <div class="progress">
@@ -312,7 +312,7 @@
                                         <i class="fa fa-spinner fa-spin"></i> Loading...
                                     </div>
 
-                                    <div class="stat-digit" id="grandExpenditure"> GH₵1</div>
+                                    <div class="stat-digit" id="grandExpenditure">  </div>
                                 </div>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-danger w-100" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -329,7 +329,7 @@
                                      <div id="spinner3" class="spinner2" style="display: none;">
                                         <i class="fa fa-spinner fa-spin"></i> Loading...
                                     </div>
-                                    <div class="stat-digit" id="localIncome"> GH₵1</div>
+                                    <div class="stat-digit" id="localIncome">     </div>
                                 </div>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-primary w-100" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -346,7 +346,7 @@
                                      <div id="spinner4" class="spinner2" style="display: none;">
                                         <i class="fa fa-spinner fa-spin"></i> Loading...
                                     </div>
-                                    <div class="stat-digit" id="localExpenditure"></div>
+                                    <div class="stat-digit" id="localExpenditure">    </div>
                                 </div>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-danger w-100" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
@@ -377,7 +377,7 @@
                             <div class="card-body text-center">
                                 <div class="m-t-10">
                                     <h4 class="card-title" id="currentBalanceYear">Current Bal as at {year}</h4>
-                                    <h2 class="mt-3">GH₵1</h2>
+                                    <h2 class="mt-3" id="currentBalance">      </h2>
                                 </div>
                                 <div class="widget-card-circle mt-5 mb-5" id="info-circle-card">
                                     <i class="ti-control-shuffle pa"></i>
@@ -960,14 +960,20 @@
   document.addEventListener("DOMContentLoaded", () => {
   const IncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec';
   const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycby9-laPphroGrCkAsLCIUhM9ZHXhzfB5AB_bW5013Kxi33_epoj47Zd2qKzZM3pxOxryQ/exec';
+  const ConferenceWebAppUrl = 'https://script.google.com/macros/s/AKfycbyuWNfL4LByPRBo9pGUk_27DHAF-xiX8yR0ubIcbpa_yqQdTdICNvUo2iqlvTml1rXg/exec';
+  const DistrictWebAppUrl = 'https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec';
 
   // Show all spinners
-  const spinnerIncome = document.getElementById('spinner1');
-  const spinnerExpenditure = document.getElementById('spinner4');
-  if (spinnerIncome) spinnerIncome.style.display = 'block';
-  if (spinnerExpenditure) spinnerExpenditure.style.display = 'block';
+  const spinnerTotalIncome = document.getElementById('spinner1');
+  const spinnerTotalExpenditure = document.getElementById('spinner2');
+  const spinnerLocalIncome = document.getElementById('spinner3');
+  const spinnerLocalExpenditure = document.getElementById('spinner4');
+  if (spinnerTotalIncome) spinnerTotalIncome.style.display = 'block';
+  if (spinnerTotalExpenditure) spinnerTotalExpenditure.style.display = 'block';
+  if (spinnerLocalIncome) spinnerLocalIncome.style.display = 'block';
+  if (spinnerLocalExpenditure) spinnerLocalExpenditure.style.display = 'block';
 
-  // Fetch both Income and Expenditure data concurrently
+  // Fetch Income, Expenditure Conference and District data concurrently
   Promise.all([
     fetch(IncomeWebAppUrl).then(response => {
       if (!response.ok) {
@@ -980,10 +986,25 @@
         throw new Error('Network response was not ok for Expenditure');
       }
       return response.json();
+    }),
+    fetch(ConferenceWebAppUrl).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok for Conference');
+      }
+      return response.json();
+    }),
+    fetch(DistrictWebAppUrl).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok for District');
+      }
+      return response.json();
     })
+
+
   ])
-    .then(([incomeData, expenditureData]) => {
-      // Process Income Data
+  
+    .then(([incomeData, expenditureData, conferenceData, districtData]) => {
+      // Process All Income Data
       let incomeGrandTotal = null;
       for (const record of incomeData) {
         if (record.GRAND2025 && !isNaN(record.GRAND2025)) {
@@ -1000,7 +1021,7 @@
         }
       }
 
-      // Process Expenditure Data
+      // Process Local Expenditure Data
       let expenditureGrandTotal = null;
       for (const record of expenditureData) {
         if (record.GRAND2025 && !isNaN(record.GRAND2025)) {
@@ -1016,14 +1037,75 @@
           expenditureElement.innerHTML = "Data not available";
         }
       }
+
+       // Process Conference Data
+       let conferenceGrandTotal = null;
+        for (const record of conferenceData) {
+            if (record.GRAND2025 && !isNaN(record.GRAND2025)) {
+            conferenceGrandTotal = parseFloat(record.GRAND2025);
+            break;
+            }
+            else {
+            conferenceGrandTotal = 0; // Set to 0 if no valid data found
+            }
+        }
+
+     // Process District Data
+      let districtGrandTotal = null;
+        for (const record of districtData) {
+            if (record.GRAND2025 && !isNaN(record.GRAND2025)) {
+            districtGrandTotal = parseFloat(record.GRAND2025);
+            break;
+            }
+            else {
+            districtGrandTotal = 0; // Set to 0 if no valid data found
+            }
+        }
+    
+    // To process Grand Total Expenditure, its going to be sum(Local Expenditure + Conference + District)
+    const totalExpenditure = (expenditureGrandTotal || 0) + (conferenceGrandTotal || 0) + (districtGrandTotal || 0);
+    const totalExpenditureElement = document.getElementById('grandExpenditure');
+    if (totalExpenditureElement) {
+        if (totalExpenditure !== null) {
+          totalExpenditureElement.innerHTML = `GH₵${totalExpenditure.toFixed(2)}`;
+        } else {
+          totalExpenditureElement.innerHTML = "Data not available";
+        }
+      }
+
+   // Process Local Income Data  its going to be (Total Income - (Conference + District))
+    const localIncome = (incomeGrandTotal || 0) - ((conferenceGrandTotal || 0) + (districtGrandTotal || 0));
+    const localIncomeElement = document.getElementById('localIncome');
+    if (localIncomeElement) {
+        if (localIncome !== null) {
+          localIncomeElement.innerHTML = `GH₵${localIncome.toFixed(2)}`;
+        } else {
+          localIncomeElement.innerHTML = "Data not available";
+        }
+      }
+
+      // Process Current Balance Data, its going to be (Total Income - Total Expenditure)
+      const currentBalance = (incomeGrandTotal || 0) - ((expenditureGrandTotal || 0) + (conferenceGrandTotal || 0) + (districtGrandTotal || 0));
+      const currentBalanceElement = document.getElementById('currentBalance');
+      if (currentBalanceElement) {
+        if (currentBalance !== null) {
+          currentBalanceElement.innerHTML = `GH₵${currentBalance.toFixed(2)}`;
+        } else {
+          currentBalanceElement.innerHTML = "Data not available";
+        }
+      }
+
     })
     .catch(error => {
       console.error('Error fetching data:', error);
     })
     .finally(() => {
       // Hide both spinners
-      if (spinnerIncome) spinnerIncome.style.display = 'none';
-      if (spinnerExpenditure) spinnerExpenditure.style.display = 'none';
+      if (spinnerTotalIncome) spinnerTotalIncome.style.display = 'none';
+      if (spinnerTotalExpenditure) spinnerTotalExpenditure.style.display = 'none';
+      if (spinnerLocalIncome) spinnerLocalIncome.style.display = 'none';
+      if (spinnerLocalExpenditure) spinnerLocalExpenditure.style.display = 'none';
+
     });
 
 
@@ -1036,8 +1118,7 @@
       }
     };
 
- checkAuth();
-
+    checkAuth();
 
 });
 
