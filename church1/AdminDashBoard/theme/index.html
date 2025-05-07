@@ -150,10 +150,6 @@
                     </li> -->
 
 
-
-
-
-
 <!-- 
                     <li class="nav-label">Apps</li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
@@ -366,22 +362,28 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-12 col-lg-8">
-                                        <div id="morris-bar-chart"></div>
+                                         <!-- Spinner  -->
+                                     <div id="spinner5" class="spinner2" style="display: none;">
+                                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                                    </div>
+                                        <div id="morris-bar-chart" style="display: block;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>  
                     <div class="col-xl-4 col-lg-4 col-md-4">
                         <div class="card">
                             <div class="card-body text-center">
                                 <div class="m-t-10">
-                                    <h4 class="card-title" id="currentBalanceYear">Current Bal as at {year}</h4>
-                                    <h2 class="mt-3" id="currentBalance">      </h2>
+                                    <i class="fa-solid  fa-beat" style="--fa-animation-duration: 2s;" >
+                                        <h4 class="card-title" id="currentBalanceYear" style="font-family: Arial, Helvetica, sans-serif;" >Current Bal as at {year}</h4>
+                                        <h2 class="mt-3" id="currentBalance" style="font-family: Arial, Helvetica, sans-serif;" >      </h2>
+                                    </i>
                                 </div>
-                                <div class="widget-card-circle mt-5 mb-5" id="info-circle-card">
+                                <!-- <div class="widget-card-circle mt-5 mb-5" id="info-circle-card">
                                     <i class="ti-control-shuffle pa"></i>
-                                </div>
+                                </div> -->
                                 <!-- <ul class="widget-line-list m-b-15">
                                     <li class="border-right">92% <br><span class="text-success"><i
                                                 class="ti-hand-point-up"></i> Positive</span></li>
@@ -389,10 +391,10 @@
                                                 class="ti-hand-point-down"></i>Negative</span></li>
                                 </ul> -->
                             </div>
-                        </div>
+                        </div>   
                     </div>
                 </div>
-
+               
 
                 <!-- <div class="row">
                     <div class="col-lg-4">
@@ -647,9 +649,6 @@
                         </div>
                     </div>
                 </div> -->
-
-
-
 
 
                 <!-- <div class="row">
@@ -949,29 +948,32 @@
       localExpenYearElement.innerText = `Local Expenditure for ${currentYear}`;
   }
   if (incomeExpenditureYearElement) {
-      incomeExpenditureYearElement.innerText = `Income and Expenditure for ${currentYear}`;
+      incomeExpenditureYearElement.innerText = `Local Income and Expenditure for the year ${currentYear}`;
     }
   if (currentBalanceYearElement) {
       currentBalanceYearElement.innerText = `Current Balance for ${currentYear}`;
   }
 });
 
-    // Function to fetch data from Google Apps Script Web App and update the HTML elements
+  // Function to fetch data from Google Apps Script Web App and update the HTML elements
   document.addEventListener("DOMContentLoaded", () => {
   const IncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec';
   const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycby9-laPphroGrCkAsLCIUhM9ZHXhzfB5AB_bW5013Kxi33_epoj47Zd2qKzZM3pxOxryQ/exec';
   const ConferenceWebAppUrl = 'https://script.google.com/macros/s/AKfycbyuWNfL4LByPRBo9pGUk_27DHAF-xiX8yR0ubIcbpa_yqQdTdICNvUo2iqlvTml1rXg/exec';
   const DistrictWebAppUrl = 'https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec';
+  const LocalIncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbxfRWuHaQ-lEvopSxkHOTXmeeWYAZ4TCx9NvUi3loXYmMjTfxq-D9VMIZY-KFOxDVNUGQ/exec';
 
   // Show all spinners
   const spinnerTotalIncome = document.getElementById('spinner1');
   const spinnerTotalExpenditure = document.getElementById('spinner2');
   const spinnerLocalIncome = document.getElementById('spinner3');
   const spinnerLocalExpenditure = document.getElementById('spinner4');
+  const spinnerIncomeExpenditure = document.getElementById('spinner5');
   if (spinnerTotalIncome) spinnerTotalIncome.style.display = 'block';
   if (spinnerTotalExpenditure) spinnerTotalExpenditure.style.display = 'block';
   if (spinnerLocalIncome) spinnerLocalIncome.style.display = 'block';
   if (spinnerLocalExpenditure) spinnerLocalExpenditure.style.display = 'block';
+  if (spinnerIncomeExpenditure) spinnerIncomeExpenditure.style.display = 'block';
 
   // Fetch Income, Expenditure Conference and District data concurrently
   Promise.all([
@@ -998,13 +1000,19 @@
         throw new Error('Network response was not ok for District');
       }
       return response.json();
+    }),
+    fetch(LocalIncomeWebAppUrl).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok for Local');
+      }
+      return response.json();
     })
 
 
   ])
   
-    .then(([incomeData, expenditureData, conferenceData, districtData]) => {
-      // Process All Income Data
+    .then(([incomeData, expenditureData, conferenceData, districtData, localData]) => {
+      // Process All Income Data (Grand Total Income)
       let incomeGrandTotal = null;
       for (const record of incomeData) {
         if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
@@ -1073,27 +1081,34 @@
         }
       }
 
-   // Process Local Income Data  its going to be (Total Income - (Conference + District))
-    const localIncome = (incomeGrandTotal || 0) - ((conferenceGrandTotal || 0) + (districtGrandTotal || 0));
+    // Process Local Income Data
+    let localIncomeGrandTotal = null;
+    for (const record of localData) {
+        if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
+          localIncomeGrandTotal = parseFloat(record.GRANDCURRENTYEAR);
+          break;
+        }
+      }
     const localIncomeElement = document.getElementById('localIncome');
     if (localIncomeElement) {
-        if (localIncome !== null) {
-          localIncomeElement.innerHTML = `GH₵${localIncome.toFixed(2)}`;
-        } else {
-          localIncomeElement.innerHTML = "Data not available";
-        }
+      if (localIncomeGrandTotal !== null) {
+        localIncomeElement.innerHTML = `GH₵${localIncomeGrandTotal.toFixed(2)}`;
+      } else {
+        localIncomeElement.innerHTML = "Data not available";
       }
+    }
 
-      // Process Current Balance Data, its going to be (Total Income - Total Expenditure)
-      const currentBalance = (incomeGrandTotal || 0) - ((expenditureGrandTotal || 0) + (conferenceGrandTotal || 0) + (districtGrandTotal || 0));
-      const currentBalanceElement = document.getElementById('currentBalance');
-      if (currentBalanceElement) {
-        if (currentBalance !== null) {
-          currentBalanceElement.innerHTML = `GH₵${currentBalance.toFixed(2)}`;
-        } else {
-          currentBalanceElement.innerHTML = "Data not available";
-        }
+    // Process Current Balance Data, its going to be (Grand Total Income - Grand Total Expenditure)
+    const currentBalance = incomeGrandTotal - totalExpenditure;
+    const currentBalanceElement = document.getElementById('currentBalance');
+    if (currentBalanceElement) {
+      if (currentBalance !== null) {
+        currentBalanceElement.innerHTML = `GH₵${currentBalance.toFixed(2)}`;
+      } else {
+        currentBalanceElement.innerHTML = "Data not available";
       }
+    }
+
 
     })
     .catch(error => {
@@ -1108,7 +1123,6 @@
 
     });
 
-    
     // Function to check authentication and redirect if not authenticated, this is for the dashboard page
     // General one exist for the whole app in auth 
     const checkAuth = () => { 
@@ -1116,13 +1130,11 @@
         window.location.href = "../../../index.html";
       }
     };
-
     checkAuth();
 
 });
 
-
-//Just for log out button
+    //Just for log out button
  const logOutButton = document.getElementById('log-out');
     if (logOutButton) {
         logOutButton.addEventListener('click', () => {
