@@ -10,9 +10,9 @@
 
     // BACKSTRETCH SLIDESHOW
     $('.hero-section').backstretch([
-      "./indexPageAssets/images/slideshow/afro-woman-cleaning-window-with-rag-home.jpg", 
-      "./indexPageAssets/images/slideshow/afro-woman-holding-bucket-with-cleaning-items.jpg",
-      "./indexPageAssets/images/slideshow/unrecognizable-cleaner-walking-into-hotel-room-with-tools-detergents.jpg"
+      "./outsideAssest/indexPageAssets/images/slideshow/afro-woman-cleaning-window-with-rag-home.jpg", 
+      "./outsideAssest/indexPageAssets/images/slideshow/afro-woman-holding-bucket-with-cleaning-items.jpg",
+      "./outsideAssest/indexPageAssets/images/slideshow/unrecognizable-cleaner-walking-into-hotel-room-with-tools-detergents.jpg"
     ],  {duration: 2000, fade: 750});
     
     // CUSTOM LINK   
