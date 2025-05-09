@@ -238,11 +238,27 @@
                                 <div class="m-t-10">
                                     <i class="fa-solid  fa-beat" style="--fa-animation-duration: 2s;" >
                                         <h4 class="card-title" id="currentBalanceYear" style="font-family: Arial, Helvetica, sans-serif;" >Current Bal as at {year}</h4>
+                                         <!-- Spinner  -->
+                                     <div id="spinner6" class="spinner2" style="display: none;">
+                                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                                    </div>
                                         <h2 class="mt-3" id="currentBalance" style="font-family: Arial, Helvetica, sans-serif;" >      </h2>
                                     </i>
                                 </div>
                             </div>
-                        </div>   
+                        </div>      
+                        <div class="card"  id="outstandingBalanceCard">
+                            <div class="card-body text-center">
+                                <div class="m-t-10">
+                                        <h4 class="card-title" id="outstandingBalanceYear" style="color: white;">Outstanding Balance from Previous Years</h4>
+                                         <!-- Spinner  -->
+                                     <div id="spinner7" class="spinner2" style="display: none;">
+                                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                                    </div>
+                                        <h2 class="mt-3" id="outstandingBalance" style="color: white;">     </h2> 
+                                </div>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -298,7 +314,7 @@
       localExpenYearElement.innerText = `Local Expenditure for ${currentYear}`;
   }
   if (incomeExpenditureYearElement) {
-      incomeExpenditureYearElement.innerText = `Local Income and Local Expenditure Chart for the year ${currentYear}`;
+      incomeExpenditureYearElement.innerText = `Local Income and Expenditure Chart for the year ${currentYear}`;
     }
   if (currentBalanceYearElement) {
       currentBalanceYearElement.innerText = `Current Balance for ${currentYear}`;
@@ -318,14 +334,19 @@
   const spinnerTotalExpenditure = document.getElementById('spinner2');
   const spinnerLocalIncome = document.getElementById('spinner3');
   const spinnerLocalExpenditure = document.getElementById('spinner4');
-  const spinnerIncomeExpenditure = document.getElementById('spinner5');
+//   const spinnerIncomeExpenditure = document.getElementById('spinner5'); //Check external script for this spinner
+  const spinnerCurrentBalance = document.getElementById('spinner6');
+  const spinnerOutstandingBalance = document.getElementById('spinner7');
+
   if (spinnerTotalIncome) spinnerTotalIncome.style.display = 'block';
   if (spinnerTotalExpenditure) spinnerTotalExpenditure.style.display = 'block';
   if (spinnerLocalIncome) spinnerLocalIncome.style.display = 'block';
   if (spinnerLocalExpenditure) spinnerLocalExpenditure.style.display = 'block';
-  if (spinnerIncomeExpenditure) spinnerIncomeExpenditure.style.display = 'block';
+//   if (spinnerIncomeExpenditure) spinnerIncomeExpenditure.style.display = 'block'; //Check external script for this spinner
+  if (spinnerCurrentBalance) spinnerCurrentBalance.style.display = 'block';
+  if (spinnerOutstandingBalance) spinnerOutstandingBalance.style.display = 'block';
 
-  // Fetch Income, Expenditure Conference and District data concurrently
+  // Fetch Income, Expenditure, Conference, District, Local Income data concurrently
   Promise.all([
     fetch(IncomeWebAppUrl).then(response => {
       if (!response.ok) {
@@ -362,7 +383,7 @@
   ])
   
     .then(([incomeData, expenditureData, conferenceData, districtData, localData]) => {
-      // Process All Income Data (Grand Total Income)
+      // Process All Income Data (Grand Total Income for current year)
       let incomeGrandTotal = null;
       for (const record of incomeData) {
         if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
@@ -379,7 +400,7 @@
         }
       }
 
-      // Process Local Expenditure Data
+      // Process Local Expenditure Data for current year
       let expenditureGrandTotal = null;
       for (const record of expenditureData) {
         if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
@@ -396,7 +417,7 @@
         }
       }
 
-       // Process Conference Data
+       // Process Conference Data for current year
        let conferenceGrandTotal = null;
         for (const record of conferenceData) {
             if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
@@ -408,7 +429,7 @@
             }
         }
 
-     // Process District Data
+     // Process District Data for current year
       let districtGrandTotal = null;
         for (const record of districtData) {
             if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
@@ -420,7 +441,7 @@
             }
         }
     
-    // To process Grand Total Expenditure, its going to be sum(Local Expenditure + Conference + District)
+    // To process Grand Total Expenditure for current year, its going to be sum(Local Expenditure + Conference + District)
     const totalExpenditure = (expenditureGrandTotal || 0) + (conferenceGrandTotal || 0) + (districtGrandTotal || 0);
     const totalExpenditureElement = document.getElementById('grandExpenditure');
     if (totalExpenditureElement) {
@@ -431,7 +452,7 @@
         }
       }
 
-    // Process Local Income Data
+    // Process Local Income Data for current year
     let localIncomeGrandTotal = null;
     for (const record of localData) {
         if (record.GRANDCURRENTYEAR && !isNaN(record.GRANDCURRENTYEAR)) {
@@ -448,7 +469,7 @@
       }
     }
 
-    // Process Current Balance Data, its going to be (Grand Total Income - Grand Total Expenditure)
+    // Process CURRENT BALANCE for current year, its going to be (Grand Total Income - Grand Total Expenditure)
     const currentBalance = incomeGrandTotal - totalExpenditure;
     const currentBalanceElement = document.getElementById('currentBalance');
     if (currentBalanceElement) {
@@ -458,6 +479,68 @@
         currentBalanceElement.innerHTML = "Data not available";
       }
     }
+
+    // Process the OUTSTANDING BALANCE from the past years. Thus (Past Years Grand Total Income - Past Years Grand Total Expenditure)
+    // Process Past Years Income Total Data
+    let pastIncomeGrandTotal = null;
+    for (const record of incomeData) {
+        if (record.GRANDPREVIOUSYEARS && !isNaN(record.GRANDPREVIOUSYEARS)) {
+            pastIncomeGrandTotal = parseFloat(record.GRANDPREVIOUSYEARS);
+          break;
+        }
+      }
+
+    // Process Past Years Expenditure Total Data
+      let pastExpenditureGrandTotal = null;
+      for (const record of expenditureData) {
+        if (record.GRANDPREVIOUSYEARS && !isNaN(record.GRANDPREVIOUSYEARS)) {
+            pastExpenditureGrandTotal = parseFloat(record.GRANDPREVIOUSYEARS);
+          break;
+        }
+      }
+
+    // Process Past Conference Income Total Data
+      let pastConferenceGrandTotal = null;
+        for (const record of conferenceData) {
+            if (record.GRANDPREVIOUSYEARS && !isNaN(record.GRANDPREVIOUSYEARS)) {
+                pastConferenceGrandTotal = parseFloat(record.GRANDPREVIOUSYEARS);
+            break;
+            }
+            else {
+                pastConferenceGrandTotal = 0; // Set to 0 if no valid data found
+            }
+        }
+
+     // Process Past District Income Total Data
+      let pastDistrictGrandTotal = null;
+        for (const record of districtData) {
+            if (record.GRANDPREVIOUSYEARS && !isNaN(record.GRANDPREVIOUSYEARS)) {
+                pastDistrictGrandTotal = parseFloat(record.GRANDPREVIOUSYEARS);
+            break;
+            }
+            else {
+                pastDistrictGrandTotal = 0; // Set to 0 if no valid data found
+            }
+        }
+
+    // Calculate the outstanding balance from the past years
+    const pastTotalExpenditure = (pastExpenditureGrandTotal || 0) + (pastConferenceGrandTotal || 0) + (pastDistrictGrandTotal || 0);
+    const outstandingBalance = (pastIncomeGrandTotal || 0) - pastTotalExpenditure;
+    const outstandingBalanceElement = document.getElementById('outstandingBalance');
+    const outstandingBalanceCardContainer = document.getElementById('outstandingBalanceCard');
+    if (outstandingBalanceElement) {
+      if (outstandingBalance !== null) {
+        outstandingBalanceElement.innerHTML = `GH₵${outstandingBalance.toFixed(2)}`;
+        if (outstandingBalance < 0) {
+          outstandingBalanceCardContainer.style.backgroundColor = "red";
+        } else {
+          outstandingBalanceCardContainer.style.backgroundColor = "#5873FE";
+        }
+      } else {
+        outstandingBalanceElement.innerHTML = "Data not available";
+      }
+    }
+
 
 
     })
@@ -470,6 +553,10 @@
       if (spinnerTotalExpenditure) spinnerTotalExpenditure.style.display = 'none';
       if (spinnerLocalIncome) spinnerLocalIncome.style.display = 'none';
       if (spinnerLocalExpenditure) spinnerLocalExpenditure.style.display = 'none';
+        // if (spinnerIncomeExpenditure) spinnerIncomeExpenditure.style.display = 'none'; //Check external script for this spinner
+      if (spinnerCurrentBalance) spinnerCurrentBalance.style.display = 'none';
+      if (spinnerOutstandingBalance) spinnerOutstandingBalance.style.display = 'none';
+
 
     });
 
