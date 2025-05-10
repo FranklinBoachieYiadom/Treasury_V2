@@ -56,7 +56,14 @@
                 <div class="dropdown-content">
                   <a href="../../../church1/income-book.html">Income-Book</a>
                   <a href="../../../church1/full-view.html">Full View</a>
-                  <a href="../../../church1/expenditure-book.html">Expenditure-Book</a>
+
+                  <a id="expensesRecords" href="#"> <i class="fa-solid fa-square-caret-down"></i> Expenditure-Book</a>
+                  <div id="expensesSubmenu" class="dropdown-content" style="display: none;">
+                    <a href="../../../church1/local-expenditure-book.html">Local Expenditure</a>
+                    <a href="../../../church1/district-expenditure-book.html">District Expenditure</a>
+                    <a href="../../../church1/conference-expenditure-book.html">Conference Expenditure</a>
+                  </div>
+                  <!-- <a href="../../../church1/expenditure-book.html">Expenditure-Book</a> -->
                   <a href="../../../church1/cutoff.html">Cut-Off Sheet</a>
                   <a href="../../../church1/denominations.html">Denominations</a>
                 </div>
@@ -559,6 +566,21 @@
 
 
     });
+
+
+// Function to toggle the visibility of the submenu for Expenditure Records
+  // This is for the Expenditure Records submenu
+  const expensesRecords = document.getElementById("expensesRecords");
+  const expensesSubmenu = document.getElementById("expensesSubmenu");
+
+  if (expensesRecords && expensesSubmenu) {
+    expensesRecords.addEventListener("click", (event) => {
+      event.preventDefault(); // Prevent default link behavior
+      // Toggle the visibility of the submenu
+      expensesSubmenu.style.display =
+        expensesSubmenu.style.display === "block" ? "none" : "block";
+    });
+  }
 
 
     // Function to check authentication and redirect if not authenticated, this is for the dashboard page

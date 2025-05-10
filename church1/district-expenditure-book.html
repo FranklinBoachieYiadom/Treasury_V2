@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ash.North SDA Church Treasury</title>
+    <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
+    <link rel="stylesheet" href="./assest/styles/styles.css" />
+    <script src="https://kit.fontawesome.com/8ebf6fd839.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./assest/scripts/auth.js"></script> 
+  </head>
+  <body>
+
+    <nav>
+        <input type="checkbox" id="check" />
+        <label for="check" class="checkbtn">
+          <i class="fas fa-bars"></i>
+        </label>
+        <a href="landing-page.html" class="logo3">Ash.North Treasury Dept.
+        <img class="sda_logo" src="./assest/images/sda_logo.png" alt="logo"></a>
+        <ul>
+          <li><a id="dashboard"  href="../church1/AdminDashBoard/theme/index.html"> <i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+          <li class="dropdown">
+            <a> <i class="fa-solid fa-bars"></i> Menu</a>
+            <div class="dropdown-content">
+              <a href="income-book.html">Income-Book</a>
+              <a href="full-view.html">Full View</a>
+
+              <a id="expensesRecords" href="#"> <i class="fa-solid fa-square-caret-down"></i> Expenditure-Book</a>
+                  <div id="expensesSubmenu" class="dropdown-content" style="display: none;">
+                    <a href="local-expenditure-book.html">Local Expenditure</a>
+                    <a href="district-expenditure-book.html">District Expenditure</a>
+                    <a href="conference-expenditure-book.html">Conference Expenditure</a>
+                  </div>
+              <!-- <a class="active" href="expenditure-book.html">Expenditure-Book</a> -->
+              <a href="cutoff.html">Cut-Off Sheet</a>
+              <a href="denominations.html">Denominations</a>
+              
+            </div>
+            </li>
+            <li class="dropdown">
+                <a> <i class="fa-solid fa-folder-minus"></i> Saved Records</a>
+                <div class="dropdown-content">
+                  <a href="income-records.html">Income-Records</a>
+                  <a href="expenditure-records.html">Expenses-Records</a>
+                  <a href="local-records.html">Local-Records</a>
+                  <a href="conference-records.html">Conference-Records</a>
+                  <a href="district-records.html">District-Records</a>
+                </div>
+              </li>
+          <li><a id="log-out"> <i class="fa-solid fa-right-from-bracket"></i> Log Out</a></li>
+        </ul>
+      </nav>
+
+
+    <div class="container">
+      <h1 class="records-header" style="background-color:#890c3a;"> District Expenditure Table</h1>
+      <div class="scrollable-container">
+        <div class="table-container">
+          <form id="distExpenTableForm">
+          <table id="amountTable">
+            <div class="date-filter-container">
+              <label for="fromDate" class="date-label">Date:</label>
+              <input type="date" id="incomeDate" class="date-input">
+            </div>
+            <br>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Particulars</th>
+                <th>| Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+               <!-- Data will be dynamically loaded here -->
+          
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <div class="tooltip">
+          <button id="save" class="btn save-btn" type="submit">Save</button>
+          <span class="tooltiptext">Save</span>
+        </div>
+      </form>
+        <div class="tooltip">
+          <button id="calculateBtn" class="btn calculate-btn">Total</button>
+          <span class="tooltiptext">Calculate Total</span>
+        </div>
+        
+        <div class="tooltip">
+            <button id="addRowBtn" class="btn add-btn">
+              <i class="fa-solid fa-plus fa-beat"></i>
+            </button>
+            <span class="tooltiptext">Add a new row</span>
+          </div>
+        <div class="tooltip">
+          <button id="removeRowBtn" class="btn remove-btn">
+            <i class="fa-solid fa-minus fa-beat"></i>
+          </button>
+          <span class="tooltiptext">Remove row</span>
+        </div>
+      </div>
+      <div id="totalAmount" class="total-amount"></div>
+    </div>
+
+    <div id="spinner" class="spinner" style="display: none;">
+      <i class="fa fa-spinner fa-spin"></i> Saving...
+    </div>
+
+    <footer class="footer">
+      <p>&copy; 2025 Phlashly Inc©. All rights reserved.</p>
+      <p>Contact us: <a href="mailto:franklinboachie@gmail.com">franklinboachie@gmail.com</a> | Phone: +233-540-896194</p>
+    </footer>
+
+    <script src="./assest/scripts/script.js"></script>
+
+    <datalist id="particularsList">
+      <option value="Transportation"></option>
+      <option value="Doryumu Sch Project"></option>
+    </datalist>
+
+
+<script>
+    // For the Save Button (Submit button for the form)
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec';
+
+    const form = document.forms["distExpenTableForm"];
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+//**********************************************************************
+//Checking if the particulars entered by the user exist in the datalist first before saving
+ // Get all valid datalist options
+ const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
+
+ // Retrieve the date value
+ const dateValue = document.getElementById("incomeDate").value;
+
+ // Validate the date
+ if (!dateValue) {
+    Swal.fire({
+      title: "Error",
+      text: "Please select a date before saving.",
+      icon: "error",
+    });
+    return; // Stop further execution
+  }
+
+// Format the date to DD-MMM-YYYY
+const dateObject = new Date(dateValue);
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const formattedDate = `${String(dateObject.getDate()).padStart(2, '0')}-${monthNames[dateObject.getMonth()]}-${dateObject.getFullYear()}`;
+
+// Validate user inputs
+const rows = document.querySelectorAll("#amountTable tbody tr");
+let invalidParticulars = [];
+let emptyParticulars = [];
+let particularsSet = new Set(); // To track duplicates
+let duplicateParticulars = [];
+
+rows.forEach((row) => {
+  const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
+  const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
+
+ // Check if the particulars are empty
+ if (!particulars) {
+      emptyParticulars.push(`Row ${row.rowIndex}`); // Add the row number with empty particulars
+      return; // Skip further checks for this row
+    }
+
+  // Check if the particulars are valid
+  if (!datalistOptions.includes(particulars)) {
+    invalidParticulars.push(particulars); // Add invalid value to the list
+  }
+
+  // Check for duplicates
+    if (particularsSet.has(particulars)) {
+      duplicateParticulars.push(particulars); // Add duplicate value to the list
+    } else {
+      particularsSet.add(particulars); // Add to the set
+    }
+});
+
+ // If there are empty particulars, show an alert and stop the form submission
+ if (emptyParticulars.length > 0) {
+    Swal.fire({
+      title: "Empty Particulars",
+      text: `The following rows have empty particulars: ${emptyParticulars.join(", ")}`,
+      icon: "error"
+    });
+    return; // Stop further execution
+  }
+
+// If there are invalid particulars, show an alert and stop the form submission
+if (invalidParticulars.length > 0) {
+  Swal.fire({
+    title: "Invalid Particulars",
+    text: `Check this Particular(s): ${invalidParticulars.join(", ")}`,
+    icon: "error"
+  });
+  return; // Stop further execution
+}
+
+// If there are duplicate particulars, show an alert and stop the form submission
+if (duplicateParticulars.length > 0) {
+  Swal.fire({
+    title: "Duplicate Particulars",
+    text: `The following Particular(s) appear more than once: ${duplicateParticulars.join(", ")}`,
+    icon: "error"
+  });
+  return; // Stop further execution
+}// End of checking for invalid and duplicate particulars
+//**********************************************************************
+
+
+      var formData = new FormData(form);
+
+       // Get user info from session storage and append to the form to be sent
+       let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));
+      if (UserInfo && UserInfo.fname) {
+          formData.append("USER", UserInfo.fname);
+      }
+
+       // Append the formated date to the form data
+      formData.append("DATE", formattedDate);
+
+       // Calculate all the expenditures provided by the user
+       let totalExpenditure = 0;
+      const amountInputs = document.querySelectorAll("#amountTable tbody tr td:nth-child(3) input");
+      amountInputs.forEach(input => {
+          const value = parseFloat(input.value) || 0; // Default to 0 if the input is empty or invalid
+          totalExpenditure += value;
+      });
+
+      // Check if total Expenditure to be sent is 0
+      if (totalExpenditure === 0) {
+        Swal.fire({
+          title: "Error",
+          text: "Total Expenditure cannot be 0. Please enter valid amounts.",
+          icon: "error"
+        });
+        return; // Stop further execution
+      } 
+
+      // Append the total income to the form data
+      formData.append("TOTAL", totalExpenditure);
+  
+      // Show spinner
+    spinner.style.display = 'block';
+  
+      fetch(scriptURL, { method: "POST", body: formData })
+        .then((response) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Done", text: "Saved Successfully.", icon: "success"
+          });
+          //reload the page after saving
+          setTimeout(() => {
+            location.reload();
+          }, 3000); // Reload after 2 seconds
+        })
+        .catch((error) => {
+          // Hide spinner
+        spinner.style.display = 'none';
+        Swal.fire({
+          title: "Error", text: "Something went wrong. please try again!", icon: "error"
+          });
+        });
+        
+    });
+
+    
+// Prevent form submission on Enter key press
+const DistExpenTableForm = document.getElementById("distExpenTableForm");
+DistExpenTableForm.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+    }
+});
+  </script>
+  </body>
+</html>

@@ -231,4 +231,19 @@ denominationInputs.forEach((input) => {
 });
 
 
+// Function to handle the click event for the "Expenses Records" link Dropdown
+  // This function toggles the visibility of the submenu
+  const expensesRecords = document.getElementById("expensesRecords");
+  const expensesSubmenu = document.getElementById("expensesSubmenu");
+
+  if (expensesRecords && expensesSubmenu) {
+    expensesRecords.addEventListener("click", (event) => {
+      event.preventDefault(); // Prevent default link behavior
+      // Toggle the visibility of the submenu
+      expensesSubmenu.style.display =
+        expensesSubmenu.style.display === "block" ? "none" : "block";
+    });
+  }
+
+
 });

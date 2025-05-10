@@ -95,6 +95,30 @@ a.active,a:hover{
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+/* Expenditure Drop down Submenu styling */
+#expensesSubmenu {
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+#expensesSubmenu a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+#expensesSubmenu a:hover {
+  background-color: #0a0a0a;
+  color: white;
+  text-decoration: none;
+}
+
+
 #log-out {
   color: white; /* Change text color to white */
   cursor: pointer;
