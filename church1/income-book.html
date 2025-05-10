@@ -335,6 +335,10 @@ const formData = new FormData(form);
   districtData.append("TOTAL", districtTotal);
   localData.append("TOTAL", localTotal);
 
+  // Hide the save button
+  const saveButton = document.getElementById("save");
+  saveButton.style.display = "none";
+
   // Show spinner
   spinner.style.display = 'block';
 
@@ -370,6 +374,8 @@ const formData = new FormData(form);
     .finally(() => {
       // Hide spinner
       spinner.style.display = 'none';
+      // Show the save button again
+      saveButton.style.display = "block";
     });
 
     

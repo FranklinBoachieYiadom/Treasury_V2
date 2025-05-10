@@ -251,11 +251,20 @@ if (duplicateParticulars.length > 0) {
   
       // Show spinner
     spinner.style.display = 'block';
+
+     // Hide the save button
+     const saveButton = document.getElementById("save");
+    saveButton.style.display = "none";
   
       fetch(scriptURL, { method: "POST", body: formData })
         .then((response) => {
           // Hide spinner
         spinner.style.display = 'none';
+
+        // Show save button again
+        saveButton.style.display = "block";
+
+          // Show success message
         Swal.fire({
           title: "Done", text: "Saved Successfully.", icon: "success"
           });

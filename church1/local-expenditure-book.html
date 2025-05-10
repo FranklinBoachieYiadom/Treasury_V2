@@ -252,6 +252,10 @@ if (duplicateParticulars.length > 0) {
 
       // Append the total income to the form data
       formData.append("TOTAL", totalExpenditure);
+
+      // Hide the save button
+    const saveButton = document.getElementById("save");
+    saveButton.style.display = "none";
   
       // Show spinner
     spinner.style.display = 'block';
@@ -260,6 +264,10 @@ if (duplicateParticulars.length > 0) {
         .then((response) => {
           // Hide spinner
         spinner.style.display = 'none';
+
+        //show save button again
+        saveButton.style.display = "block";
+
         Swal.fire({
           title: "Done", text: "Saved Successfully.", icon: "success"
           });
