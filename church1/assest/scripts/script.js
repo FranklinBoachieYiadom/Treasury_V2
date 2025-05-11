@@ -120,7 +120,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (result.isConfirmed) {
           sessionStorage.removeItem("user-creds");
           sessionStorage.removeItem("user-info");
+          sessionStorage.removeItem("monthlyIncome");
+          sessionStorage.removeItem("monthlyExpenditure");
           localStorage.removeItem("amountTableData");
+          localStorage.removeItem("incomeTableData");
+          localStorage.removeItem("localExpenditureTableData");
+          localStorage.removeItem("districtExpenditureTableData");
+          localStorage.removeItem("confExpenditureTableData");
           window.location.href = '../index.html';
         }
       });
@@ -245,5 +251,19 @@ denominationInputs.forEach((input) => {
     });
   }
 
+// Prevent form submission on Enter key press
+const AllForms = document.getElementById("incomeTableForm");
+AllForms.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+    }
+});
+
+
 
 });
+
+
+
+
+

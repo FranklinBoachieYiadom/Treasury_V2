@@ -58,7 +58,7 @@
       <h1 class="records-header" style="background-color:#c5105e;"> Conference Expenditure Table</h1>
       <div class="scrollable-container">
         <div class="table-container">
-          <form id="confExpenTableForm">
+          <form id="incomeTableForm">
           <table id="amountTable">
             <div class="date-filter-container">
               <label for="fromDate" class="date-label">Date:</label>
@@ -128,7 +128,7 @@
     // For the Save Button (Submit button for the form)
     const scriptURL =  'https://script.google.com/macros/s/AKfycbyuWNfL4LByPRBo9pGUk_27DHAF-xiX8yR0ubIcbpa_yqQdTdICNvUo2iqlvTml1rXg/exec';                    
 
-    const form = document.forms["confExpenTableForm"];
+    const form = document.forms["incomeTableForm"];
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -283,14 +283,77 @@ if (duplicateParticulars.length > 0) {
         
     });
 
-    
-// Prevent form submission on Enter key press
-const ConfExpenTableForm = document.getElementById("confExpenTableForm");
-ConfExpenTableForm.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
+
+
+
+// Save data to localStorage whenever the user modifies the table
+function saveDataToLocalStorage() {
+  const rows = document.querySelectorAll("#amountTable tbody tr");
+  const tableData = [];
+
+  rows.forEach((row) => {
+    const particularsInput = row.cells[1].querySelector("input");
+    const amountInput = row.cells[2].querySelector("input");
+
+    if (particularsInput && amountInput) {
+      tableData.push({
+        particulars: particularsInput.value.trim(),
+        amount: parseFloat(amountInput.value) || 0,
+      });
     }
+  });
+
+  localStorage.setItem("confExpenditureTableData", JSON.stringify(tableData));
+}
+// Add event listeners to save data when inputs change
+document.addEventListener("input", (event) => {
+  if (event.target.closest("#amountTable")) {
+    saveDataToLocalStorage();
+  }
 });
+
+
+// Load data from localStorage when the page loads
+function loadDataFromLocalStorage() {
+  const savedData = localStorage.getItem("confExpenditureTableData");
+
+  if (savedData) {
+    const tableData = JSON.parse(savedData);
+    const tableBody = document.querySelector("#amountTable tbody");
+
+    tableData.forEach((rowData, index) => {
+      const newRow = tableBody.insertRow();
+
+      const cell1 = newRow.insertCell(0);
+      const cell2 = newRow.insertCell(1);
+      const cell3 = newRow.insertCell(2);
+
+      // Set the row number
+      cell1.textContent = index + 1;
+
+      // Add the particulars input
+      const particularsInput = document.createElement("input");
+      particularsInput.type = "text";
+      particularsInput.value = rowData.particulars;
+      particularsInput.classList.add("particulars-input");
+      particularsInput.setAttribute("list", "particularsList");
+      cell2.appendChild(particularsInput);
+
+      // Add the amount input
+      const amountInput = document.createElement("input");
+      amountInput.type = "number";
+      amountInput.value = rowData.amount;
+      amountInput.classList.add("amount-input");
+      cell3.appendChild(amountInput);
+    });
+  }
+}
+
+// Call the function to load data when the page loads
+document.addEventListener("DOMContentLoaded", loadDataFromLocalStorage);
+
+
+    
   </script>
   </body>
 </html>

@@ -604,9 +604,15 @@
             confirmButtonColor: "#3085d6", cancelButtonColor: "#d33", confirmButtonText: "Yes, Log out"
         }).then((result) => {
             if (result.isConfirmed) {
-            sessionStorage.removeItem("user-creds");
-            sessionStorage.removeItem("user-info");
-            localStorage.removeItem("amountTableData");
+                sessionStorage.removeItem("user-creds");
+                sessionStorage.removeItem("user-info");
+                sessionStorage.removeItem("monthlyIncome");
+                sessionStorage.removeItem("monthlyExpenditure");
+                localStorage.removeItem("amountTableData");
+                localStorage.removeItem("incomeTableData");
+                localStorage.removeItem("localExpenditureTableData");
+                localStorage.removeItem("districtExpenditureTableData");
+                localStorage.removeItem("confExpenditureTableData");
             window.location.href = '../../../index.html';
             }
         });
