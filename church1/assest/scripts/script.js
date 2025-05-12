@@ -1,5 +1,54 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+//Function to hide all empty columns in the table
+function hideEmptyColumns(tableId) {
+  const table = document.getElementById(tableId);
+  const headers = table.querySelectorAll("thead th");
+  const rows = table.querySelectorAll("tbody tr");
+
+  if (!table || headers.length === 0 || rows.length === 0) {
+    console.warn(`Table with ID "${tableId}" is empty or not found.`);
+    return;
+  }
+
+  // Iterate through each column
+  headers.forEach((header, colIndex) => {
+    let isEmpty = true;
+
+    // Check if all cells in the column are empty
+    rows.forEach((row) => {
+      const cell = row.cells[colIndex];
+      if (cell && cell.textContent.trim() !== "") {
+        isEmpty = false; // If any cell has content, the column is not empty
+      }
+    });
+
+    // Hide the column if it is empty
+    if (isEmpty) {
+      // Hide the header
+      header.style.display = "none";
+
+      // Hide all cells in the column
+      rows.forEach((row) => {
+        const cell = row.cells[colIndex];
+        if (cell) {
+          cell.style.display = "none";
+        }
+      });
+    }
+  });
+}
+
+// Call the function for both tables
+hideEmptyColumns("dataTable");
+hideEmptyColumns("dataTable2");
+hideEmptyColumns("dataTable2");
+
+
+
+
+
+
   // Add Row button
   const addRowBtn = document.getElementById('addRowBtn');
   if (addRowBtn) {
@@ -261,9 +310,49 @@ AllForms.addEventListener("keydown", function(event) {
 
 
 
+
+
+
 });
 
+// function hideEmptyColumns(tableId) {
+//   const table = document.getElementById(tableId);
+//   const headers = table.querySelectorAll("thead th");
+//   const rows = table.querySelectorAll("tbody tr");
 
+//   // Iterate through each column
+//   headers.forEach((header, colIndex) => {
+//     let isEmpty = true;
+
+//     // Check if all cells in the column are empty
+//     rows.forEach((row) => {
+//       const cell = row.cells[colIndex];
+//       if (cell && cell.textContent.trim() !== "") {
+//         isEmpty = false; // If any cell has content, the column is not empty
+//       }
+//     });
+
+//     // Hide the column if it is empty
+//     if (isEmpty) {
+//       // Hide the header
+//       header.style.display = "none";
+
+//       // Hide all cells in the column
+//       rows.forEach((row) => {
+//         const cell = row.cells[colIndex];
+//         if (cell) {
+//           cell.style.display = "none";
+//         }
+//       });
+//     }
+//   });
+// }
+
+// // Call the function for both tables after the data is loaded
+// document.addEventListener("DOMContentLoaded", () => {
+//   hideEmptyColumns("dataTable");
+//   hideEmptyColumns("dataTable2");
+// });
 
 
 
