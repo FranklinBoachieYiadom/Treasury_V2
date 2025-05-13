@@ -140,7 +140,7 @@
  // Retrieve the date value
  const dateValue = document.getElementById("incomeDate").value;
 
- // Validate the date
+ // Validate the date 
  if (!dateValue) {
     Swal.fire({
       title: "Error",
@@ -149,6 +149,14 @@
     });
     return; // Stop further execution
   }
+  else if (new Date(dateValue) > new Date()) {
+  Swal.fire({
+    title: "Error",
+    text: "The date cannot be in the future.",
+    icon: "error",
+  });
+  return; // Stop further execution
+}
 
 // Format the date to DD-MMM-YYYY
 const dateObject = new Date(dateValue);
