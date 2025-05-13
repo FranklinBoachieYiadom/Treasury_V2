@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
      input.addEventListener('input', calculateTotal);
    });
  
+
    // Function to calculate the total
    function calculateTotal() {
      let total = 0;
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
      document.getElementById('totalAmount').textContent = `Total Amount: GH₵${total.toFixed(2)}`;
    }
 
+
   // Remove Row button
   const removeRowBtn = document.getElementById('removeRowBtn');
   if (removeRowBtn) {
@@ -70,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
 
   // Calculate button
   const calculateBtn = document.getElementById('calculateBtn');
@@ -86,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('totalAmount').textContent = `Total Amount: GH₵${total.toFixed(2)}`;
     });
   }
+
 
   // Full view button (Its hidden on the screen)
   const fullBtn = document.getElementById('fullBtn');
@@ -108,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
+
   // Log out button
   const logOutButton = document.getElementById('log-out');
   if (logOutButton) {
@@ -192,8 +197,105 @@ if (filterBtn){
         grandTotalDiv.textContent = `Grand Total: GH₵${grandTotal.toFixed(2)}`;
         document.getElementById('cut-off-tables').appendChild(grandTotalDiv);
     }
-});
+
+     // Hide empty columns after filtering for both conference and district tables
+     hideEmptyColumnsAfterFilter('#dataTable');  // Hide empty columns for conference table
+     hideEmptyColumnsAfterFilter('#dataTable2'); // Hide empty columns for district table
+     calculateColumnTotals("dataTable");    // Calculate totals for conference table
+     calculateColumnTotals("dataTable2");   // Calculate totals for district table
+  });
 }
+
+
+
+// Function to hide empty columns after filtering based on the content of visible rows
+// This function checks each column in the table and hides it if all visible rows in that column are empty
+function hideEmptyColumnsAfterFilter(tableId) {
+  const table = document.querySelector(tableId);
+  const headers = table.querySelectorAll('thead th');
+  const rows = table.querySelectorAll('tbody tr');
+
+  headers.forEach((header, colIndex) => {
+    let isEmpty = true;
+
+    rows.forEach(row => {
+      if (row.style.display !== 'none') { // Only check visible rows
+        const cell = row.cells[colIndex];
+        if (cell && cell.textContent.trim() !== '') {
+          isEmpty = false; // If any visible cell has content, the column is not empty
+        }
+      }
+    });
+    // Hide the column if it is empty
+    if (isEmpty) {
+      header.style.display = 'none'; // Hide the header
+      rows.forEach(row => {
+        const cell = row.cells[colIndex];
+        if (cell) {
+          cell.style.display = 'none'; // Hide the cell
+        }
+      });
+    } else {
+      header.style.display = ''; // Ensure the header is visible if the column is not empty
+      rows.forEach(row => {
+        const cell = row.cells[colIndex];
+        if (cell) {
+          cell.style.display = ''; // Ensure the cell is visible if the column is not empty
+        }
+      });
+    }
+  });
+}
+
+
+
+// Function to calculate column totals and display them in the footer of the table
+function calculateColumnTotals(tableId) {
+  const table = document.getElementById(tableId);
+  const rows = table.querySelectorAll("tbody tr");
+  const totalRow = document.createElement("tr");
+  const columnCount = table.querySelectorAll("thead th").length;
+  // Initialize an array to store totals for each column
+  const columnTotals = new Array(columnCount).fill(0);
+  // Iterate through each row and calculate column totals for visible rows only
+  rows.forEach((row) => {
+    if (row.style.display !== "none") { // Only process visible rows
+      const cells = row.querySelectorAll("td");
+      cells.forEach((cell, colIndex) => {
+        if (colIndex > 0) { // Skip the first column (Date)
+          const value = parseFloat(cell.textContent.trim()) || 0;
+          columnTotals[colIndex] += value;
+        }
+      });
+    }
+  });
+  // Remove any existing total row
+  const existingTotalRow = table.querySelector("tfoot tr");
+  if (existingTotalRow) {
+    existingTotalRow.remove();
+  }
+  // Create the total row
+  for (let i = 0; i < columnCount; i++) {
+    if (i === 0 || columnTotals[i] !== 0) { // Skip columns with a total of 0
+      const cell = document.createElement("td");
+      if (i === 0) {
+        cell.textContent = "Total"; // Add "Total" label in the first column
+        cell.style.fontWeight = "bold";
+      } else {
+        cell.textContent = columnTotals[i].toFixed(2); // Add the total for each column
+      }
+      totalRow.appendChild(cell);
+    }
+  }
+  // Append the total row to the table footer
+  let tfoot = table.querySelector("tfoot");
+  if (!tfoot) {
+    tfoot = document.createElement("tfoot");
+    table.appendChild(tfoot);
+  }
+  tfoot.appendChild(totalRow);
+}
+
 
 
 //Here is the function calculation of the Denominations
@@ -236,6 +338,7 @@ denominationInputs.forEach((input) => {
 });
 
 
+
 // Function to handle the click event for the "Expenses Records" link Dropdown
   // This function toggles the visibility of the submenu
   const expensesRecords = document.getElementById("expensesRecords");
@@ -250,6 +353,7 @@ denominationInputs.forEach((input) => {
     });
   }
 
+  
 // Prevent form submission on Enter key press
 const AllForms = document.getElementById("incomeTableForm");
 AllForms.addEventListener("keydown", function(event) {
