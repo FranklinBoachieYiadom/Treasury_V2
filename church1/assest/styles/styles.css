@@ -532,6 +532,19 @@ th {
   background-color: #bdd64f;
 }
 
+.download-btn {
+  background-color: #0649bc;
+  color: #fff;
+  margin-left: 10px;
+}
+
+#downloadCutOffPdf{
+  background-color: #0649bc;
+  color: #fff;
+  margin-left: 20px;
+  font-size: smaller;
+}
+
 #cal-cutoff{
   margin: 0 45px;
 }

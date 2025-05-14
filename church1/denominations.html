@@ -137,36 +137,64 @@
                     <td><input type="number" id="tenP" class="amount-input"></td>
                     <td id="answer13"></td>
                 </tr>
-                <!-- <tr>
-                    <td><b>Total</b></td>
-                    <td colspan="2" id="grandTot"></td>
-                </tr> -->
-              
-          
+  
             </tbody>
           </table>
         </div>
       </div>
 
       <div class="buttons">
-        <div class="tooltip">
-            
+        <div class="tooltip"> 
           <button id="calDenom" class="btn save-btn" >Calculate</button>
           <span class="tooltiptext">Calculate</span>
         </div> 
-    </div>
+      </div>
+
     <div id="grandTot" class="total-amount"></div>
 </div>
 
-    <br><br><br><br><br>
+
+<div class="buttons">
+  <i class="fa-solid  fa-beat" style="--fa-animation-duration: 2s;" >
+    <button id="downloadPdf" class="btn download-btn" >
+      DOWNLOAD PAGE
+    </button>
+  </i>
+</div>
+
+<br> <br> <br>
+<!-- // This will be used for printing the grand total -->
+<div id="printGrandTotal" class="total-amount" style="display: block;">  </div>
+
+<br><br><br><br><br>
+    
+<footer class="footer">
+  <p>&copy; 2025 Phlashly Inc©. All rights reserved.</p>
+  <p>Contact us: <a href="mailto:franklinboachie@gmail.com">franklinboachie@gmail.com</a> | Phone: +233-540-896194</p>
+</footer>
 
 
-    <footer class="footer">
-      <p>&copy; 2025 Phlashly Inc©. All rights reserved.</p>
-      <p>Contact us: <a href="mailto:franklinboachie@gmail.com">franklinboachie@gmail.com</a> | Phone: +233-540-896194</p>
-    </footer>
   
-    <script src="./assest/scripts/script.js"></script>
+<script src="./assest/scripts/script.js"></script>
+
+    <script>
+      const downloadPdfButton = document.getElementById('downloadPdf');
+      downloadPdfButton.addEventListener('click', function() {
+        document.getElementById('calDenom').style.display = 'none'; // Hide the calculate button
+        document.getElementById('downloadPdf').style.display = 'none'; // Hide the download button
+        document.getElementById('grandTot').style.display = 'none'; // Hide the grand total
+        document.getElementById('printGrandTotal').style.display = 'block'; // Show the grand total for printing
+        const grandTotal = document.getElementById('grandTot').innerHTML;
+        document.getElementById('printGrandTotal').innerHTML = grandTotal; // Set the grand total for printing
+        window.print(); // Print the page
+        document.getElementById('calDenom').style.display = 'block'; // Show the calculate button again
+        document.getElementById('downloadPdf').style.display = 'block'; // Show the download button again
+        document.getElementById('grandTot').style.display = 'block'; // Show the grand total again
+        document.getElementById('printGrandTotal').style.display = 'none'; // Hide the grand total after printing
+
+      });
+    
+    </script>
 
    
   </body>
