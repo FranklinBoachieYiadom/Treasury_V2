@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ash.North SDA Church Treasury</title>
+    <link rel="icon" type="image/icon" href="./outsideAssest/images/favicon.png">
+    <link rel="stylesheet" href="./outsideAssest/styles/styles.css">
+    <script src="https://kit.fontawesome.com/8ebf6fd839.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <br><br><br><br>
+    <div class="form-container">
+        <form class="form" id="signupForm">
+            <img class="logo" src="./outsideAssest/images/logo.png" alt="logo">
+            <h2>Sign Up</h2>
+            <div class="form-group">
+                <label for="signupName">First Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="signupSurname">Surname</label>
+                <input type="text" id="surname" name="surname" required>
+            </div>
+            <div class="form-group">
+                <label for="church">Church</label>
+                <select id="church" name="church" required>
+                    <option value="" disabled selected>Select your Church</option>
+                    <option value="AshNorth">Ashaiman North</option>
+                    <option value="Church2">Church2</option>
+                    <option value="Church3">Church3</option>
+                    <option value="Church4">Church4</option>
+                    <option value="Church5">Church5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="key">Church Key</label>
+                <input type="text" id="key" name="key" required>
+            </div>
+            <div class="form-group">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="signupPassword">Confirm Password</label>
+                <input type="password" id="signupPasswordConfirm" name="passwordConfirm" required>
+            </div>
+            <div>
+                <input type="checkbox" id="togglePassword"> Show Password 
+            </div>
+            <br>
+            <button type="submit" id="submit" class="btn signup-btn">Sign Up</button>
+            <p class="form-text">Already have an account? <a href="login.html">Login</a></p>
+        </form>
+        <div id="spinner" class="spinner" style="display: none;">
+            <i class="fa fa-spinner fa-spin"></i> Signing Up...
+          </div>
+    </div>
+
+    <br><br><br><br>
+
+    <footer class="footer">
+        <p>&copy; 2025 Phlashly Inc©. All rights reserved.</p>
+        <p>Contact us: <a href="mailto:franklinboachie@gmail.com">franklinboachie@gmail.com</a> | Phone: +233-540-896194</p>
+      </footer>
+
+    <script type="module" src="./outsideAssest/js/signup.js"> </script>
+</body>
+</html>
