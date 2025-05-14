@@ -279,10 +279,11 @@ function calculateColumnTotals(tableId) {
     if (i === 0 || columnTotals[i] !== 0) { // Skip columns with a total of 0
       const cell = document.createElement("td");
       if (i === 0) {
-        cell.textContent = "Total"; // Add "Total" label in the first column
+        cell.textContent = "Total (GH₵)"; // Add "Total" label in the first column
         cell.style.fontWeight = "bold";
       } else {
         cell.textContent = columnTotals[i].toFixed(2); // Add the total for each column
+        cell.style.fontWeight = "bolder";
       }
       totalRow.appendChild(cell);
     }
