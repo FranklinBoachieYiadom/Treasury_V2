@@ -117,18 +117,24 @@
       <p>Contact us: <a href="mailto:franklinboachie@gmail.com">franklinboachie@gmail.com</a> | Phone: +233-540-896194</p>
     </footer>
 
+
+<!-- Placeholder for the datalist -->
+<div id="datalistContainer"></div>
+
+
     <script src="./assest/scripts/script.js"></script>
 
-    <datalist id="particularsList">
-      <option value="Utilities"></option>
-      <option value="Deaconery"></option>
-      <option value="Local Transport"></option>
-      <option value="Funeral"></option>
-      <option value="Charity"></option>
-    </datalist>
-
-
 <script>
+
+  // Dynamically load the datalist from an external file
+  fetch('./assest/datalist/local-expenditure-datalist.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('datalistContainer').innerHTML = data;
+    })
+    .catch(error => console.error('Error loading datalist:', error));
+
+
     // For the Save Button (Submit button for the form)
     const scriptURL =  "https://script.google.com/macros/s/AKfycbwfn3QAsi_s8g8pXZs_1j0p4Me3FqFhmdzSW99r2y7SiWiuI77B2oCsubCIKX78bJ01Bw/exec"                      
 

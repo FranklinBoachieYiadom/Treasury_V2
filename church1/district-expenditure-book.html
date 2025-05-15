@@ -116,15 +116,23 @@
       <p>Contact us: <a href="mailto:franklinboachie@gmail.com">franklinboachie@gmail.com</a> | Phone: +233-540-896194</p>
     </footer>
 
+    <!-- Placeholder for the datalist -->
+    <div id="datalistContainer"></div>
+
+
     <script src="./assest/scripts/script.js"></script>
 
-    <datalist id="particularsList">
-      <option value="Transportation"></option>
-      <option value="Doryumu Sch Project"></option>
-    </datalist>
+    <script>
+
+  // Dynamically load the datalist from an external file
+  fetch('./assest/datalist/district-expenditure-datalist.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('datalistContainer').innerHTML = data;
+    })
+    .catch(error => console.error('Error loading datalist:', error));
 
 
-<script>
     // For the Save Button (Submit button for the form)
     const scriptURL = 'https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec';
 
