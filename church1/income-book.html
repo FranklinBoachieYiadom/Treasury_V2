@@ -121,21 +121,25 @@
     </footer>
 
 
+<!-- Placeholder for the datalist -->
+<div id="datalistContainer"></div>
+
+
     <script src="./assest/scripts/script.js"></script>
 
-    <datalist id="particularsList">
-      <option value="Tithe"></option>
-      <option value="C.B.F"></option>
-      <option value="Loose Offering"></option>
-      <option value="Thanksgiving"></option>
-      <option value="Children Offering"></option>
-      <option value="Sabbath School"></option>
-
-<!-- //All new income data would be added here -->
-
-    </datalist>
+   
 
 <script>
+
+  // Dynamically load the datalist from an external file
+  fetch('./assest/datalist/income-datalist.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('datalistContainer').innerHTML = data;
+    })
+    .catch(error => console.error('Error loading datalist:', error));
+
+
     // For the Save Button (Submit button for the form Income)
     const totalIncomeScriptURL = "https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec";                     
     const conferenceScriptURL ="https://script.google.com/macros/s/AKfycbxCdDlJLrcq3qxlEcOW8oI73OJHXC-E3eOaapWiW4Qj9l6OHY8XO1cSK_oaqOWwx7fu9A/exec";
@@ -241,7 +245,7 @@ if (duplicateParticulars.length > 0) {
 
 // Proceed with saving if all particulars are valid
 const formData = new FormData(form);
-  let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));
+  let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));  // Retrieve user info from session storage
   if (UserInfo && UserInfo.fname) {
     formData.append("USER", UserInfo.fname);
   }
@@ -407,8 +411,14 @@ function saveDataToLocalStorage() {
 
     if (particularsInput && amountInput) {
       tableData.push({
-        particulars: particularsInput.value.trim(),
-        amount: parseFloat(amountInput.value) || 0,
+        particulars: {
+          value: particularsInput.value.trim(),
+        },
+        amount: {
+          value: parseFloat(amountInput.value) || 0,
+          id: amountInput.id || "", // Save the id
+          name: amountInput.name || "" //  Save the name's as well, which is the datalist values which is the same as the particulars 
+        }
       });
     }
   });
@@ -444,7 +454,7 @@ function loadDataFromLocalStorage() {
       // Add the particulars input
       const particularsInput = document.createElement("input");
       particularsInput.type = "text";
-      particularsInput.value = rowData.particulars;
+      particularsInput.value = rowData.particulars.value;
       particularsInput.classList.add("particulars-input");
       particularsInput.setAttribute("list", "particularsList");
       cell2.appendChild(particularsInput);
@@ -452,7 +462,9 @@ function loadDataFromLocalStorage() {
       // Add the amount input
       const amountInput = document.createElement("input");
       amountInput.type = "number";
-      amountInput.value = rowData.amount;
+      amountInput.value = rowData.amount.value;
+      amountInput.id = rowData.amount.id; // Restore the id
+      amountInput.name = rowData.amount.name; // Restore the name
       amountInput.classList.add("amount-input");
       cell3.appendChild(amountInput);
     });

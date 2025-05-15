@@ -306,8 +306,14 @@ function saveDataToLocalStorage() {
 
     if (particularsInput && amountInput) {
       tableData.push({
-        particulars: particularsInput.value.trim(),
-        amount: parseFloat(amountInput.value) || 0,
+        particulars: {
+          value: particularsInput.value.trim(),
+        },
+        amount: {
+          value: parseFloat(amountInput.value) || 0,
+          id: amountInput.id || "", // Save the id
+          name: amountInput.name || "" //  Save the name's as well, which is the datalist values which is the same as the particulars 
+        }
       });
     }
   });
@@ -343,7 +349,7 @@ function loadDataFromLocalStorage() {
       // Add the particulars input
       const particularsInput = document.createElement("input");
       particularsInput.type = "text";
-      particularsInput.value = rowData.particulars;
+      particularsInput.value = rowData.particulars.value;
       particularsInput.classList.add("particulars-input");
       particularsInput.setAttribute("list", "particularsList");
       cell2.appendChild(particularsInput);
@@ -351,7 +357,9 @@ function loadDataFromLocalStorage() {
       // Add the amount input
       const amountInput = document.createElement("input");
       amountInput.type = "number";
-      amountInput.value = rowData.amount;
+      amountInput.value = rowData.amount.value;
+      amountInput.id = rowData.amount.id; // Restore the id
+      amountInput.name = rowData.amount.name; // Restore the name
       amountInput.classList.add("amount-input");
       cell3.appendChild(amountInput);
     });
