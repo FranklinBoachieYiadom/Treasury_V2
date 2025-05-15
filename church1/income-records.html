@@ -142,7 +142,6 @@
 
         $(document).ready(function() {
             const webAppUrl = 'https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec';
-             //const webAppUrl = 'https://script.google.com/macros/s/AKfycbx4pI-Q_2fcUgb3R2rPr8meTV4oLukbfFyXqqSvdxPF6kjiWDNvmxcYZPvsBpKVS2kxJA/exec';
 
             // Show spinner
             $('#spinner2').show();
@@ -174,14 +173,15 @@
                         scrollCollapse: true, // Allow the table to shrink when fewer rows are displayed
                         paging: true, // Enable pagination
                         fixedColumns: {
-                            leftColumns: 1, // Freeze the first column (Date_Column)
+                            leftColumns: 1, // Freeze the first column (Num column)
                             rightColumns: 1 // Freeze the last column (Total)
                         },
                         order: [[0, "desc"]], // Order by the first column (NUM) in descending order
                         pageLength: 10, // Set the number of rows per page
                         lengthMenu: [5, 10, 25, 50, 100, 200] // Options for number of rows per page
                     });
-
+                    
+                    // Hide empty columns function
                     hideEmptyColumns("dataTable");// Call the function to hide empty columns
 
                 })
@@ -193,7 +193,7 @@
           });
 
 
-    });
+    });// End of DOMContentLoaded event
     </script>
 </body>
 </html>
