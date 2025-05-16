@@ -127,10 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
           sessionStorage.removeItem("monthlyIncome");
           sessionStorage.removeItem("monthlyExpenditure");
           localStorage.removeItem("amountTableData");
-          localStorage.removeItem("incomeTableData");
-          localStorage.removeItem("localExpenditureTableData");
-          localStorage.removeItem("districtExpenditureTableData");
-          localStorage.removeItem("confExpenditureTableData");
+          sessionStorage.removeItem("incomeTableData");
+          sessionStorage.removeItem("localExpenditureTableData");
+          sessionStorage.removeItem("districtExpenditureTableData");
+          sessionStorage.removeItem("confExpenditureTableData");
           window.location.href = '../index.html';
         }
       });
