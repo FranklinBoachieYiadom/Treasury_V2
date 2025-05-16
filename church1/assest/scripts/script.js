@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
           sessionStorage.removeItem("user-info");
           sessionStorage.removeItem("monthlyIncome");
           sessionStorage.removeItem("monthlyExpenditure");
-          localStorage.removeItem("amountTableData");
+          localStorage.removeItem("fullViewTableData");
           sessionStorage.removeItem("incomeTableData");
           sessionStorage.removeItem("localExpenditureTableData");
           sessionStorage.removeItem("districtExpenditureTableData");
