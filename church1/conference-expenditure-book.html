@@ -303,8 +303,8 @@ if (duplicateParticulars.length > 0) {
 
 
 
-// Save data to localStorage whenever the user modifies the table
-function saveDataToLocalStorage() {
+// Save data to SessionStorage whenever the user modifies the table
+function saveDataToSessionStorage() {
   const rows = document.querySelectorAll("#amountTable tbody tr");
   const tableData = [];
 
@@ -326,19 +326,19 @@ function saveDataToLocalStorage() {
     }
   });
 
-  localStorage.setItem("confExpenditureTableData", JSON.stringify(tableData));
+  sessionStorage.setItem("confExpenditureTableData", JSON.stringify(tableData));
 }
 // Add event listeners to save data when inputs change
 document.addEventListener("input", (event) => {
   if (event.target.closest("#amountTable")) {
-    saveDataToLocalStorage();
+    saveDataToSessionStorage();
   }
 });
 
 
-// Load data from localStorage when the page loads
-function loadDataFromLocalStorage() {
-  const savedData = localStorage.getItem("confExpenditureTableData");
+// Load data from SessionStorage when the page loads
+function loadDataFromSessionStorage() {
+  const savedData = sessionStorage.getItem("confExpenditureTableData");
 
   if (savedData) {
     const tableData = JSON.parse(savedData);
@@ -375,7 +375,7 @@ function loadDataFromLocalStorage() {
 }
 
 // Call the function to load data when the page loads
-document.addEventListener("DOMContentLoaded", loadDataFromLocalStorage);
+document.addEventListener("DOMContentLoaded", loadDataFromSessionStorage);
 
 
     
