@@ -15,7 +15,7 @@ function normalizeParticulars(particulars) {
   
   // Function to populate the tables with data from localStorage
   function populateTables() {
-    const amountTableData = JSON.parse(localStorage.getItem('amountTableData')) || [];
+    const amountTableData = JSON.parse(localStorage.getItem('fullViewTableData')) || [];
     const fullAmountTable = document.getElementById('fullAmountTable').getElementsByTagName('tbody')[0];
     const localFundTable = document.getElementById('localFundTable').getElementsByTagName('tbody')[0];
     const conferenceFundTable = document.getElementById('conferenceFundTable').getElementsByTagName('tbody')[0];

@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
       }
-      localStorage.setItem('amountTableData', JSON.stringify(amountTableData));
+      localStorage.setItem('fullViewTableData', JSON.stringify(amountTableData));
       window.location.href = 'full-view.html';
     });
   }
