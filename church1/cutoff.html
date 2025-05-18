@@ -58,7 +58,7 @@
       </nav>
 
 <br><br><br><br>
-    <div class="date-filter-container">
+    <div class="date-filter-container" id="filter-selector">
         <label for="fromDate" class="date-label">From:</label>
         <input type="date" id="fromDate" class="date-input">
         
@@ -132,6 +132,19 @@
     <br>
     <div id="grandTotal" style="font-size: 40px; text-align: center; color: rgb(21, 35, 47); text-decoration: solid;" ></div>
 
+<div class="signatures">
+    <div id="first-signature" >
+        <span>...........................................</span>
+        <br>
+        <p style="margin-left: 60px;">First Elder</p>
+    </div>
+    <div id="second-signature">
+        <span>..............................................</span>
+        <br>
+        <p style="margin-right: 70px;">Treasurer</p>
+    </div>
+</div>
+
 
     <div class="buttons">
         <i class="fa-solid  fa-beat" style="--fa-animation-duration: 2s;" >
@@ -145,7 +158,7 @@
     
 </div>
 
-<footer class="footer">
+<footer class="footer" id="footer">
     <p>&copy; 2025 Phlashly Inc©. All rights reserved.</p>
     <p>Contact us: <a href="mailto:franklinboachie@gmail.com">franklinboachie@gmail.com</a> | Phone: +233-540-896194</p>
 </footer>
@@ -153,6 +166,23 @@
 
 
 <script>
+
+        const downloadPdfButton = document.getElementById('downloadCutOffPdf');
+        downloadPdfButton.addEventListener('click', function() {
+        document.getElementById('filter-selector').style.display = 'none'; // Hide the filter selector
+        document.getElementById('downloadCutOffPdf').style.display = 'none'; // Hide the download button
+        document.getElementById('footer').style.display = 'none'; // Hide the footer
+
+        window.print(); // Print the page
+
+        document.getElementById('filter-selector').style.display = 'block'; // Show the calculate button again
+        document.getElementById('downloadCutOffPdf').style.display = 'block'; // Show the download button again
+        document.getElementById('footer').style.display = 'block'; // Hide the footer
+
+      });
+
+
+
 
         $(document).ready(function() {
             const webAppUrl = 'https://script.google.com/macros/s/AKfycbyuWNfL4LByPRBo9pGUk_27DHAF-xiX8yR0ubIcbpa_yqQdTdICNvUo2iqlvTml1rXg/exec';
