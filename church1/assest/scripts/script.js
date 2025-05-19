@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   
-//Here is the function for the cut-off table
+//Here is the function for the cut-off table when the filter button is clicked
 const filterBtn = document.getElementById('filterBtn');
 if (filterBtn){
   filterBtn.addEventListener('click', () => {
@@ -355,13 +355,17 @@ denominationInputs.forEach((input) => {
   }
 
   
-// Prevent form submission on Enter key press
-const AllForms = document.getElementById("incomeTableForm");
-AllForms.addEventListener("keydown", function(event) {
+// Prevent form submission on Enter key press (All the forms thus; incomeTableForm, localExpenditureForm, districtExpenditureForm, confExpenditureForm)
+// All the forms have the same id thus incomeTableForm
+const incomeTableForm = document.getElementById("incomeTableForm");
+if (incomeTableForm) {
+  incomeTableForm.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
-        event.preventDefault();
+      event.preventDefault();
     }
-});
+  });
+}
+
 
 
 
