@@ -1,3 +1,57 @@
+
+  // The code below is a function that hides empty columns in a table. 
+  // It checks each column in the table and hides it if all cells in that column are empty. 
+  // The function is called after the data is fetched and the table is populated.
+  // Used by (Income Records, Local Income Records, Local Expenditure Records, District Records, Conference Records )
+  function hideEmptyColumns(tableId) {
+    const table = document.getElementById(tableId);
+    const headers = table.querySelectorAll("thead th");
+    const rows = table.querySelectorAll("tbody tr");
+  
+    if (!table || headers.length === 0 || rows.length === 0) {
+      console.warn(`Table with ID "${tableId}" is empty or not found.`);
+      return;
+    }
+  
+    // Iterate through each column
+    headers.forEach((header, colIndex) => {
+      let isEmpty = true;
+  
+      // Check if all cells in the column are empty
+      rows.forEach((row) => {
+        const cell = row.cells[colIndex];
+        if (cell && cell.textContent.trim() !== "") {
+          isEmpty = false; // If any cell has content, the column is not empty
+        }
+      });
+  
+      // Hide the column if it is empty
+      if (isEmpty) {
+        // Hide the header
+        header.style.display = "none";
+  
+        // Hide all cells in the column
+        rows.forEach((row) => {
+          const cell = row.cells[colIndex];
+          if (cell) {
+            cell.style.display = "none";
+          }
+        });
+      } else {
+        // Ensure the header and cells are visible if the column is not empty
+        header.style.display = ""; // Make the header visible
+        rows.forEach((row) => {
+          const cell = row.cells[colIndex];
+          if (cell) {
+            cell.style.display = ""; // Make the cell visible
+          }
+        });
+      }
+    });
+  }
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
   // Add Row button
   const addRowBtn = document.getElementById('addRowBtn');
@@ -91,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // Full view button (Its hidden on the screen)
+  // Full view button (Its hidden on the screen), but its clicked when income record is saved
   const fullBtn = document.getElementById('fullBtn');
   if (fullBtn) {
     fullBtn.addEventListener('click', () => {
@@ -113,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
 
-  // Log out button
+// Log out button
   const logOutButton = document.getElementById('log-out');
   if (logOutButton) {
     logOutButton.addEventListener('click', () => {
@@ -137,7 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  
+
+// Used by the cut-off table
 //Here is the function for the cut-off table when the filter button is clicked
 const filterBtn = document.getElementById('filterBtn');
 if (filterBtn){
@@ -199,13 +254,12 @@ if (filterBtn){
     }
 
      // Hide empty columns after filtering for both conference and district tables
-     hideEmptyColumnsAfterFilter('#dataTable');  // Hide empty columns for conference table
+     hideEmptyColumnsAfterFilter('#dataTable1');  // Hide empty columns for conference table
      hideEmptyColumnsAfterFilter('#dataTable2'); // Hide empty columns for district table
-     calculateColumnTotals("dataTable");    // Calculate totals for conference table
+     calculateColumnTotals("dataTable1");    // Calculate totals for conference table
      calculateColumnTotals("dataTable2");   // Calculate totals for district table
   });
 }
-
 
 
 // Function to hide empty columns after filtering based on the content of visible rows
@@ -246,8 +300,6 @@ function hideEmptyColumnsAfterFilter(tableId) {
     }
   });
 }
-
-
 
 // Function to calculate column totals and display them in the footer of the table
 function calculateColumnTotals(tableId) {
@@ -298,7 +350,7 @@ function calculateColumnTotals(tableId) {
 }
 
 
-
+//Used by the denominations table
 //Here is the function calculation of the Denominations
 function calculateDenomination(id1, amount, id2) {
   const input = document.getElementById(id1).value;
@@ -339,8 +391,7 @@ denominationInputs.forEach((input) => {
 });
 
 
-
-// Function to handle the click event for the "Expenses Records" link Dropdown
+// Function to handle the click event for the "Expenses Records Tab" link Dropdown
   // This function toggles the visibility of the submenu
   const expensesRecords = document.getElementById("expensesRecords");
   const expensesSubmenu = document.getElementById("expensesSubmenu");
@@ -353,7 +404,6 @@ denominationInputs.forEach((input) => {
         expensesSubmenu.style.display === "block" ? "none" : "block";
     });
   }
-
   
 // Prevent form submission on Enter key press (All the forms thus; incomeTableForm, localExpenditureForm, districtExpenditureForm, confExpenditureForm)
 // All the forms have the same id thus incomeTableForm
@@ -368,5 +418,6 @@ if (incomeTableForm) {
 
 
 
+});// End of DOMContentLoaded event
 
-});
+

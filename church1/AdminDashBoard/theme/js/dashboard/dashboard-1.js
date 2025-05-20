@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycby9-laPphroGrCkAsLCIUhM9ZHXhzfB5AB_bW5013Kxi33_epoj47Zd2qKzZM3pxOxryQ/exec';
-    const LocalIncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbwJtMQTFn6sIT2z06yDEBzo39NLYURzkeECRKy6rep9WaTKZOWSCS7Y38bxCa63TBZDnw/exec';
+    // const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycby9-laPphroGrCkAsLCIUhM9ZHXhzfB5AB_bW5013Kxi33_epoj47Zd2qKzZM3pxOxryQ/exec';
+    // const LocalIncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbwJtMQTFn6sIT2z06yDEBzo39NLYURzkeECRKy6rep9WaTKZOWSCS7Y38bxCa63TBZDnw/exec';
   
     const spinnerIncomeExpenditure = document.getElementById('spinner5');
     const chartIncomeExpenditure = document.getElementById('morris-bar-chart');

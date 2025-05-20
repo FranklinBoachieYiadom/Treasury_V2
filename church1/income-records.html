@@ -61,7 +61,7 @@
       </nav>
       <br><br>
     <div class="container mt-5">
-        <h2 class="records-header" style="background-color:#007bff;">TOTAL INCOME RECORDS</h2>
+        <h2 class="records-header" style="background-color:#007bff;">ALL INCOME RECORDS</h2>
         <div class="table-responsive">
             <!-- Spinner -->
             <div id="spinner2" class="spinner2" style="display: none;">
@@ -101,53 +101,17 @@
       </footer>
 
     <script src="./assest/scripts/script.js"></script>
+    <script src="./assest/webAppUrls/weburls.js"></script>
 
     <script>
-//   document.addEventListener('DOMContentLoaded', () => {
-//   // Function to hide all empty columns in the table
-//   function hideEmptyColumns(tableId) {
-//     const table = document.getElementById(tableId);
-//     const headers = table.querySelectorAll("thead th");
-//     const rows = table.querySelectorAll("tbody tr");
-
-//     if (!table || headers.length === 0 || rows.length === 0) {
-//       console.warn(`Table with ID "${tableId}" is empty or not found.`);
-//       return;
-//     }
-//     // Iterate through each column
-//     headers.forEach((header, colIndex) => {
-//       let isEmpty = true;
-//     // Check if all cells in the column are empty
-//       rows.forEach((row) => {
-//         const cell = row.cells[colIndex];
-//         if (cell && cell.textContent.trim() !== "") {
-//           isEmpty = false; // If any cell has content, the column is not empty
-//         }
-//       });
-//       // Hide the column if it is empty
-//       if (isEmpty) {
-//         // Hide the header
-//         header.style.display = "none";
-//         // Hide all cells in the column
-//         rows.forEach((row) => {
-//           const cell = row.cells[colIndex];
-//           if (cell) {
-//             cell.style.display = "none";
-//           }
-//         });
-//       }
-//     });
-//   }
-// // The code above is a function that hides empty columns in a table. It checks each column in the table and hides it if all cells in that column are empty. The function is called after the data is fetched and the table is populated.
-
-
         $(document).ready(function() {
-            const webAppUrl = 'https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec';
+            // const IncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec';
+            // Reference the web app URL from the external script weburls.js  
 
             // Show spinner
             $('#spinner2').show();
 
-            fetch(webAppUrl)
+            fetch(IncomeWebAppUrl)
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById('tableBody');
@@ -171,7 +135,7 @@
                         tableBody.appendChild(tr);
                     });
 
-                     // call the Hide empty columns function
+                     // Hide empty columns function (Function in  external script.js)
                      hideEmptyColumns("dataTable4");// Call the function to hide empty columns
 
                     $('#dataTable4').DataTable({
@@ -195,59 +159,6 @@
                 });
           });
 
-
-  
-  // The code below is a function that hides empty columns in a table. 
-  // It checks each column in the table and hides it if all cells in that column are empty. 
-  // The function is called after the data is fetched and the table is populated.
-  function hideEmptyColumns(tableId) {
-  const table = document.getElementById(tableId);
-  const headers = table.querySelectorAll("thead th");
-  const rows = table.querySelectorAll("tbody tr");
-
-  if (!table || headers.length === 0 || rows.length === 0) {
-    console.warn(`Table with ID "${tableId}" is empty or not found.`);
-    return;
-  }
-
-  // Iterate through each column
-  headers.forEach((header, colIndex) => {
-    let isEmpty = true;
-
-    // Check if all cells in the column are empty
-    rows.forEach((row) => {
-      const cell = row.cells[colIndex];
-      if (cell && cell.textContent.trim() !== "") {
-        isEmpty = false; // If any cell has content, the column is not empty
-      }
-    });
-
-    // Hide the column if it is empty
-    if (isEmpty) {
-      // Hide the header
-      header.style.display = "none";
-
-      // Hide all cells in the column
-      rows.forEach((row) => {
-        const cell = row.cells[colIndex];
-        if (cell) {
-          cell.style.display = "none";
-        }
-      });
-    } else {
-      // Ensure the header and cells are visible if the column is not empty
-      header.style.display = ""; // Make the header visible
-      rows.forEach((row) => {
-        const cell = row.cells[colIndex];
-        if (cell) {
-          cell.style.display = ""; // Make the cell visible
-        }
-      });
-    }
-  });
-}
-
-    // });// End of DOMContentLoaded event
     </script>
 </body>
 </html>

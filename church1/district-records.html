@@ -58,7 +58,7 @@
       </nav>
       <br><br>
     <div class="container mt-5">
-    <h2 class="records-header" style="background-color:#07836c;">TOTAL DISTRICT RECORDS</h2>
+    <h2 class="records-header" style="background-color:#07836c;"> DISTRICT RECORDS</h2>
         <div class="table-responsive">
             <!-- Spinner -->
             <div id="spinner2" class="spinner2" style="display: none;">
@@ -96,16 +96,20 @@
       </footer>
 
     <script src="./assest/scripts/script.js"></script>
+    <script src="./assest/webAppUrls/weburls.js"></script>
+
+
 
     <script>
 
         $(document).ready(function() {
-            const webAppUrl = 'https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec';
+            // const DistrictWebAppUrl = 'https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec';
+            // Reference the web app URL from the external script weburls.js
 
             // Show spinner
             $('#spinner2').show();
 
-            fetch(webAppUrl)
+            fetch(DistrictWebAppUrl)
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById('tableBody');
@@ -125,7 +129,8 @@
                         `;
                         tableBody.appendChild(tr);
                     });
-                    // Call function to Hide empty columns function
+
+                    // Hide empty columns function (Function in  external script.js)
                     hideEmptyColumns("dataTable6");// Call the function to hide empty columns
 
                     $('#dataTable6').DataTable({
@@ -150,59 +155,6 @@
                 });
           });
 
-
-
-  
-
-  // The code below is a function that hides empty columns in a table. 
-  // It checks each column in the table and hides it if all cells in that column are empty. 
-  // The function is called after the data is fetched and the table is populated.
-  function hideEmptyColumns(tableId) {
-  const table = document.getElementById(tableId);
-  const headers = table.querySelectorAll("thead th");
-  const rows = table.querySelectorAll("tbody tr");
-
-  if (!table || headers.length === 0 || rows.length === 0) {
-    console.warn(`Table with ID "${tableId}" is empty or not found.`);
-    return;
-  }
-
-  // Iterate through each column
-  headers.forEach((header, colIndex) => {
-    let isEmpty = true;
-
-    // Check if all cells in the column are empty
-    rows.forEach((row) => {
-      const cell = row.cells[colIndex];
-      if (cell && cell.textContent.trim() !== "") {
-        isEmpty = false; // If any cell has content, the column is not empty
-      }
-    });
-
-    // Hide the column if it is empty
-    if (isEmpty) {
-      // Hide the header
-      header.style.display = "none";
-
-      // Hide all cells in the column
-      rows.forEach((row) => {
-        const cell = row.cells[colIndex];
-        if (cell) {
-          cell.style.display = "none";
-        }
-      });
-    } else {
-      // Ensure the header and cells are visible if the column is not empty
-      header.style.display = ""; // Make the header visible
-      rows.forEach((row) => {
-        const cell = row.cells[colIndex];
-        if (cell) {
-          cell.style.display = ""; // Make the cell visible
-        }
-      });
-    }
-  });
-}
     
     </script>
 </body>
