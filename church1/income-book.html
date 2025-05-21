@@ -466,6 +466,9 @@ function loadDataFromSessionStorage() {
       amountInput.value = rowData.amount.value;
       amountInput.id = rowData.amount.id; // Restore the id
       amountInput.name = rowData.amount.name; // Restore the name
+      amountInput.setAttribute("step", "any"); // Allow decimal numbers
+      amountInput.setAttribute("min", "1"); // Set minimum value to 1
+      amountInput.setAttribute("required", "required");   // Set required attribute
       amountInput.classList.add("amount-input");
       cell3.appendChild(amountInput);
     });

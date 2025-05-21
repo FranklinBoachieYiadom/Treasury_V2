@@ -81,6 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
       amountInput.classList.add('amount-input');
       amountInput.placeholder = 'Enter amount';
       amountInput.step='any';   // This allows for decimal numbers 
+      amountInput.min = 1; // Set minimum value to 1
+      amountInput.required = true;  // Make the input required for amount
       cell3.appendChild(amountInput);
 
       // Set the ID of the amount input based on the particulars input value
