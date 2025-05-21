@@ -70,6 +70,10 @@
 
     
     <div id='cut-off-tables' style="display: none;">
+        <div class="cut-off-header">
+            <h2 class="cut-off-subtitle" id="cut-off-subtitle">CUTOFF SHEET from (In script)</h2>
+        </div>
+
       
     <div class="container mt-5">
     <h2 class="records-header" style="background-color:#90066b;">CONFERENCE FUNDS</h2>
@@ -92,7 +96,7 @@
                         <th>Total</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
+                <tbody id="tableBody1">
                     <!-- Data will be dynamically loaded here -->
                 </tbody>
             </table>
@@ -132,20 +136,6 @@
     <br>
     <div id="grandTotal" style="font-size: 40px; text-align: center; color: rgb(21, 35, 47); text-decoration: solid;" ></div>
 
-<div class="signatures">
-    <div id="first-signature" >
-        <span>...........................................</span>
-        <br>
-        <p style="margin-left: 60px;">First Elder</p>
-    </div>
-    <div id="second-signature">
-        <span>..............................................</span>
-        <br>
-        <p style="margin-right: 70px;">Treasurer</p>
-    </div>
-</div>
-
-
     <div class="buttons">
         <i class="fa-solid  fa-beat" style="--fa-animation-duration: 2s;" >
           <button id="downloadCutOffPdf" class="btn download-btn" >
@@ -153,6 +143,20 @@
           </button>
         </i>
       </div>
+
+
+      <div class="signatures" >
+        <div id="first-signature" style="display: none;">
+            <span>...........................................</span>
+            <br>
+            <p style="margin-left: 60px;">First Elder</p>
+        </div>
+        <div id="second-signature" style="display: none;">
+            <span>..............................................</span>
+            <br>
+            <p style="margin-right: 70px;">Treasurer</p>
+        </div>
+    </div>
       
     <br><br><br><br>
     
@@ -174,12 +178,16 @@
         downloadPdfButton.addEventListener('click', function() {
         document.getElementById('filter-selector').style.display = 'none'; // Hide the filter selector
         document.getElementById('downloadCutOffPdf').style.display = 'none'; // Hide the download button
+        document.getElementById('first-signature').style.display = 'block'; // Show the signatures
+        document.getElementById('second-signature').style.display = 'block'; // Show the signatures
         document.getElementById('footer').style.display = 'none'; // Hide the footer
-
+       
         window.print(); // Print the page
 
         document.getElementById('filter-selector').style.display = 'block'; // Show the calculate button again
         document.getElementById('downloadCutOffPdf').style.display = 'block'; // Show the download button again
+        document.getElementById('first-signature').style.display = 'none'; // Hide the signatures
+        document.getElementById('second-signature').style.display = 'none'; // Hide the signatures
         document.getElementById('footer').style.display = 'block'; // Hide the footer
 
       });
@@ -197,7 +205,7 @@
             fetch(ConferenceWebAppUrl)
                 .then(response => response.json())
                 .then(data => {
-                    const tableBody = document.getElementById('tableBody');
+                    const tableBody1 = document.getElementById('tableBody1');
                     data.forEach(row => {
                         let tr = document.createElement('tr');
                         // Format the date
@@ -218,7 +226,7 @@
                             <td>${row['CAMP-GOAL']}</td>
                             <td>${row['TOTAL']}</td>    
                         `;
-                        tableBody.appendChild(tr);
+                        tableBody1.appendChild(tr);
                     });
                     $('#dataTable1').DataTable({
                         searching: false, // Disable the search functionality

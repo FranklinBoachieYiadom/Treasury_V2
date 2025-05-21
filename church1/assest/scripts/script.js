@@ -199,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const filterBtn = document.getElementById('filterBtn');
 if (filterBtn){
   filterBtn.addEventListener('click', () => {
+    
     document.getElementById('cut-off-tables').style.display = 'block';
     const fromDateInput = document.getElementById('fromDate').value;
     const toDateInput = document.getElementById('toDate').value;
@@ -210,7 +211,11 @@ if (filterBtn){
     const toDate = new Date(toDateInput);
     toDate.setHours(23, 59, 59, 999); // Set to end of the day
 
-    const tableRows = document.querySelectorAll('#dataTable tbody tr, #dataTable2 tbody tr');
+    // Set the cut-off subtitle with the dates
+    document.getElementById('cut-off-subtitle').innerHTML = "CUT OFF FROM " + fromDate.toLocaleDateString() + " TO " + toDate.toLocaleDateString();
+
+
+    const tableRows = document.querySelectorAll('#dataTable1 tbody tr, #dataTable2 tbody tr');
     let conferenceTotal = 0;
     let districtTotal = 0;
 
@@ -226,7 +231,7 @@ if (filterBtn){
                 const totalCell = row.cells[row.cells.length - 1]; // Assuming the last column is "Total"
                 const totalValue = parseFloat(totalCell.textContent.trim()) || 0;
 
-                if (row.closest('#dataTable')) {
+                if (row.closest('#dataTable1')) {
                     conferenceTotal += totalValue; // Add to conference total
                 } else if (row.closest('#dataTable2')) {
                     districtTotal += totalValue; // Add to district total
