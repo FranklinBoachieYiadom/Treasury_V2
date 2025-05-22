@@ -18,7 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Only show the menu nav link if the user role is admin
     if (HideMenu){
       if(UserInfo.role === "admin"){
-        HideMenu.style.display ="block" ;
+        HideMenu.style.display ="block" ;   //Show the menu, only if the user is an admin
+      }
+      else{
+        HideMenu.style.display ="none" ;  //Hide the menu, only if the user is not an admin
       }
     }
 
