@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ash.North SDA Church Treasury</title>
+    <title>Treasury-App</title>
     <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
     <link rel="stylesheet" href="./assest/styles/styles.css" />
     <script src="https://kit.fontawesome.com/8ebf6fd839.js" crossorigin="anonymous"></script>
@@ -118,276 +118,274 @@
     </footer>
 
 
-<!-- Placeholder for the datalist -->
-<div id="datalistContainer"></div>
+    <!-- Placeholder for the datalist -->
+    <div id="datalistContainer"></div>
 
 
-<script src="./assest/scripts/script.js"></script>
-<script src="./assest/webAppUrls/weburls.js"></script>
+    <script src="./assest/scripts/script.js"></script>
+    <script src="./assest/webAppUrls/weburls.js"></script>
 
-<script>
-
-  // Dynamically load the datalist from an external file
-  fetch('./assest/datalist/local-expenditure-datalist.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('datalistContainer').innerHTML = data;
-    })
-    .catch(error => console.error('Error loading datalist:', error));
-
-
-   
-    // const ExpenditureWebAppUrl =  "https://script.google.com/macros/s/AKfycbwfn3QAsi_s8g8pXZs_1j0p4Me3FqFhmdzSW99r2y7SiWiuI77B2oCsubCIKX78bJ01Bw/exec"  
-    // Reference the web app URL from the external script weburls.js   
-
- // For the Save Button (Submit button for the form)
-    const form = document.forms["incomeTableForm"];
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-//**********************************************************************
-//Checking if the particulars entered by the user exist in the datalist first before saving
- // Get all valid datalist options
- const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
-
- // Retrieve the date value
- const dateValue = document.getElementById("incomeDate").value;
-
- // Validate the date value and check if its not empty or in the future
- if (!dateValue) {
-    Swal.fire({
-      title: "Error",
-      text: "Please select a date before saving.",
-      icon: "error",
-    });
-    return; // Stop further execution
-  }
-  else if (new Date(dateValue) > new Date()) {
-  Swal.fire({
-    title: "Error",
-    text: "The date cannot be in the future.",
-    icon: "error",
-  });
-  return; // Stop further execution
-}
-
-// Format the date to DD-MMM-YYYY
-const dateObject = new Date(dateValue);
-const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const formattedDate = `${String(dateObject.getDate()).padStart(2, '0')}-${monthNames[dateObject.getMonth()]}-${dateObject.getFullYear()}`;
-
-// Validate user inputs
-const rows = document.querySelectorAll("#amountTable tbody tr");
-let invalidParticulars = [];
-let emptyParticulars = [];
-let particularsSet = new Set(); // To track duplicates
-let duplicateParticulars = [];
-
-rows.forEach((row) => {
-  const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
-  const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
-
- // Check if the particulars are empty
- if (!particulars) {
-      emptyParticulars.push(`Row ${row.rowIndex}`); // Add the row number with empty particulars
-      return; // Skip further checks for this row
-    }
-
-  // Check if the particulars are valid
-  if (!datalistOptions.includes(particulars)) {
-    invalidParticulars.push(particulars); // Add invalid value to the list
-  }
-
-  // Check for duplicates
-    if (particularsSet.has(particulars)) {
-      duplicateParticulars.push(particulars); // Add duplicate value to the list
-    } else {
-      particularsSet.add(particulars); // Add to the set
-    }
-});
-
- // If there are empty particulars, show an alert and stop the form submission
- if (emptyParticulars.length > 0) {
-    Swal.fire({
-      title: "Empty Particulars",
-      text: `The following rows have empty particulars: ${emptyParticulars.join(", ")}`,
-      icon: "error"
-    });
-    return; // Stop further execution
-  }
-
-// If there are invalid particulars, show an alert and stop the form submission
-if (invalidParticulars.length > 0) {
-  Swal.fire({
-    title: "Invalid Particulars",
-    text: `Check this Particular(s): ${invalidParticulars.join(", ")}`,
-    icon: "error"
-  });
-  return; // Stop further execution
-}
-
-// If there are duplicate particulars, show an alert and stop the form submission
-if (duplicateParticulars.length > 0) {
-  Swal.fire({
-    title: "Duplicate Particulars",
-    text: `The following Particular(s) appear more than once: ${duplicateParticulars.join(", ")}`,
-    icon: "error"
-  });
-  return; // Stop further execution
-}// End of checking for invalid and duplicate particulars
-//**********************************************************************
-
-
-      var formData = new FormData(form);
-
-       // Get user info from session storage and append to the form to be sent
-       let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));
-      if (UserInfo && UserInfo.fname) {
-          formData.append("USER", UserInfo.fname);
-      }
-
-       // Append the formated date to the form data
-      formData.append("DATE", formattedDate);
-
-       // Calculate all the expenditures provided by the user
-       let totalExpenditure = 0;
-      const amountInputs = document.querySelectorAll("#amountTable tbody tr td:nth-child(3) input");
-      amountInputs.forEach(input => {
-          const value = parseFloat(input.value) || 0; // Default to 0 if the input is empty or invalid
-          totalExpenditure += value;
-      });
-
-      // Check if total Expenditure to be sent is 0
-      if (totalExpenditure === 0) {
+    <script>
+    
+      // Dynamically load the datalist from an external file
+      fetch('./assest/datalist/local-expenditure-datalist.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('datalistContainer').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading datalist:', error));
+      
+      
+      
+        // const ExpenditureWebAppUrl =  "https://script.google.com/macros/s/AKfycbwfn3QAsi_s8g8pXZs_1j0p4Me3FqFhmdzSW99r2y7SiWiuI77B2oCsubCIKX78bJ01Bw/exec"  
+        // Reference the web app URL from the external script weburls.js   
+      
+     // For the Save Button (Submit button for the form)
+        const form = document.forms["incomeTableForm"];
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+        
+    //**********************************************************************
+    //Checking if the particulars entered by the user exist in the datalist first before saving
+     // Get all valid datalist options
+     const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
+        
+     // Retrieve the date value
+     const dateValue = document.getElementById("incomeDate").value;
+        
+     // Validate the date value and check if its not empty or in the future
+     if (!dateValue) {
         Swal.fire({
           title: "Error",
-          text: "Total Expenditure cannot be 0. Please enter valid amounts.",
+          text: "Please select a date before saving.",
+          icon: "error",
+        });
+        return; // Stop further execution
+      }
+      else if (new Date(dateValue) > new Date()) {
+      Swal.fire({
+        title: "Error",
+        text: "The date cannot be in the future.",
+        icon: "error",
+      });
+      return; // Stop further execution
+    }
+
+    // Format the date to DD-MMM-YYYY
+    const dateObject = new Date(dateValue);
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedDate = `${String(dateObject.getDate()).padStart(2, '0')}-${monthNames[dateObject.getMonth()]}-${dateObject.getFullYear()}`;
+
+    // Validate user inputs
+    const rows = document.querySelectorAll("#amountTable tbody tr");
+    let invalidParticulars = [];
+    let emptyParticulars = [];
+    let particularsSet = new Set(); // To track duplicates
+    let duplicateParticulars = [];
+
+    rows.forEach((row) => {
+      const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
+      const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
+    
+     // Check if the particulars are empty
+     if (!particulars) {
+          emptyParticulars.push(`Row ${row.rowIndex}`); // Add the row number with empty particulars
+          return; // Skip further checks for this row
+        }
+      
+      // Check if the particulars are valid
+      if (!datalistOptions.includes(particulars)) {
+        invalidParticulars.push(particulars); // Add invalid value to the list
+      }
+    
+      // Check for duplicates
+        if (particularsSet.has(particulars)) {
+          duplicateParticulars.push(particulars); // Add duplicate value to the list
+        } else {
+          particularsSet.add(particulars); // Add to the set
+        }
+    });
+
+     // If there are empty particulars, show an alert and stop the form submission
+     if (emptyParticulars.length > 0) {
+        Swal.fire({
+          title: "Empty Particulars",
+          text: `The following rows have empty particulars: ${emptyParticulars.join(", ")}`,
           icon: "error"
         });
         return; // Stop further execution
-      } 
+      }
+    
+    // If there are invalid particulars, show an alert and stop the form submission
+    if (invalidParticulars.length > 0) {
+      Swal.fire({
+        title: "Invalid Particulars",
+        text: `Check this Particular(s): ${invalidParticulars.join(", ")}`,
+        icon: "error"
+      });
+      return; // Stop further execution
+    }
 
-      // Append the total income to the form data
-      formData.append("TOTAL", totalExpenditure);
+    // If there are duplicate particulars, show an alert and stop the form submission
+    if (duplicateParticulars.length > 0) {
+      Swal.fire({
+        title: "Duplicate Particulars",
+        text: `The following Particular(s) appear more than once: ${duplicateParticulars.join(", ")}`,
+        icon: "error"
+      });
+      return; // Stop further execution
+    }// End of checking for invalid and duplicate particulars
+    //**********************************************************************
 
-      // Hide the save button
-    const saveButton = document.getElementById("save");
-    saveButton.style.display = "none";
-  
-      // Show spinner
-    spinner.style.display = 'block';
-  
-      fetch(ExpenditureWebAppUrl, { method: "POST", body: formData })
-        .then((response) => {
-          // Hide spinner
-        spinner.style.display = 'none';
 
-        //show save button again
-        saveButton.style.display = "block";
+          var formData = new FormData(form);
 
-        Swal.fire({
-          title: "Done", text: "Saved Successfully.", icon: "success"
+           // Get user info from session storage and append to the form to be sent
+           let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));
+          if (UserInfo && UserInfo.fname) {
+              formData.append("USER", UserInfo.fname);
+          }
+        
+           // Append the formated date to the form data
+          formData.append("DATE", formattedDate);
+        
+           // Calculate all the expenditures provided by the user
+           let totalExpenditure = 0;
+          const amountInputs = document.querySelectorAll("#amountTable tbody tr td:nth-child(3) input");
+          amountInputs.forEach(input => {
+              const value = parseFloat(input.value) || 0; // Default to 0 if the input is empty or invalid
+              totalExpenditure += value;
           });
-          // Clear the session storage
-          sessionStorage.removeItem("localExpenditureTableData");
-          //reload the page after saving
-          setTimeout(() => {
-            location.reload();
-          }, 3000); // Reload after 2 seconds
-        })
-        .catch((error) => {
-          // Hide spinner
-        spinner.style.display = 'none';
-        Swal.fire({
-          title: "Error", text: "Something went wrong. please try again!", icon: "error"
-          });
+        
+          // Check if total Expenditure to be sent is 0
+          if (totalExpenditure === 0) {
+            Swal.fire({
+              title: "Error",
+              text: "Total Expenditure cannot be 0. Please enter valid amounts.",
+              icon: "error"
+            });
+            return; // Stop further execution
+          } 
+        
+          // Append the total income to the form data
+          formData.append("TOTAL", totalExpenditure);
+        
+          // Hide the save button
+        const saveButton = document.getElementById("save");
+        saveButton.style.display = "none";
+        
+          // Show spinner
+        spinner.style.display = 'block';
+        
+          fetch(ExpenditureWebAppUrl, { method: "POST", body: formData })
+            .then((response) => {
+              // Hide spinner
+            spinner.style.display = 'none';
+            
+            //show save button again
+            saveButton.style.display = "block";
+            
+            Swal.fire({
+              title: "Done", text: "Saved Successfully.", icon: "success"
+              });
+              // Clear the session storage
+              sessionStorage.removeItem("localExpenditureTableData");
+              //reload the page after saving
+              setTimeout(() => {
+                location.reload();
+              }, 3000); // Reload after 2 seconds
+            })
+            .catch((error) => {
+              // Hide spinner
+            spinner.style.display = 'none';
+            Swal.fire({
+              title: "Error", text: "Something went wrong. please try again!", icon: "error"
+              });
+            });
+          
+
         });
       
-        
-    });
-
-
-
-// Save data to SessionStorage whenever the user modifies the table
-function saveDataToSessionStorage() {
-  const rows = document.querySelectorAll("#amountTable tbody tr");
-  const tableData = [];
-
-  rows.forEach((row) => {
-    const particularsInput = row.cells[1].querySelector("input");
-    const amountInput = row.cells[2].querySelector("input");
-
-    if (particularsInput && amountInput) {
-      tableData.push({
-        particulars: {
-          value: particularsInput.value.trim(),
-        },
-        amount: {
-          value: parseFloat(amountInput.value) || 0,
-          id: amountInput.id || "", // Save the id
-          name: amountInput.name || "", //  Save the name's as well, which is the datalist values which is the same as the particulars 
+      
+      
+    // Save data to SessionStorage whenever the user modifies the table
+    function saveDataToSessionStorage() {
+      const rows = document.querySelectorAll("#amountTable tbody tr");
+      const tableData = [];
+    
+      rows.forEach((row) => {
+        const particularsInput = row.cells[1].querySelector("input");
+        const amountInput = row.cells[2].querySelector("input");
+      
+        if (particularsInput && amountInput) {
+          tableData.push({
+            particulars: {
+              value: particularsInput.value.trim(),
+            },
+            amount: {
+              value: parseFloat(amountInput.value) || 0,
+              id: amountInput.id || "", // Save the id
+              name: amountInput.name || "", //  Save the name's as well, which is the datalist values which is the same as the particulars 
+            }
+          });
         }
       });
-    }
-  });
-
-  sessionStorage.setItem("localExpenditureTableData", JSON.stringify(tableData));
-}
-// Add event listeners to save data when inputs change
-document.addEventListener("input", (event) => {
-  if (event.target.closest("#amountTable")) {
-    saveDataToSessionStorage();
-  }
-});
-
-
-// Load data from SessionStorage when the page loads
-function loadDataFromSessionStorage() {
-  const savedData = sessionStorage.getItem("localExpenditureTableData");
-
-  if (savedData) {
-    const tableData = JSON.parse(savedData);
-    const tableBody = document.querySelector("#amountTable tbody");
-
-    tableData.forEach((rowData, index) => {
-      const newRow = tableBody.insertRow();
-
-      const cell1 = newRow.insertCell(0);
-      const cell2 = newRow.insertCell(1);
-      const cell3 = newRow.insertCell(2);
-
-      // Set the row number
-      cell1.textContent = index + 1;
-
-      // Add the particulars input
-      const particularsInput = document.createElement("input");
-      particularsInput.type = "text";
-      particularsInput.value = rowData.particulars.value;
-      particularsInput.classList.add("particulars-input");
-      particularsInput.setAttribute("list", "particularsList");
-      cell2.appendChild(particularsInput);
-
-      // Add the amount input
-      const amountInput = document.createElement("input");
-      amountInput.type = "number";
-      amountInput.value = rowData.amount.value;
-      amountInput.id = rowData.amount.id; // Restore the id
-      amountInput.name = rowData.amount.name; // Restore the name
-      amountInput.setAttribute("step", "any"); // Allow decimal numbers
-      amountInput.setAttribute("min", "1"); // Set minimum value to 1
-      amountInput.setAttribute("required", "required");   // Set required attribute
-      amountInput.classList.add("amount-input");
-      cell3.appendChild(amountInput);
-    });
-  }
-}
-
-// Call the function to load data when the page loads
-document.addEventListener("DOMContentLoaded", loadDataFromSessionStorage);
-
-
     
+      sessionStorage.setItem("localExpenditureTableData", JSON.stringify(tableData));
+    }
+    // Add event listeners to save data when inputs change
+    document.addEventListener("input", (event) => {
+      if (event.target.closest("#amountTable")) {
+        saveDataToSessionStorage();
+      }
+    });
 
-  </script>
-  </body>
-</html>
+
+    // Load data from SessionStorage when the page loads
+    function loadDataFromSessionStorage() {
+      const savedData = sessionStorage.getItem("localExpenditureTableData");
+    
+      if (savedData) {
+        const tableData = JSON.parse(savedData);
+        const tableBody = document.querySelector("#amountTable tbody");
+      
+        tableData.forEach((rowData, index) => {
+          const newRow = tableBody.insertRow();
+        
+          const cell1 = newRow.insertCell(0);
+          const cell2 = newRow.insertCell(1);
+          const cell3 = newRow.insertCell(2);
+        
+          // Set the row number
+          cell1.textContent = index + 1;
+        
+          // Add the particulars input
+          const particularsInput = document.createElement("input");
+          particularsInput.type = "text";
+          particularsInput.value = rowData.particulars.value;
+          particularsInput.classList.add("particulars-input");
+          particularsInput.setAttribute("list", "particularsList");
+          cell2.appendChild(particularsInput);
+        
+          // Add the amount input
+          const amountInput = document.createElement("input");
+          amountInput.type = "number";
+          amountInput.value = rowData.amount.value;
+          amountInput.id = rowData.amount.id; // Restore the id
+          amountInput.name = rowData.amount.name; // Restore the name
+          amountInput.setAttribute("step", "any"); // Allow decimal numbers
+          amountInput.setAttribute("min", "1"); // Set minimum value to 1
+          amountInput.setAttribute("required", "required");   // Set required attribute
+          amountInput.classList.add("amount-input");
+          cell3.appendChild(amountInput);
+        });
+      }
+    }
+
+    // Call the function to load data when the page loads
+    document.addEventListener("DOMContentLoaded", loadDataFromSessionStorage);
+
+
+      </script>
+      </body>
+    </html>

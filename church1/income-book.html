@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ash.North SDA Church Treasury</title>
+    <title>Treasury-App</title>
     <link rel="icon" type="image/icon" href="./assest/images/favicon.png">
     <link rel="stylesheet" href="./assest/styles/styles.css" />
     <script src="https://kit.fontawesome.com/8ebf6fd839.js" crossorigin="anonymous"></script>
@@ -95,6 +95,7 @@
           <button id="fullBtn" class="btn full-btn" type="submit">Full View</button>
           <span class="tooltiptext">Full View</span>
         </div>
+
         <div class="tooltip">
             <button id="addRowBtn" class="btn add-btn">
               <i class="fa-solid fa-plus fa-beat"></i>
@@ -128,10 +129,7 @@
     <script src="./assest/scripts/script.js"></script>
     <script src="./assest/webAppUrls/weburls.js"></script>
 
-   
-
-<script>
-
+    <script>
     // Dynamically load the datalist from an external file
     fetch('./assest/datalist/income-datalist.html')
     .then(response => response.text())
@@ -151,332 +149,332 @@
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-//**********************************************************************
-//Checking if the particulars entered by the user exist in the datalist first before saving
- // Get all valid datalist options
- const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
+    //**********************************************************************
+    //Checking if the particulars entered by the user exist in the datalist first before saving
+     // Get all valid datalist options
+    const datalistOptions = Array.from(document.querySelectorAll("#particularsList option")).map(option => option.value);
 
-// Retrieve the date value
-const dateValue = document.getElementById("incomeDate").value;
-// Validate the date, make sure it is not empty or in the future
-if (!dateValue) {
-  Swal.fire({
-    title: "Error",
-    text: "Please select a date before saving.",
-    icon: "error",
-  });
-  return; // Stop further execution
-}
-
-else if (new Date(dateValue) > new Date()) {
-  Swal.fire({
-    title: "Error",
-    text: "The date cannot be in the future.",
-    icon: "error",
-  });
-  return; // Stop further execution
-}
-
-// Format the date to DD-MMM-YYYY
-const dateObject = new Date(dateValue);
-const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const formattedDate = `${String(dateObject.getDate()).padStart(2, '0')}-${monthNames[dateObject.getMonth()]}-${dateObject.getFullYear()}`;
-
-// Validate user inputs
-const rows = document.querySelectorAll("#amountTable tbody tr");
-let invalidParticulars = [];
-let emptyParticulars = [];
-let particularsSet = new Set(); // To track duplicates
-let duplicateParticulars = [];
-
-rows.forEach((row) => {
-  const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
-  const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
-
-   // Check if the particulars are empty
-   if (!particulars) {
-      emptyParticulars.push(`Row ${row.rowIndex}`); // Add the row number with empty particulars
-      return; // Skip further checks for this row
-    }
-
-  // Check if the particulars are valid
-  if (!datalistOptions.includes(particulars)) {
-    invalidParticulars.push(particulars); // Add invalid value to the list
-  }
-
-  // Check for duplicates  
-  if (particularsSet.has(particulars)) {
-      duplicateParticulars.push(particulars); // Add duplicate value to the list
-    } else {
-      particularsSet.add(particulars); // Add to the set
-  }
-});
-
- // If there are empty particulars, show an alert and stop the form submission
- if (emptyParticulars.length > 0) {
-    Swal.fire({
-      title: "Empty Particulars",
-      text: `The following rows have empty particulars: ${emptyParticulars.join(", ")}`,
-      icon: "error"
-    });
-    return; // Stop further execution
-  }
-
-// If there are invalid particulars, show an alert and stop the form submission
-if (invalidParticulars.length > 0) {
-  Swal.fire({
-    title: "Invalid Particulars",
-    text: `Check this Particular(s): ${invalidParticulars.join(", ")}`,
-    icon: "error"
-  });
-  return; // Stop further execution
-}
-
-// If there are duplicate particulars, show an alert and stop the form submission
-if (duplicateParticulars.length > 0) {
-  Swal.fire({
-    title: "Duplicate Particulars",
-    text: `The following Particular(s) appear more than once: ${duplicateParticulars.join(", ")}`,
-    icon: "error"
-  });
-  return; // Stop further execution
-}
-
-//****************************************************************************
-
-// Proceed with saving if all particulars are valid
-const formData = new FormData(form);
-  let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));  // Retrieve user info from session storage
-  if (UserInfo && UserInfo.fname) {
-    formData.append("USER", UserInfo.fname);
-  }
-
-  // Append the formatted date to the form data
-  formData.append("DATE", formattedDate);
-
-  let totalIncome = 0;
-  const amountInputs = document.querySelectorAll("#amountTable tbody tr td:nth-child(3) input");
-  amountInputs.forEach(input => {
-    const value = parseFloat(input.value) || 0;
-    totalIncome += value;
-  });
-
-  if (totalIncome === 0) {
-    Swal.fire({
-      title: "Error",
-      text: "Total income cannot be 0. Please enter valid amounts.",
-      icon: "error"
-    });
-    return;
-  }
-
-  formData.append("TOTAL", totalIncome);
-
-  // Prepare Conference , District Data and Local data
-  const conferenceData = new FormData();
-  const districtData = new FormData();
-  const localData = new FormData();
-  let conferenceTotal = 0;
-  let districtTotal = 0;
-  let localTotal = 0;
-
-  const conferencerows = document.querySelectorAll("#amountTable tbody tr");
-  conferencerows.forEach((row) => {
-    const particularsInput = row.cells[1].querySelector("input");
-    const amountInput = row.cells[2].querySelector("input");
-    const particulars = particularsInput ? particularsInput.value.trim() : "";
-    const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0;
-
-    if (particulars === "Tithe") {
-      conferenceData.append("TITHE", amount);
-      conferenceTotal += amount;
-    } else if (particulars === "C.B.F") {
-      const cbfAmount = amount * 0.4;
-      conferenceData.append("C.B.F", cbfAmount);
-      conferenceTotal += cbfAmount;
-
-      const districtCBFAmount = amount * 0.1;
-      districtData.append("C.B.F", districtCBFAmount);
-      districtTotal += districtCBFAmount;
-
-      const localCBFAmount = amount * 0.5;
-      localData.append("C.B.F", localCBFAmount);
-      localTotal += localCBFAmount;
-    } else if (particulars === "Loose Offering") {
-      const looseOfferingAmount = amount * 0.4;
-      conferenceData.append("LOOSE-OFFERING", looseOfferingAmount);
-      conferenceTotal += looseOfferingAmount;
-
-      const districtLooseOfferingAmount = amount * 0.1;
-      districtData.append("LOOSE-OFFERING", districtLooseOfferingAmount);
-      districtTotal += districtLooseOfferingAmount;
-
-      const localLooseOfferingAmount = amount * 0.5;
-      localData.append("LOOSE-OFFERING", localLooseOfferingAmount);
-      localTotal += localLooseOfferingAmount;
-    } else if (particulars === "Thanksgiving") {
-      const thanksgivingAmount = amount * 0.4;
-      conferenceData.append("THANKSGIVING", thanksgivingAmount);
-      conferenceTotal += thanksgivingAmount;
-
-      const districtThanksgivingAmount = amount * 0.1;
-      districtData.append("THANKSGIVING", districtThanksgivingAmount);
-      districtTotal += districtThanksgivingAmount;
-
-      const localThanksgivingAmount = amount * 0.5;
-      localData.append("THANKSGIVING", localThanksgivingAmount);
-      localTotal += localThanksgivingAmount;
-    } else {
-      // Convert particulars to uppercase and replace spaces with "-"
-    const formattedParticulars = particulars.toUpperCase().replace(/\s+/g, "-");
-    localData.append(formattedParticulars, amount);
-    localTotal += amount;
-    }
-  });
-
-  // Append user info and date to conference, district, and local data
-  if (UserInfo && UserInfo.fname) {
-    conferenceData.append("USER", UserInfo.fname);
-    districtData.append("USER", UserInfo.fname);
-    localData.append("USER", UserInfo.fname);
-  }
-  conferenceData.append("DATE", formattedDate);
-  districtData.append("DATE", formattedDate);
-  localData.append("DATE", formattedDate);
-
-  // Append totals to conference, district and local data
-  conferenceData.append("TOTAL", conferenceTotal);
-  districtData.append("TOTAL", districtTotal);
-  localData.append("TOTAL", localTotal);
-
-  // Hide the save button
-  const saveButton = document.getElementById("save");
-  saveButton.style.display = "none";
-
-  // Show spinner
-  spinner.style.display = 'block';
-
-  // Save all data and redirect after success
-  Promise.all([
-    fetch(IncomeWebAppUrl, { method: "POST", body: formData }),
-    fetch(ConferenceWebAppUrl, { method: "POST", body: conferenceData }),
-    fetch(DistrictWebAppUrl, { method: "POST", body: districtData }),
-    fetch(LocalIncomeWebAppUrl, { method: "POST", body: localData })
-  ])
-    .then((responses) => {
-      // Check if all responses are successful
-      if (responses.every(response => response.ok)) {
-        Swal.fire({
-          title: "Done",
-          text: "All records saved successfully!",
-          icon: "success"
-        }).then(() => {
-           // Clear sessionStorage after successful save
-           sessionStorage.removeItem("incomeTableData");
-         
-          // Trigger the Full View button click
-          document.getElementById('fullBtn').click();
-        });
-      } else {
-        throw new Error("One or more requests failed.");
-      }
-    })
-    .catch((error) => {
+    // Retrieve the date value
+    const dateValue = document.getElementById("incomeDate").value;
+    // Validate the date, make sure it is not empty or in the future
+    if (!dateValue) {
       Swal.fire({
         title: "Error",
-        text: "Could not save all records. Please try again!",
+        text: "Please select a date before saving.",
+        icon: "error",
+      });
+      return; // Stop further execution
+    }
+
+    else if (new Date(dateValue) > new Date()) {
+      Swal.fire({
+        title: "Error",
+        text: "The date cannot be in the future.",
+        icon: "error",
+      });
+      return; // Stop further execution
+    }
+
+    // Format the date to DD-MMM-YYYY
+    const dateObject = new Date(dateValue);
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedDate = `${String(dateObject.getDate()).padStart(2, '0')}-${monthNames[dateObject.getMonth()]}-${dateObject.getFullYear()}`;
+
+    // Validate user inputs
+    const rows = document.querySelectorAll("#amountTable tbody tr");
+    let invalidParticulars = [];
+    let emptyParticulars = [];
+    let particularsSet = new Set(); // To track duplicates
+    let duplicateParticulars = [];
+
+    rows.forEach((row) => {
+      const particularsInput = row.cells[1].querySelector("input"); // Get the input element in the Particulars cell
+      const particulars = particularsInput ? particularsInput.value.trim() : ""; // Get the value of the Particulars input
+    
+       // Check if the particulars are empty
+       if (!particulars) {
+          emptyParticulars.push(`Row ${row.rowIndex}`); // Add the row number with empty particulars
+          return; // Skip further checks for this row
+        }
+      
+      // Check if the particulars are valid
+      if (!datalistOptions.includes(particulars)) {
+        invalidParticulars.push(particulars); // Add invalid value to the list
+      }
+    
+      // Check for duplicates  
+      if (particularsSet.has(particulars)) {
+          duplicateParticulars.push(particulars); // Add duplicate value to the list
+        } else {
+          particularsSet.add(particulars); // Add to the set
+      }
+    });
+
+     // If there are empty particulars, show an alert and stop the form submission
+     if (emptyParticulars.length > 0) {
+        Swal.fire({
+          title: "Empty Particulars",
+          text: `The following rows have empty particulars: ${emptyParticulars.join(", ")}`,
+          icon: "error"
+        });
+        return; // Stop further execution
+      }
+    
+    // If there are invalid particulars, show an alert and stop the form submission
+    if (invalidParticulars.length > 0) {
+      Swal.fire({
+        title: "Invalid Particulars",
+        text: `Check this Particular(s): ${invalidParticulars.join(", ")}`,
         icon: "error"
       });
-    })
-    .finally(() => {
-      // Hide spinner
-      spinner.style.display = 'none';
-      // Show the save button again
-      saveButton.style.display = "block";
-    });
+      return; // Stop further execution
+    }
 
+    // If there are duplicate particulars, show an alert and stop the form submission
+    if (duplicateParticulars.length > 0) {
+      Swal.fire({
+        title: "Duplicate Particulars",
+        text: `The following Particular(s) appear more than once: ${duplicateParticulars.join(", ")}`,
+        icon: "error"
+      });
+      return; // Stop further execution
+    }
 
+    //****************************************************************************
+
+    // Proceed with saving if all particulars are valid
+    const formData = new FormData(form);
+      let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));  // Retrieve user info from session storage
+      if (UserInfo && UserInfo.fname) {
+        formData.append("USER", UserInfo.fname);
+      }
     
-});
-
-
-
-// Save data to SessionStorage whenever the user modifies the table
-function saveDataToSessionStorage() {
-  const rows = document.querySelectorAll("#amountTable tbody tr");
-  const tableData = [];
-
-  rows.forEach((row) => {
-    const particularsInput = row.cells[1].querySelector("input");
-    const amountInput = row.cells[2].querySelector("input");
-
-    if (particularsInput && amountInput) {
-      tableData.push({
-        particulars: {
-          value: particularsInput.value.trim(),
-        },
-        amount: {
-          value: parseFloat(amountInput.value) || 0,
-          id: amountInput.id || "", // Save the id
-          name: amountInput.name || "" //  Save the name's as well, which is the datalist values which is the same as the particulars 
+      // Append the formatted date to the form data
+      formData.append("DATE", formattedDate);
+    
+      let totalIncome = 0;
+      const amountInputs = document.querySelectorAll("#amountTable tbody tr td:nth-child(3) input");
+      amountInputs.forEach(input => {
+        const value = parseFloat(input.value) || 0;
+        totalIncome += value;
+      });
+    
+      if (totalIncome === 0) {
+        Swal.fire({
+          title: "Error",
+          text: "Total income cannot be 0. Please enter valid amounts.",
+          icon: "error"
+        });
+        return;
+      }
+    
+      formData.append("TOTAL", totalIncome);
+    
+      // Prepare Conference , District Data and Local data
+      const conferenceData = new FormData();
+      const districtData = new FormData();
+      const localData = new FormData();
+      let conferenceTotal = 0;
+      let districtTotal = 0;
+      let localTotal = 0;
+    
+      const conferencerows = document.querySelectorAll("#amountTable tbody tr");
+      conferencerows.forEach((row) => {
+        const particularsInput = row.cells[1].querySelector("input");
+        const amountInput = row.cells[2].querySelector("input");
+        const particulars = particularsInput ? particularsInput.value.trim() : "";
+        const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0;
+      
+        if (particulars === "Tithe") {
+          conferenceData.append("TITHE", amount);
+          conferenceTotal += amount;
+        } else if (particulars === "C.B.F") {
+          const cbfAmount = amount * 0.4;
+          conferenceData.append("C.B.F", cbfAmount);
+          conferenceTotal += cbfAmount;
+        
+          const districtCBFAmount = amount * 0.1;
+          districtData.append("C.B.F", districtCBFAmount);
+          districtTotal += districtCBFAmount;
+        
+          const localCBFAmount = amount * 0.5;
+          localData.append("C.B.F", localCBFAmount);
+          localTotal += localCBFAmount;
+        } else if (particulars === "Loose Offering") {
+          const looseOfferingAmount = amount * 0.4;
+          conferenceData.append("LOOSE-OFFERING", looseOfferingAmount);
+          conferenceTotal += looseOfferingAmount;
+        
+          const districtLooseOfferingAmount = amount * 0.1;
+          districtData.append("LOOSE-OFFERING", districtLooseOfferingAmount);
+          districtTotal += districtLooseOfferingAmount;
+        
+          const localLooseOfferingAmount = amount * 0.5;
+          localData.append("LOOSE-OFFERING", localLooseOfferingAmount);
+          localTotal += localLooseOfferingAmount;
+        } else if (particulars === "Thanksgiving") {
+          const thanksgivingAmount = amount * 0.4;
+          conferenceData.append("THANKSGIVING", thanksgivingAmount);
+          conferenceTotal += thanksgivingAmount;
+        
+          const districtThanksgivingAmount = amount * 0.1;
+          districtData.append("THANKSGIVING", districtThanksgivingAmount);
+          districtTotal += districtThanksgivingAmount;
+        
+          const localThanksgivingAmount = amount * 0.5;
+          localData.append("THANKSGIVING", localThanksgivingAmount);
+          localTotal += localThanksgivingAmount;
+        } else {
+          // Convert particulars to uppercase and replace spaces with "-"
+        const formattedParticulars = particulars.toUpperCase().replace(/\s+/g, "-");
+        localData.append(formattedParticulars, amount);
+        localTotal += amount;
         }
       });
-    }
-  });
+    
+      // Append user info and date to conference, district, and local data
+      if (UserInfo && UserInfo.fname) {
+        conferenceData.append("USER", UserInfo.fname);
+        districtData.append("USER", UserInfo.fname);
+        localData.append("USER", UserInfo.fname);
+      }
+      conferenceData.append("DATE", formattedDate);
+      districtData.append("DATE", formattedDate);
+      localData.append("DATE", formattedDate);
+    
+      // Append totals to conference, district and local data
+      conferenceData.append("TOTAL", conferenceTotal);
+      districtData.append("TOTAL", districtTotal);
+      localData.append("TOTAL", localTotal);
+    
+      // Hide the save button
+      const saveButton = document.getElementById("save");
+      saveButton.style.display = "none";
+    
+      // Show spinner
+      spinner.style.display = 'block';
+    
+      // Save all data and redirect after success
+      Promise.all([
+        fetch(IncomeWebAppUrl, { method: "POST", body: formData }),
+        fetch(ConferenceWebAppUrl, { method: "POST", body: conferenceData }),
+        fetch(DistrictWebAppUrl, { method: "POST", body: districtData }),
+        fetch(LocalIncomeWebAppUrl, { method: "POST", body: localData })
+      ])
+        .then((responses) => {
+          // Check if all responses are successful
+          if (responses.every(response => response.ok)) {
+            Swal.fire({
+              title: "Done",
+              text: "All records saved successfully!",
+              icon: "success"
+            }).then(() => {
+               // Clear sessionStorage after successful save
+               sessionStorage.removeItem("incomeTableData");
+            
+              // Trigger the Full View button click
+              document.getElementById('fullBtn').click();
+            });
+          } else {
+            throw new Error("One or more requests failed.");
+          }
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: "Error",
+            text: "Could not save all records. Please try again!",
+            icon: "error"
+          });
+        })
+        .finally(() => {
+          // Hide spinner
+          spinner.style.display = 'none';
+          // Show the save button again
+          saveButton.style.display = "block";
+        });
+      
+      
 
-  sessionStorage.setItem("incomeTableData", JSON.stringify(tableData));
-}
-// Add event listeners to save data when inputs change
-document.addEventListener("input", (event) => {
-  if (event.target.closest("#amountTable")) {
-    saveDataToSessionStorage();
-  }
-});
-
-
-// Load data from SessionStorage when the page loads
-function loadDataFromSessionStorage() {
-  const savedData = sessionStorage.getItem("incomeTableData");
-
-  if (savedData) {
-    const tableData = JSON.parse(savedData);
-    const tableBody = document.querySelector("#amountTable tbody");
-
-    tableData.forEach((rowData, index) => {
-      const newRow = tableBody.insertRow();
-
-      const cell1 = newRow.insertCell(0);
-      const cell2 = newRow.insertCell(1);
-      const cell3 = newRow.insertCell(2);
-
-      // Set the row number
-      cell1.textContent = index + 1;
-
-      // Add the particulars input
-      const particularsInput = document.createElement("input");
-      particularsInput.type = "text";
-      particularsInput.value = rowData.particulars.value;
-      particularsInput.classList.add("particulars-input");
-      particularsInput.setAttribute("list", "particularsList");
-      cell2.appendChild(particularsInput);
-
-      // Add the amount input
-      const amountInput = document.createElement("input");
-      amountInput.type = "number";
-      amountInput.value = rowData.amount.value;
-      amountInput.id = rowData.amount.id; // Restore the id
-      amountInput.name = rowData.amount.name; // Restore the name
-      amountInput.setAttribute("step", "any"); // Allow decimal numbers
-      amountInput.setAttribute("min", "1"); // Set minimum value to 1
-      amountInput.setAttribute("required", "required");   // Set required attribute
-      amountInput.classList.add("amount-input");
-      cell3.appendChild(amountInput);
     });
-  }
-}
 
-// Call the function to load data when the page loads
-document.addEventListener("DOMContentLoaded", loadDataFromSessionStorage);
+
+
+    // Save data to SessionStorage whenever the user modifies the table
+    function saveDataToSessionStorage() {
+      const rows = document.querySelectorAll("#amountTable tbody tr");
+      const tableData = [];
+    
+      rows.forEach((row) => {
+        const particularsInput = row.cells[1].querySelector("input");
+        const amountInput = row.cells[2].querySelector("input");
+      
+        if (particularsInput && amountInput) {
+          tableData.push({
+            particulars: {
+              value: particularsInput.value.trim(),
+            },
+            amount: {
+              value: parseFloat(amountInput.value) || 0,
+              id: amountInput.id || "", // Save the id
+              name: amountInput.name || "" //  Save the name's as well, which is the datalist values which is the same as the particulars 
+            }
+          });
+        }
+      });
+    
+      sessionStorage.setItem("incomeTableData", JSON.stringify(tableData));
+    }
+    // Add event listeners to save data when inputs change
+    document.addEventListener("input", (event) => {
+      if (event.target.closest("#amountTable")) {
+        saveDataToSessionStorage();
+      }
+    });
+
+
+    // Load data from SessionStorage when the page loads
+    function loadDataFromSessionStorage() {
+      const savedData = sessionStorage.getItem("incomeTableData");
+    
+      if (savedData) {
+        const tableData = JSON.parse(savedData);
+        const tableBody = document.querySelector("#amountTable tbody");
+      
+        tableData.forEach((rowData, index) => {
+          const newRow = tableBody.insertRow();
+        
+          const cell1 = newRow.insertCell(0);
+          const cell2 = newRow.insertCell(1);
+          const cell3 = newRow.insertCell(2);
+        
+          // Set the row number
+          cell1.textContent = index + 1;
+        
+          // Add the particulars input
+          const particularsInput = document.createElement("input");
+          particularsInput.type = "text";
+          particularsInput.value = rowData.particulars.value;
+          particularsInput.classList.add("particulars-input");
+          particularsInput.setAttribute("list", "particularsList");
+          cell2.appendChild(particularsInput);
+        
+          // Add the amount input
+          const amountInput = document.createElement("input");
+          amountInput.type = "number";
+          amountInput.value = rowData.amount.value;
+          amountInput.id = rowData.amount.id; // Restore the id
+          amountInput.name = rowData.amount.name; // Restore the name
+          amountInput.setAttribute("step", "any"); // Allow decimal numbers
+          amountInput.setAttribute("min", "1"); // Set minimum value to 1
+          amountInput.setAttribute("required", "required");   // Set required attribute
+          amountInput.classList.add("amount-input");
+          cell3.appendChild(amountInput);
+        });
+      }
+    }
+
+    // Call the function to load data when the page loads
+    document.addEventListener("DOMContentLoaded", loadDataFromSessionStorage);
 
   </script>
   </body>

@@ -1,6 +1,6 @@
 [class*=" icon-"], [class^=icon-] {
     font-family: fontawesome;
-    speak: none;
+    /* speak: none; */
     font-style: normal;
     font-weight: 400;
     font-variant: normal;
@@ -12,7 +12,7 @@
 
 .calendar {
     float: none;
-    !important
+   
 }
 
 .icon-arrow-left:before {

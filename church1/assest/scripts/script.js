@@ -1,4 +1,3 @@
-
   // The code below is a function that hides empty columns in a table. 
   // It checks each column in the table and hides it if all cells in that column are empty. 
   // The function is called after the data is fetched and the table is populated.
@@ -391,37 +390,37 @@ function calculateGrandTotal() {
   document.getElementById("grandTot").innerText = "Total: GH₵" + grandTotal.toFixed(2);
 }
 
-// Add event listeners to all input fields in the denominations table
-const denominationInputs = document.querySelectorAll("#denominations input[type='number']");
-denominationInputs.forEach((input) => {
-  input.addEventListener("input", calculateGrandTotal);
-});
-
-
-// Function to handle the click event for the "Expenses Records Tab" link Dropdown
-  // This function toggles the visibility of the submenu
-  const expensesRecords = document.getElementById("expensesRecords");
-  const expensesSubmenu = document.getElementById("expensesSubmenu");
-
-  if (expensesRecords && expensesSubmenu) {
-    expensesRecords.addEventListener("click", (event) => {
-      event.preventDefault(); // Prevent default link behavior
-      // Toggle the visibility of the submenu
-      expensesSubmenu.style.display =
-        expensesSubmenu.style.display === "block" ? "none" : "block";
+    // Add event listeners to all input fields in the denominations table
+    const denominationInputs = document.querySelectorAll("#denominations input[type='number']");
+    denominationInputs.forEach((input) => {
+      input.addEventListener("input", calculateGrandTotal);
     });
-  }
-  
-// Prevent form submission on Enter key press (All the forms thus; incomeTableForm, localExpenditureForm, districtExpenditureForm, confExpenditureForm)
-// All the forms have the same id thus incomeTableForm
-const incomeTableForm = document.getElementById("incomeTableForm");
-if (incomeTableForm) {
-  incomeTableForm.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
+
+
+    // Function to handle the click event for the "Expenses Records Tab" link Dropdown
+      // This function toggles the visibility of the submenu
+      const expensesRecords = document.getElementById("expensesRecords");
+      const expensesSubmenu = document.getElementById("expensesSubmenu");
+
+      if (expensesRecords && expensesSubmenu) {
+        expensesRecords.addEventListener("click", (event) => {
+          event.preventDefault(); // Prevent default link behavior
+          // Toggle the visibility of the submenu
+          expensesSubmenu.style.display =
+            expensesSubmenu.style.display === "block" ? "none" : "block";
+        });
+      }
+
+    // Prevent form submission on Enter key press (All the forms thus; incomeTableForm, localExpenditureForm, districtExpenditureForm, confExpenditureForm)
+    // All the forms have the same id thus incomeTableForm
+    const incomeTableForm = document.getElementById("incomeTableForm");
+    if (incomeTableForm) {
+      incomeTableForm.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+        }
+      });
     }
-  });
-}
 
 
 
