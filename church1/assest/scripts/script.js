@@ -210,8 +210,12 @@ if (filterBtn){
     const toDate = new Date(toDateInput);
     toDate.setHours(23, 59, 59, 999); // Set to end of the day
 
-    // Set the cut-off subtitle with the dates
-    document.getElementById('cut-off-subtitle').innerHTML = "CUT OFF FROM " + fromDate.toLocaleDateString() + " TO " + toDate.toLocaleDateString();
+    // Set the cut-off subtitle with the dates in the format "DD MMM YYYY"
+    // Example: "CUT OFF FROM (01 Jan 2023) TO (31 Dec 2023)"
+    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+    document.getElementById('cut-off-subtitle').innerHTML =
+      "Cut off From: (" + fromDate.toLocaleDateString('en-GB', options) +
+      ")    To: (" + toDate.toLocaleDateString('en-GB', options) + ")";
 
 
     const tableRows = document.querySelectorAll('#dataTable1 tbody tr, #dataTable2 tbody tr');
