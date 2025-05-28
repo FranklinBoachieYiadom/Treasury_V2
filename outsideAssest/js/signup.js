@@ -2,7 +2,7 @@
       
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"; 
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"; 
         
         
         const firebaseConfig = {
@@ -96,21 +96,28 @@
                 role:"member",
                 church:church
             })
-            // Hide spinner
-        spinner.style.display = 'none';
-
+            // Send email verification
+            sendEmailVerification(auth.currentUser)
+            .then(() => {
+                // Hide spinner
+           spinner.style.display = 'none';
             Swal.fire({
-                position: "top-end",
                 icon: "success",
-                title: "Account created successfully",
-                showConfirmButton: false,
-                timer: 1500
-            });
-            // Wait for 10 seconds before redirecting
-            setTimeout(() => {
-              var targetPageUrl = "login.html";
-              window.location.href = targetPageUrl;
-            }, 1500); // 10000 milliseconds = 10 seconds
+                title: "Email Verification Sent",
+                text: "Please click on the link sent to your Email to verify your account.",
+                showConfirmButton: true,
+                confirmButtonText: "OK",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "login.html";
+                        } 
+                    })
+                })
+            // // Wait for 10 seconds before redirecting
+            // setTimeout(() => {
+            //   var targetPageUrl = "login.html";
+            //   window.location.href = targetPageUrl;
+            // }, 1500); // 10000 milliseconds = 10 seconds
         })
         .catch((error) => {
             // Hide spinner
@@ -129,7 +136,6 @@
             // ..
         });
     })
-
 
 
     // Toggle password visibility

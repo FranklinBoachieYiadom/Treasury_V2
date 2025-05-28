@@ -75,6 +75,18 @@
       signInWithEmailAndPassword(auth, email, password)
       .then(async(userCredential) => {
 
+        //check if the user is verified
+        if (!userCredential.user.emailVerified) {
+          // Hide spinner
+          spinner.style.display = 'none';
+          Swal.fire({
+            text: "Please VERIFY your Email from the link sent to your Email Address.",
+            icon: "warning"
+          });
+          return;
+        }
+        // User signed in successfully
+
           // Log In
           var ref = doc (db,"UserAuthList",userCredential.user.uid); 
           const docSnap = await getDoc(ref);
