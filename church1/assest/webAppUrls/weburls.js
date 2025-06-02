@@ -1,7 +1,7 @@
 
-const IncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbz6aKEzFGa8ztzvunW_9gYJj3AMsHZkHwyslb8aQzwWKU9_D08q04E85VrB8-0nemuWdQ/exec';
-const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycbzsQuRy8MyJHE6qLJS3iS9pl1o0KikXz2DGKA7yGXgOuLdVv8eb3Z_brzvVNcl5-1a3IQ/exec';
+const IncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbxC0cohwYCL3UVDYOkhxMgQPtO3mKY4hQMNfhyFXPLY_H3ksJNQRyGFEATilwEEXGTgKQ/exec';
+const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycbzqGNJP2niR4JGMuLLg_iDVRuzxZ0D3OlaDq4m_RFFOEDXcfTau538WJCxOoYx-Tm5-uQ/exec';
 const ConferenceWebAppUrl = 'https://script.google.com/macros/s/AKfycbxytTEWen706OmR5fKey2qNIlRe_QwbTLVK_-DJPlHLsF7_REMV1rERiHjNnzB1OFeuvA/exec';
-const DistrictWebAppUrl = 'https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec';
-const LocalIncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbwJtMQTFn6sIT2z06yDEBzo39NLYURzkeECRKy6rep9WaTKZOWSCS7Y38bxCa63TBZDnw/exec';
+const DistrictWebAppUrl = 'https://script.google.com/macros/s/AKfycbxTOdEGxoTpK0JQwFe89O12M2r5egN5tv0dPcJUAQO5Kbd9UCQI4V61AvpUiJwD4qNxYw/exec';
+const LocalIncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbx3iMkg4wEEaiBlrg-Lh6mmOi78ikz9Rc2xqCirxhopRVJJsTtTyYaFMhNHyQtMHuTg/exec';
 
