@@ -362,24 +362,65 @@
         fetch(DistrictWebAppUrl, { method: "POST", body: districtData }),
         fetch(LocalIncomeWebAppUrl, { method: "POST", body: localData })
       ])
-        .then((responses) => {
-          // Check if all responses are successful
-          if (responses.every(response => response.ok)) {
-            Swal.fire({
-              title: "Done",
-              text: "All records saved successfully!",
-              icon: "success"
-            }).then(() => {
-               // Clear sessionStorage after successful save
-               sessionStorage.removeItem("incomeTableData");
+      .then(responses => Promise.all(responses.map(res => res.json())))
+      .then(results => {
+        // Check for conflict in any result
+        const conflict = results.find(r => r.result === "conflict");
+        if (conflict) {
+          Swal.fire({
+            title: "Conflict",
+            text: "Records for this Date already exists. Please check the Date and Try again.",
+            icon: "warning"
+          });
+          return;
+        }
+
+        // If all are successful
+        if (results.every(r => r.result === "success")) {
+          Swal.fire({
+            title: "Done",
+            text: "All records saved successfully!",
+            icon: "success"
+          }).then(() => {
+            // Clear sessionStorage after successful save
+            sessionStorage.removeItem("incomeTableData");
+            // Trigger the Full View button click
+            document.getElementById('fullBtn').click();
+          });
+        } else {
+          // Handle other errors
+          Swal.fire({
+            title: "Error",
+            text: "Could not save all records. Please try again!",
+            icon: "error"
+          });
+        }
+      })
+
+
+
+
+
+        // .then((responses) => {
+        //   // Check if all responses are successful
+        //   if (responses.every(response => response.ok)) {
+        //     Swal.fire({
+        //       title: "Done",
+        //       text: "All records saved successfully!",
+        //       icon: "success"
+        //     }).then(() => {
+        //        // Clear sessionStorage after successful save
+        //        sessionStorage.removeItem("incomeTableData");
             
-              // Trigger the Full View button click
-              document.getElementById('fullBtn').click();
-            });
-          } else {
-            throw new Error("One or more requests failed.");
-          }
-        })
+        //       // Trigger the Full View button click
+        //       document.getElementById('fullBtn').click();
+        //     });
+        //   } else {
+        //     throw new Error("One or more requests failed.");
+        //   }
+        // })
+
+
         .catch((error) => {
           Swal.fire({
             title: "Error",

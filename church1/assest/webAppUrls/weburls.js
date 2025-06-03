@@ -1,7 +1,7 @@
-
-const IncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbxC0cohwYCL3UVDYOkhxMgQPtO3mKY4hQMNfhyFXPLY_H3ksJNQRyGFEATilwEEXGTgKQ/exec';
-const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycbzqGNJP2niR4JGMuLLg_iDVRuzxZ0D3OlaDq4m_RFFOEDXcfTau538WJCxOoYx-Tm5-uQ/exec';
-const ConferenceWebAppUrl = 'https://script.google.com/macros/s/AKfycbxytTEWen706OmR5fKey2qNIlRe_QwbTLVK_-DJPlHLsF7_REMV1rERiHjNnzB1OFeuvA/exec';
-const DistrictWebAppUrl = 'https://script.google.com/macros/s/AKfycbxTOdEGxoTpK0JQwFe89O12M2r5egN5tv0dPcJUAQO5Kbd9UCQI4V61AvpUiJwD4qNxYw/exec';
-const LocalIncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbx3iMkg4wEEaiBlrg-Lh6mmOi78ikz9Rc2xqCirxhopRVJJsTtTyYaFMhNHyQtMHuTg/exec';
+// This file contains the URLs for various web applications used in the church management system.
+const IncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbysaxL7UgzV_Yv-VduwVCePp8ovTHCoNczAl5IZoifFUwccGC1AK0vjQyhUDihACcTdAw/exec';
+const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycbxcYgomulLwDcnuQJ57tLEcO2EOppdbZ2zvt-3AiLGQFU7FrSqlXwWntY8XdX7BwNB0EA/exec';
+const ConferenceWebAppUrl = 'https://script.google.com/macros/s/AKfycbznpfHgHXqR6kWIoMMb92qYzyjBxcfuZenrf9bCi8IJ3M13VCFxuylJK719XKUKWpy_Ig/exec';
+const DistrictWebAppUrl = 'https://script.google.com/macros/s/AKfycbwg9NlStQMKzUtxIdant2S8nHnTaunBmx7sxV0l8KDSpNN98y4EeOaRKStQgME5MsjDAA/exec';
+const LocalIncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbyTxc9AzAyIWkmamu3UD8XBNIzbaW9Tb2aWe1HBGYbIYtL9YYpGTXK4GtUwCjwSKOh6nQ/exec';
 

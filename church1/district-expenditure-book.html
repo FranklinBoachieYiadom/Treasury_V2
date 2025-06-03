@@ -274,24 +274,34 @@
          saveButton.style.display = "none";
         
           fetch(DistrictWebAppUrl, { method: "POST", body: formData })
-            .then((response) => {
-              // Hide spinner
-            spinner.style.display = 'none';
-            
-            // Show save button again
-            saveButton.style.display = "block";
-            
-              // Show success message
-            Swal.fire({
-              title: "Done", text: "Saved Successfully.", icon: "success"
+            .then(response => response.json())
+            .then(result => {
+              spinner.style.display = 'none';
+              saveButton.style.display = "block";    // Show the save button again
+              
+
+              if (result.result === "conflict") {
+                Swal.fire({
+                  title: "Conflict",
+                  text: result.message + (result.conflictedHeaders ? "\nConflicted fields: " + result.conflictedHeaders.join(", ") : ""),
+                  icon: "warning"
+                }); 
+                // Optionally, do NOT clear session storage or reload the page
+                return;
+              }
+
+              // If no conflict, assume success
+              Swal.fire({
+                title: "Done",
+                text: "Saved Successfully.",
+                icon: "success"
               });
-              // Clear the session storage
               sessionStorage.removeItem("districtExpenditureTableData");
-              //reload the page after saving
               setTimeout(() => {
                 location.reload();
-              }, 3000); // Reload after 2 seconds
+              }, 3000);
             })
+
             .catch((error) => {
               // Hide spinner
             spinner.style.display = 'none';
