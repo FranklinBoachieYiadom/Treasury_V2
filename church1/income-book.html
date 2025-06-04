@@ -128,7 +128,7 @@
 
 
     <script src="./assest/scripts/script.js"></script>
-    <script src="./assest/webAppUrls/weburls.js"></script>
+    <script type="module" src="./assest/webAppUrls/weburls.js"></script>
 
     <script>
     // Dynamically load the datalist from an external file
@@ -357,10 +357,10 @@
     
       // Save all data and redirect after success
       Promise.all([
-        fetch(IncomeWebAppUrl, { method: "POST", body: formData }),
-        fetch(ConferenceWebAppUrl, { method: "POST", body: conferenceData }),
-        fetch(DistrictWebAppUrl, { method: "POST", body: districtData }),
-        fetch(LocalIncomeWebAppUrl, { method: "POST", body: localData })
+        fetch(window.webAppUrls.IncomeWebAppUrl, { method: "POST", body: formData }),
+        fetch(window.webAppUrls.ConferenceWebAppUrl, { method: "POST", body: conferenceData }),
+        fetch(window.webAppUrls.DistrictWebAppUrl, { method: "POST", body: districtData }),
+        fetch(window.webAppUrls.LocalIncomeWebAppUrl, { method: "POST", body: localData })
       ])
       .then(responses => Promise.all(responses.map(res => res.json())))
       .then(results => {

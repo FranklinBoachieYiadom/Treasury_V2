@@ -132,18 +132,19 @@
       </footer>
 
     <script src="./assest/scripts/script.js"></script>
-    <script src="./assest/webAppUrls/weburls.js"></script>
+    <script type="module" src="./assest/webAppUrls/weburls.js"></script>
 
 
     <script>
-        $(document).ready(function() {
+        $('#spinner2').show();
+        //$(document).ready(function() {
             // const LocalIncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbwJtMQTFn6sIT2z06yDEBzo39NLYURzkeECRKy6rep9WaTKZOWSCS7Y38bxCa63TBZDnw/exec';
             // Reference the web app URL from the external script weburls.js
-
+         document.addEventListener('webAppUrlsReady', function() {
             // Show spinner
-            $('#spinner2').show();
+            //$('#spinner2').show();
 
-            fetch(LocalIncomeWebAppUrl)
+            fetch(window.webAppUrls.LocalIncomeWebAppUrl)
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById('tableBody');

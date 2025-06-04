@@ -103,18 +103,19 @@
       </footer>
 
     <script src="./assest/scripts/script.js"></script>
-    <script src="./assest/webAppUrls/weburls.js"></script>
+    <script type="module" src="./assest/webAppUrls/weburls.js"></script>
 
 
     <script>
-        $(document).ready(function() {
+         $('#spinner2').show();
+       // $(document).ready(function() {
             // const ConferenceWebAppUrl = 'https://script.google.com/macros/s/AKfycbyuWNfL4LByPRBo9pGUk_27DHAF-xiX8yR0ubIcbpa_yqQdTdICNvUo2iqlvTml1rXg/exec';
             // Reference the web app URL from the external script weburls.js
-
+        document.addEventListener('webAppUrlsReady', function() {
             // Show spinner
-            $('#spinner2').show();
+           // $('#spinner2').show();
 
-            fetch(ConferenceWebAppUrl)
+            fetch(window.webAppUrls.ConferenceWebAppUrl)
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById('tableBody');

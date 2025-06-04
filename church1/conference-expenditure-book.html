@@ -121,7 +121,7 @@
     <div id="datalistContainer"></div>
 
     <script src="./assest/scripts/script.js"></script>
-    <script src="./assest/webAppUrls/weburls.js"></script>
+    <script type="module" src="./assest/webAppUrls/weburls.js"></script>
 
    <script>
       // Dynamically load the datalist from an external file
@@ -274,7 +274,7 @@
          const saveButton = document.getElementById("save");
         saveButton.style.display = "none";
         
-          fetch(ConferenceWebAppUrl, { method: "POST", body: formData })
+          fetch(window.webAppUrls.ConferenceWebAppUrl, { method: "POST", body: formData })
               .then(response => response.json())
               .then(result => {
               spinner.style.display = 'none';

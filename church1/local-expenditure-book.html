@@ -124,7 +124,7 @@
 
 
     <script src="./assest/scripts/script.js"></script>
-    <script src="./assest/webAppUrls/weburls.js"></script>
+    <script type="module"  src="./assest/webAppUrls/weburls.js"></script>
 
     <script>
     
@@ -278,7 +278,8 @@
           // Show spinner
         spinner.style.display = 'block';
         
-          fetch(ExpenditureWebAppUrl, { method: "POST", body: formData })
+      //document.addEventListener('webAppUrlsReady', function() {
+          fetch(window.webAppUrls.ExpenditureWebAppUrl, { method: "POST", body: formData })
              .then(response => response.json())
             .then(result => {
               spinner.style.display = 'none';
@@ -313,10 +314,10 @@
               title: "Error", text: "Something went wrong. please try again!", icon: "error"
               });
             });
-          
+        //});
 
         });
-      
+        
       
       
     // Save data to SessionStorage whenever the user modifies the table

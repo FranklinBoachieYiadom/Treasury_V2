@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
+//document.addEventListener("DOMContentLoaded", () => {
+
+   document.addEventListener('webAppUrlsReady', function() {
     // const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycby9-laPphroGrCkAsLCIUhM9ZHXhzfB5AB_bW5013Kxi33_epoj47Zd2qKzZM3pxOxryQ/exec';
     // const LocalIncomeWebAppUrl = 'https://script.google.com/macros/s/AKfycbwJtMQTFn6sIT2z06yDEBzo39NLYURzkeECRKy6rep9WaTKZOWSCS7Y38bxCa63TBZDnw/exec';
   
@@ -8,13 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
   
       // Fetch Income, Expenditure Conference and District data concurrently
   Promise.all([
-    fetch(ExpenditureWebAppUrl).then(response => {
+    fetch(window.webAppUrls.ExpenditureWebAppUrl).then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok for Expenditure');
       }
       return response.json();
     }),
-    fetch(LocalIncomeWebAppUrl).then(response => {
+    fetch(window.webAppUrls.LocalIncomeWebAppUrl).then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok for Localincome');
       }

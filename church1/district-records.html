@@ -101,18 +101,18 @@
       </footer>
 
     <script src="./assest/scripts/script.js"></script>
-    <script src="./assest/webAppUrls/weburls.js"></script>
+    <script type="module" src="./assest/webAppUrls/weburls.js"></script>
 
     <script>
-
-        $(document).ready(function() {
+         $('#spinner2').show();
+        //$(document).ready(function() {
             // const DistrictWebAppUrl = 'https://script.google.com/macros/s/AKfycbz7UCFcas-OBahG81Gutd1SkzmFncvLgX30m_y43ZAE7uzpwjBANbq_4SZAiU_aWO3R5A/exec';
             // Reference the web app URL from the external script weburls.js
-
+        document.addEventListener('webAppUrlsReady', function() {
             // Show spinner
-            $('#spinner2').show();
+            //$('#spinner2').show();
 
-            fetch(DistrictWebAppUrl)
+            fetch(window.webAppUrls.DistrictWebAppUrl)
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById('tableBody');

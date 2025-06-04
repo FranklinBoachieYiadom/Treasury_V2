@@ -138,18 +138,19 @@
         <p>Contact us: <a href="mailto:franklinboachie@gmail.com">franklinboachie@gmail.com</a> | Phone: +233-540-896194</p>
       </footer>
     <script src="./assest/scripts/script.js"></script>
-    <script src="./assest/webAppUrls/weburls.js"></script>
+    <script type="module" src="./assest/webAppUrls/weburls.js"></script>
 
 
     <script>
-        $(document).ready(function() {
+        $('#spinner2').show();
+        //$(document).ready(function() {
             // const ExpenditureWebAppUrl = 'https://script.google.com/macros/s/AKfycby9-laPphroGrCkAsLCIUhM9ZHXhzfB5AB_bW5013Kxi33_epoj47Zd2qKzZM3pxOxryQ/exec';
             // Reference the web app URL from the external script weburls.js
-
+        document.addEventListener('webAppUrlsReady', function() {
             // Show spinner
-            $('#spinner2').show();
+            //$('#spinner2').show();
 
-            fetch(ExpenditureWebAppUrl)
+            fetch(window.webAppUrls.ExpenditureWebAppUrl)
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById('tableBody');
