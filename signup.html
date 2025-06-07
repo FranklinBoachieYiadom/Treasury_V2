@@ -17,12 +17,29 @@
             <h2>Sign Up</h2>
             <div class="form-group">
                 <label for="signupName">First Name</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" >
             </div>
             <div class="form-group">
                 <label for="signupSurname">Surname</label>
-                <input type="text" id="surname" name="surname" required>
+                <input type="text" id="surname" name="surname" >
             </div>
+            
+            <div class="form-group">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="signupPassword"> Choose Password</label>
+                <input type="password" id="signupPassword" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="signupPassword">Confirm Password</label>
+                <input type="password" id="signupPasswordConfirm" name="passwordConfirm" required>
+            </div>
+            <div>
+                <input type="checkbox" id="togglePassword"> Show Password 
+            </div>
+            <br>
             <div class="form-group">
                 <label for="church">Church</label>
                 <select id="church" name="church" required>
@@ -38,21 +55,7 @@
                 <label for="key">Church Key</label>
                 <input type="text" id="key" name="key" required>
             </div>
-            <div class="form-group">
-                <label for="signupEmail">Email</label>
-                <input type="email" id="signupEmail" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="signupPassword">Password</label>
-                <input type="password" id="signupPassword" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="signupPassword">Confirm Password</label>
-                <input type="password" id="signupPasswordConfirm" name="passwordConfirm" required>
-            </div>
-            <div>
-                <input type="checkbox" id="togglePassword"> Show Password 
-            </div>
+            
             <br>
             <button type="submit" id="submit" class="btn signup-btn">Sign Up</button>
             <p class="form-text">Already have an account? <a href="login.html">Login</a></p>

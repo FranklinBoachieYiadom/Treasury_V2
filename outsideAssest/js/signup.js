@@ -1,7 +1,7 @@
 
       
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"; 
         
         
@@ -19,6 +19,24 @@
         const db = getFirestore()
         const auth = getAuth(app)
 
+    //     // Fetch the URLs
+    //    async function fetchWebAppUrls() {
+    //      const docRef = doc(db, "config", "WebUrls");
+    //      const docSnap = await getDoc(docRef);
+    //      if (docSnap.exists()) {
+    //        const urls = docSnap.data();
+    //        window.webAppUrls = urls; // Make globally available
+    //        document.dispatchEvent(new Event('webAppUrlsReady')); // Fire event
+    //        return urls;
+    //      } else {
+    //        throw new Error("No webAppUrls config found!");
+    //      }
+    //    }
+       
+    //    fetchWebAppUrls();
+
+
+       // When the sign up (submit) button is clicked
         const submit= document.getElementById("submit");
         submit.addEventListener("click", function(event){
         event.preventDefault()
@@ -33,15 +51,17 @@
         let password=document.getElementById("signupPassword").value;
         let confirmPassword = document.getElementById("signupPasswordConfirm").value;
        
-        // Define church keys
-        const churchKeys = {
-            AshNorth: "KEY123",
-            Church2: "KEY456",
-            Church3: "KEY789",
-            Church4: "KEY101",
-            Church5: "KEY112",
-        };
-        
+        // Validate name and surname
+        if (name === "" || surname === "") {
+            // Hide spinner
+            spinner.style.display = 'none';
+            Swal.fire({
+                text: "Please fill in all fields.",
+                icon: "error"
+            });
+            return; // Stop further execution
+        }
+
         // Validate church selection
         if (church === "") {
             // Hide spinner
@@ -53,23 +73,12 @@
             return; // Stop further execution
         }
 
-         // Validate church key
-        if (churchKeys[church] !== key) {
-            // Hide spinner
-            spinner.style.display = "none";
-            Swal.fire({
-            text: "Invalid church key. Please enter the correct key for the selected church.",
-            icon: "error",
-            });
-            return; // Stop further execution
-        }
-
-        // Validate name and surname
-        if (name === "" || surname === "") {
+        // Validate Key Input selection
+        if (key === "") {
             // Hide spinner
             spinner.style.display = 'none';
             Swal.fire({
-                text: "Please fill in all fields.",
+                text: "Please enter your key.",
                 icon: "error"
             });
             return; // Stop further execution
@@ -86,6 +95,31 @@
             return; // Stop further execution
         }
 
+
+        // Validate church keys stored using Apps Script web app
+        const ChurchKeysWebUrl = "https://script.google.com/macros/s/AKfycbwel4EZjGWIgc8ZEEzW3Vvr_zlALahZI9PG5Lznw-PxBLAx65-vBR0kIxFT9gmoOxo4Lw/exec";
+    //   document.addEventListener('webAppUrlsReady', function() {
+        async function validateChurchKey(church, key) {
+        const response = await fetch(ChurchKeysWebUrl, {
+                method: "POST",
+                body: JSON.stringify({ church, key }),
+                //headers: { "Content-Type": "application/json" }
+            });
+            return await response.json();
+        }
+
+        // Usage in your signup logic:
+        validateChurchKey(church, key).then(result => {
+        if (!result.valid) {
+            spinner.style.display = "none";
+            Swal.fire({
+            text: "Invalid church key. Please enter the correct key for the selected church.",
+            icon: "error"
+            });
+            return;
+        }
+
+        // If Church and keys are correct Continue with signup...
         createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
             // Signed up 
@@ -96,6 +130,7 @@
                 role:"member",
                 church:church
             })
+
             // Send email verification
             sendEmailVerification(auth.currentUser)
             .then(() => {
@@ -113,16 +148,11 @@
                         } 
                     })
                 })
-            // // Wait for 10 seconds before redirecting
-            // setTimeout(() => {
-            //   var targetPageUrl = "login.html";
-            //   window.location.href = targetPageUrl;
-            // }, 1500); // 10000 milliseconds = 10 seconds
-        })
+             })
         .catch((error) => {
             // Hide spinner
           spinner.style.display = 'none';
-          
+
             let errorCode = error.code;
             let errorMessage = error.message;
             // Replace "Firebase:" with an empty string
@@ -134,9 +164,11 @@
             icon: "error"
           });  
             // ..
-        });
-    })
+         });
+      })
+}); 
 
+ //})// End of event listener for webAppUrlsReady
 
     // Toggle password visibility
     const togglePassword = document.getElementById("togglePassword");
@@ -158,5 +190,5 @@
         if (event.key === "Enter") {
             event.preventDefault();
         }
-    });
+ });
    
