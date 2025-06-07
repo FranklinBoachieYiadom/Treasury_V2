@@ -1,5 +1,4 @@
 
-      
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"; 
@@ -19,21 +18,21 @@
         const db = getFirestore()
         const auth = getAuth(app)
 
-    //     // Fetch the URLs
-    //    async function fetchWebAppUrls() {
-    //      const docRef = doc(db, "config", "WebUrls");
-    //      const docSnap = await getDoc(docRef);
-    //      if (docSnap.exists()) {
-    //        const urls = docSnap.data();
-    //        window.webAppUrls = urls; // Make globally available
-    //        document.dispatchEvent(new Event('webAppUrlsReady')); // Fire event
-    //        return urls;
-    //      } else {
-    //        throw new Error("No webAppUrls config found!");
-    //      }
-    //    }
+        // Fetch the URLs from Firestore
+       async function fetchWebAppUrls() {
+         const docRef = doc(db, "config", "WebUrls");
+         const docSnap = await getDoc(docRef);
+         if (docSnap.exists()) {
+           const urls = docSnap.data();
+           window.webAppUrls = urls; // Make globally available
+           document.dispatchEvent(new Event('webAppUrlsReady')); // Fire event
+           return urls;
+         } else {
+           throw new Error("No webAppUrls config found!");
+         }
+       }
        
-    //    fetchWebAppUrls();
+       fetchWebAppUrls();
 
 
        // When the sign up (submit) button is clicked
@@ -97,10 +96,10 @@
 
 
         // Validate church keys stored using Apps Script web app
-        const ChurchKeysWebUrl = "https://script.google.com/macros/s/AKfycbwel4EZjGWIgc8ZEEzW3Vvr_zlALahZI9PG5Lznw-PxBLAx65-vBR0kIxFT9gmoOxo4Lw/exec";
+        //const ChurchKeysWebUrl = "https://script.google.com/macros/s/AKfycbwel4EZjGWIgc8ZEEzW3Vvr_zlALahZI9PG5Lznw-PxBLAx65-vBR0kIxFT9gmoOxo4Lw/exec";
     //   document.addEventListener('webAppUrlsReady', function() {
         async function validateChurchKey(church, key) {
-        const response = await fetch(ChurchKeysWebUrl, {
+        const response = await fetch(window.webAppUrls.ChurchKeysWebUrl, {
                 method: "POST",
                 body: JSON.stringify({ church, key }),
                 //headers: { "Content-Type": "application/json" }
